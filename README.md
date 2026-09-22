@@ -4,9 +4,9 @@ Repository lưu trữ các bài thực hành của học phần **An toàn Bảo
 
 | Mục | Nội dung |
 |---|---|
-| Họ và tên | *(điền họ tên)* |
-| Mã số sinh viên (MSSV) | *(điền MSSV)* |
-| Lớp | *(điền lớp)* |
+| Họ và tên | Hoàng Thanh Trà |
+| Mã số sinh viên (MSSV) | 1150080120 |
+| Lớp | 11_ĐHCNPM_2 |
 
 ## Danh sách bài Lab
 

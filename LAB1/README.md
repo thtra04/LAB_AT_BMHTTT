@@ -4,9 +4,9 @@
 
 | Mục | Nội dung |
 |---|---|
-| Họ và tên | *(điền họ tên)* |
-| Mã số sinh viên (MSSV) | *(điền MSSV)* |
-| Lớp | *(điền lớp)* |
+| Họ và tên | Hoàng Thanh Trà |
+| Mã số sinh viên (MSSV) | 1150080120 |
+| Lớp | 11_ĐHCNPM_2 |
 | Link video YouTube | *(dán link video quay quá trình thực hiện)* |
 
 ## 2. Tên bài Lab
@@ -75,7 +75,7 @@ Công cụ ảo hóa: VMware Workstation *(hoặc VirtualBox)*.
 LAB1/
 ├── README.md                                       # File mô tả này
 ├── Lab1 - Examining SSH  Telnet in Wireshark.pdf   # Đề bài Lab 1
-├── report/                                         # Báo cáo Word: Lab1_Lop_MSSV_TenSV.docx
+├── report/                                         # Báo cáo Word: Lab1_11_ĐHCNPM_2_1150080120_HoangThanhTra.docx
 ├── images/                                         # Ảnh chụp màn hình kết quả
 └── captures/                                       # File bắt gói Wireshark (.pcapng)
 ```

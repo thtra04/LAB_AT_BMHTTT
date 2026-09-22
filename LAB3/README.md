@@ -4,9 +4,9 @@
 
 | Mục | Nội dung |
 |---|---|
-| Họ và tên | *(điền họ tên)* |
-| Mã số sinh viên (MSSV) | *(điền MSSV)* |
-| Lớp | *(điền lớp)* |
+| Họ và tên | Hoàng Thanh Trà |
+| Mã số sinh viên (MSSV) | 1150080120 |
+| Lớp | 11_ĐHCNPM_2 |
 | Link video YouTube | *(dán link)* |
 
 ## 2. Tên bài Lab
