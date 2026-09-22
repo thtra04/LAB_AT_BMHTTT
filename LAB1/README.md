@@ -73,11 +73,8 @@ Công cụ ảo hóa: VMware Workstation *(hoặc VirtualBox)*.
 
 ```
 LAB1/
-├── README.md                                       # File mô tả này
-├── Lab1 - Examining SSH  Telnet in Wireshark.pdf   # Đề bài Lab 1
-├── report/                                         # Báo cáo Word: Lab1_11_ĐHCNPM_2_1150080120_HoangThanhTra.docx
-├── images/                                         # Ảnh chụp màn hình kết quả
-└── captures/                                       # File bắt gói Wireshark (.pcapng)
+├── README.md                                   # File mô tả này
+└── Lab1_CNPM2_1150080120_HoangThanhTra.docx    # Báo cáo Word (Lab1_Lop_MSSV_TenSV)
 ```
 
 ## 7. Lưu ý để giảng viên kiểm tra / chạy lại
