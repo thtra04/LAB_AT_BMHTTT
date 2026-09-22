@@ -7,7 +7,7 @@
 | Họ và tên | Hoàng Thanh Trà |
 | Mã số sinh viên (MSSV) | 1150080120 |
 | Lớp | 11_ĐHCNPM_2 |
-| Link video YouTube | *(dán link video quay quá trình thực hiện)* |
+| Link video YouTube |  |
 
 ## 2. Tên bài Lab
 
