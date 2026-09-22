@@ -11,7 +11,7 @@ Repository lưu trữ các bài thực hành của học phần **An toàn Bảo
 ## Danh sách bài Lab
 
 | Thư mục | Tên bài Lab |
-|---|---|---|
+|---|---|
 | [LAB1](LAB1/) | Bắt gói tin Telnet – SSH (Examining SSH & Telnet in Wireshark) |
 | [LAB2](LAB2/) | *(cập nhật sau)* |
 | [LAB3](LAB3/) | *(cập nhật sau)* |
