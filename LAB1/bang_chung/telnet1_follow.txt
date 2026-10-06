@@ -1,0 +1,157 @@
+
+===================================================================
+Follow: tcp,ascii
+Filter: tcp.stream eq 0
+Node 0: 192.168.226.130:48690
+Node 1: 192.168.226.132:23
+33
+..&..&........... ..!.."..'.....#
+	21
+..%..&..... ..#..'..$
+12
+..%..&.....$
+	32
+..&..&...........!..".."........
+73
+....M......".....b........b.....B.
+................................"....
+	24
+.. .....#.....'.........
+70
+.. .38400,38400....#.kali:0....'..DISPLAY.kali:0......XTERM-256COLOR..
+	3
+...
+3
+...
+	16
+........!......"
+9
+........"
+	89
+.."................
+.....................
+Linux 7.0.0-31-generic (thanhtra) (pts/0)
+
+
+	16
+thanhtra login: 
+14
+hoangthanhtra
+	15
+hoangthanhtra
+
+	10
+Password: 
+11
+1150080120
+	2
+
+
+	782
+Welcome to Ubuntu 26.04.1 LTS (GNU/Linux 7.0.0-31-generic x86_64)
+
+ * Documentation:  https://docs.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Tue Oct  6 02:15:40 AM UTC 2026
+
+  System load:  0.0               Processes:              220
+  Usage of /:   35.0% of 9.75GB   Users logged in:        0
+  Memory usage: 7%                IPv4 address for ens33: 192.168.226.132
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+13 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+
+	275
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+
+	241
+.]3008;start=c299f1afa2d1499894f72605ec7137d2;user=root;hostname=thanhtra;machineid=9ad9b907d49140099ca8adf032cc5e7f;bootid=a9de092377f24dd6a4a4666fbb12b83b;pid=3711;pidfdid=5793;comm=login;targetuser=hoangthanhtra;sessionid=7;type=session.\
+	235
+.]3008;start=3dfe64dc-f59d-4135-99b4-95d68d807dd3;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=shell;cwd=/home/hoangthanhtra.\
+	8
+.[?2004h
+	82
+.]0;hoangthanhtra@thanhtra: ~..[01;32mhoangthanhtra@thanhtra.[00m:.[01;34m~.[00m$ 
+3
+ls
+	2
+ls
+	12
+
+.[?2004l.
+	237
+.]3008;start=acece3e7-d760-4811-ab11-9d7f5c9fc77b;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=command;cwd=/home/hoangthanhtra.\
+	62
+.]3008;end=acece3e7-d760-4811-ab11-9d7f5c9fc77b;exit=success.\
+	235
+.]3008;start=3dfe64dc-f59d-4135-99b4-95d68d807dd3;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=shell;cwd=/home/hoangthanhtra.\
+	90
+.[?2004h.]0;hoangthanhtra@thanhtra: ~..[01;32mhoangthanhtra@thanhtra.[00m:.[01;34m~.[00m$ 
+22
+mkdir lab1_telnet_dir
+	21
+mkdir lab1_telnet_dir
+	12
+
+.[?2004l.
+	237
+.]3008;start=f74475b5-6217-47a9-9330-892f19e92781;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=command;cwd=/home/hoangthanhtra.\
+	62
+.]3008;end=f74475b5-6217-47a9-9330-892f19e92781;exit=success.\
+	235
+.]3008;start=3dfe64dc-f59d-4135-99b4-95d68d807dd3;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=shell;cwd=/home/hoangthanhtra.\
+	8
+.[?2004h
+	82
+.]0;hoangthanhtra@thanhtra: ~..[01;32mhoangthanhtra@thanhtra.[00m:.[01;34m~.[00m$ 
+3
+ls
+	2
+ls
+	12
+
+.[?2004l.
+	237
+.]3008;start=b9c28a77-c39e-4bd6-bcbc-a137d2aa4b1e;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=command;cwd=/home/hoangthanhtra.\
+	33
+.[0m.[01;34mlab1_telnet_dir.[0m
+
+	62
+.]3008;end=b9c28a77-c39e-4bd6-bcbc-a137d2aa4b1e;exit=success.\
+	235
+.]3008;start=3dfe64dc-f59d-4135-99b4-95d68d807dd3;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=shell;cwd=/home/hoangthanhtra.\
+	90
+.[?2004h.]0;hoangthanhtra@thanhtra: ~..[01;32mhoangthanhtra@thanhtra.[00m:.[01;34m~.[00m$ 
+5
+exit
+	4
+exit
+	12
+
+.[?2004l.
+	237
+.]3008;start=07e33fdb-8abc-466b-aa2d-ce4bf907d8e0;machineid=9ad9b907d49140099ca8adf032cc5e7f;user=hoangthanhtra;hostname=thanhtra;bootid=a9de0923-77f2-4dd6-a4a4-666fbb12b83b;pid=00000000000000003781;type=command;cwd=/home/hoangthanhtra.\
+	8
+logout
+
+	45
+.]3008;end=c299f1afa2d1499894f72605ec7137d2.\
+===================================================================

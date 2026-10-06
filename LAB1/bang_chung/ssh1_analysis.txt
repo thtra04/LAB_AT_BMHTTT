@@ -1,0 +1,32 @@
+=== [LAB1] Buoc 5 (SSH): Phan tich ssh1.pcapng - Wireshark/tshark chi thay goi da MA HOA ===
+
+--- Cac goi SSH dau tien (bat tay, trao doi khoa) ---
+4	192.168.226.130	192.168.226.132	Client: Protocol (SSH-2.0-OpenSSH_10.3p1 Debian-4)
+6	192.168.226.132	192.168.226.130	Server: Protocol (SSH-2.0-OpenSSH_10.2p1 Ubuntu-2ubuntu3.6)
+8	192.168.226.130	192.168.226.132	Client: Key Exchange Init
+9	192.168.226.132	192.168.226.130	Server: Key Exchange Init
+10	192.168.226.130	192.168.226.132	Client: PQ/T Hybrid Key Exchange Init
+11	192.168.226.132	192.168.226.130	Server: PQ/T Hybrid Key Exchange Reply, New Keys, Encrypted packet (len=284)
+13	192.168.226.130	192.168.226.132	Client: New Keys, Encrypted packet (len=68)
+15	192.168.226.130	192.168.226.132	Client: Encrypted packet (len=44)
+17	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=44)
+18	192.168.226.130	192.168.226.132	Client: Encrypted packet (len=76)
+19	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=264)
+21	192.168.226.130	192.168.226.132	Client: Encrypted packet (len=148)
+23	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=28)
+25	192.168.226.130	192.168.226.132	Client: Encrypted packet (len=112)
+27	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=628)
+28	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=44)
+30	192.168.226.130	192.168.226.132	Client: Encrypted packet (len=1100)
+32	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=540)
+33	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=108)
+35	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=820)
+37	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=276)
+39	192.168.226.132	192.168.226.130	Server: Encrypted packet (len=44)
+
+--- Thong ke ---
+Tong goi SSH            : 340
+Goi Encrypted packet    : 335
+Goi chua chuoi plaintext: 0
+
+>>> Sau New Keys, toan bo du lieu la Encrypted packet: khong doc duoc ten dang nhap, mat khau hay lenh <<<
