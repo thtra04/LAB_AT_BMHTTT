@@ -10,7 +10,7 @@
 | Học phần | Thực hành An toàn Bảo mật Hệ thống thông tin – Năm học 2026–2027 |
 | Giảng viên biên soạn | Phạm Trọng Huynh – Bộ môn An toàn Thông tin |
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
-| Link video YouTube | *(dán link video quay quá trình thực hiện nếu lớp yêu cầu)* |
+| Link video YouTube | https://youtu.be/7876Zcu4GBk |
 | Đề bài | [LAB4_Nmap_HuongDan_2026.pdf](LAB4_Nmap_HuongDan_2026.pdf) |
 | Báo cáo | [Lab4_CNPM2_1150080120_HoangThanhTra.docx](Lab4_CNPM2_1150080120_HoangThanhTra.docx) |
 
@@ -451,7 +451,7 @@ LAB4/
 
 - Ảnh minh chứng: `anh/A1`–`A16` (8 ảnh bắt buộc: A1 ip+host discovery, A2 ifconfig máy đích, A1 host discovery, A4 -sS, A8 -sV, A10 -A, A11/A12 NSE, A13 file kết quả).
 - Output/log: `bang_chung/` gồm `hostdiscovery.txt`, `scan_sT/sS/sF/sX/sN/sA/sU/sV/O/A.txt`, `scan_smbos.txt`, `scan_ms17.txt`, `scan_all.{nmap,xml,gnmap,html}`, `scan_allports.txt`, `before_harden.txt`, `after_harden.txt`.
-- Video quay quá trình: `Lab4_Nmap_quaytrinh.mp4` (11 phút, chưa đưa lên repo vì dung lượng lớn — upload YouTube rồi dán link vào đầu báo cáo).
+- Video quay quá trình (11 phút): https://youtu.be/7876Zcu4GBk (file gốc `Lab4_Nmap_quaytrinh.mp4` không đưa lên repo vì dung lượng lớn).
 - Báo cáo: `Lab4_11CNPM2_1150080120_HoangThanhTra.docx`.
 
 ## 9. Lỗi gặp phải và cách khắc phục
