@@ -15,6 +15,7 @@ Repository lưu trữ các bài thực hành của học phần **An toàn Bảo
 | [LAB1](LAB1/) | Bắt gói tin Telnet – SSH (Examining SSH & Telnet in Wireshark) |
 | [LAB3](LAB3/) | Nhận diện và ứng phó các mối đe dọa đến an toàn thông tin (Identifying and Responding to Information Security Threats) |
 | [LAB4](LAB4/) | Khảo sát và đánh giá bề mặt mạng bằng Nmap (Network Attack Surface Assessment with Nmap) |
+| [LAB5](LAB5/) | Thiết lập mô hình tường lửa pfSense (pfSense Firewall Configuration) |
 
 ## Cấu trúc Repository
 
