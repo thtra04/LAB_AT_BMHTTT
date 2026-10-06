@@ -61,6 +61,7 @@ Công cụ ảo hóa: VMware Workstation Pro 26H1, hai VM cùng mạng NAT VMnet
 | Capture SSH (376 gói, 7,64 s) | `bang_chung/ssh1.pcapng` |
 | Phân tích SSH: 340 gói SSH, 335 Encrypted packet, 0 gói chứa chuỗi plaintext | `bang_chung/ssh1_analysis.txt` |
 | Ảnh H01–H04 (Wireshark + terminal Telnet/SSH trên Kali) | `anh/` |
+| Ảnh H05 (console Server Ubuntu: inetd.conf, cổng 23/22, user, thư mục do phiên Telnet/SSH tạo) | `anh/H05_ubuntu_server_kiem_tra_cau_hinh.jpg` |
 | Báo cáo | `Lab1_11CNPM2_1150080120_HoangThanhTra.docx` |
 
 Kết luận: cùng thao tác đăng nhập và lệnh `ls`, `mkdir`, phiên Telnet để lộ toàn bộ tên đăng nhập, mật khẩu và lệnh; phiên SSH sau bước New Keys chỉ còn Encrypted packet, không đọc được thông tin xác thực hay lệnh.
