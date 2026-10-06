@@ -415,3 +415,65 @@ LAB4/
 5. Kali Linux Documentation. *Kali inside VirtualBox (Guest VM)*. https://www.kali.org/docs/virtualization/install-virtualbox-guest-vm/
 6. Rapid7. *Metasploitable 2* – máy ảo mục tiêu cố ý dễ bị tổn thương cho học tập. https://docs.rapid7.com/metasploit/metasploitable-2/
 7. Microsoft. *Security Bulletin MS17-010 – Security Update for Microsoft Windows SMB Server*. https://learn.microsoft.com/security-updates/securitybulletins/2017/ms17-010
+
+
+## 6. Môi trường đã dựng (thực tế)
+
+| Thành phần | Giá trị |
+|---|---|
+| Ảo hóa | VMware Workstation Pro 26H1, mạng NAT VMnet8 `192.168.226.0/24` (cô lập, chỉ VM của sinh viên) |
+| Máy quét | Kali GNU/Linux Rolling, kernel 6.19.14+kali, **Nmap 7.99**, IP `192.168.226.130` |
+| Máy đích | Metasploitable 2 (Linux 2.6.24-16-server), IP `192.168.226.134`, MAC `00:0C:29:FA:DD:2A` |
+| Ngày giờ trong VM | 29/09/2026 13:32 (đặt trước khi quay) |
+
+> Đề gợi ý VirtualBox Host-Only; ở đây dùng mạng NAT ảo của VMware — cũng là mạng ảo cô lập chỉ gồm VM của sinh viên, chỉ quét máy đích do chính sinh viên dựng.
+
+## 7. Các tình huống đã thực hiện và kết quả
+
+| # | Nội dung | Lệnh chính | Kết quả | PASS/FAIL |
+|---|---|---|---|---|
+| 1 | Host discovery | `nmap -sn 192.168.226.0/24` | 5 host up; xác định máy đích .134 | PASS |
+| 2 | IP máy đích | `ssh msfadmin@192.168.226.134; ifconfig` | 192.168.226.134 | PASS |
+| 3 | TCP Connect | `nmap -sT` | 23 cổng open, 0,66 s, không cần root | PASS |
+| 4 | SYN scan | `sudo nmap -sS` | 23 cổng open, 0,74 s | PASS |
+| 5 | FIN/Xmas/NULL | `sudo nmap -sF/-sX/-sN` | 23 cổng open\|filtered | PASS |
+| 6 | ACK scan | `sudo nmap -sA` | 1000 cổng unfiltered (không firewall) | PASS |
+| 7 | UDP | `sudo nmap -sU --top-ports 20` | 53,137 open; 68,69,138 open\|filtered | PASS |
+| 8 | Version | `nmap -sV` | vsftpd 2.3.4, OpenSSH 4.7p1, Apache 2.2.8, Samba 3.0.20, MySQL 5.0.51a... | PASS |
+| 9 | OS detection | `sudo nmap -O` | Linux 2.6.x | PASS |
+| 10 | Aggressive | `sudo nmap -A` | sV+O+traceroute+scripts | PASS |
+| 11 | NSE SMB | `--script smb-os-discovery`, `smb-vuln-ms17-010` | OS Unix (Samba 3.0.20); MS17-010 không VULNERABLE (Samba ≠ SMBv1 Windows) | PASS |
+| 12 | Xuất kết quả | `-oN/-oX/-oG`, `grep`, `xsltproc` | scan_all.{nmap,xml,gnmap,html} | PASS |
+| 13 | Before/After hardening | iptables DROP 21,23 + `nmap -sV -p21,22,23` | open 3→1, filtered 0→2 (21,23 filtered) | PASS |
+| 14 | Quét toàn cổng | `sudo nmap -sS -p-` | 30 cổng open; thêm 3632,6697,8180,8787,37985,39083,47519,58459 | PASS |
+
+## 8. Bằng chứng kèm theo
+
+- Ảnh minh chứng: `anh/A1`–`A16` (8 ảnh bắt buộc: A1 ip+host discovery, A2 ifconfig máy đích, A1 host discovery, A4 -sS, A8 -sV, A10 -A, A11/A12 NSE, A13 file kết quả).
+- Output/log: `bang_chung/` gồm `hostdiscovery.txt`, `scan_sT/sS/sF/sX/sN/sA/sU/sV/O/A.txt`, `scan_smbos.txt`, `scan_ms17.txt`, `scan_all.{nmap,xml,gnmap,html}`, `scan_allports.txt`, `before_harden.txt`, `after_harden.txt`.
+- Video quay quá trình: `Lab4_Nmap_quaytrinh.mp4` (11 phút, chưa đưa lên repo vì dung lượng lớn — upload YouTube rồi dán link vào đầu báo cáo).
+- Báo cáo: `Lab4_11CNPM2_1150080120_HoangThanhTra.docx`.
+
+## 9. Lỗi gặp phải và cách khắc phục
+
+- Máy đích Metasploitable 2 dùng SSH đời cũ → kết nối bằng `-o KexAlgorithms=+diffie-hellman-group1-sha1 -o HostKeyAlgorithms=+ssh-rsa -o Ciphers=+aes128-cbc`.
+- Áp iptables qua SSH tự động → dùng `sshpass` và script chạy phía máy đích để tránh lỗi dấu nháy.
+- Giữ đồng hồ VM cố định → tắt NTP (`timedatectl set-ntp false`) trước khi `date -s`.
+
+## 10. Cách chạy lại
+
+```bash
+# Kali (192.168.226.130) quét Metasploitable 2 (192.168.226.134)
+nmap -sn 192.168.226.0/24 -oN hostdiscovery.txt
+nmap -sT 192.168.226.134 -oN scan_sT.txt
+sudo nmap -sS 192.168.226.134 -oN scan_sS.txt
+sudo nmap -sU --top-ports 20 192.168.226.134 -oN scan_sU.txt
+nmap -sV 192.168.226.134 -oN scan_sV.txt
+sudo nmap -O 192.168.226.134 -oN scan_O.txt
+sudo nmap -A 192.168.226.134 -oN scan_A.txt
+nmap -p445 --script smb-os-discovery 192.168.226.134
+nmap -p445 --script smb-vuln-ms17-010 192.168.226.134
+nmap -sV -p21,22,23,80,445,3306 192.168.226.134 -oA scan_all
+xsltproc scan_all.xml -o scan_all.html
+# Hardening trên máy đích: sudo iptables -A INPUT -p tcp --dport 21 -j DROP; --dport 23 -j DROP
+```
