@@ -7,7 +7,7 @@
 | Họ và tên | Hoàng Thanh Trà |
 | Mã số sinh viên (MSSV) | 1150080120 |
 | Lớp | 11_ĐHCNPM_2 |
-| Link video YouTube |  |
+| Link video YouTube | https://youtu.be/xTK20bLATpE |
 
 ## 2. Tên bài Lab
 
@@ -63,6 +63,7 @@ Công cụ ảo hóa: VMware Workstation Pro 26H1, hai VM cùng mạng NAT VMnet
 | Ảnh H01–H04 (Wireshark + terminal Telnet/SSH trên Kali) | `anh/` |
 | Ảnh H05 (console Server Ubuntu: inetd.conf, cổng 23/22, user, thư mục do phiên Telnet/SSH tạo) | `anh/H05_ubuntu_server_kiem_tra_cau_hinh.jpg` |
 | Báo cáo | `Lab1_11CNPM2_1150080120_HoangThanhTra.docx` |
+| Video quay quá trình (6:55) | https://youtu.be/xTK20bLATpE |
 
 Kết luận: cùng thao tác đăng nhập và lệnh `ls`, `mkdir`, phiên Telnet để lộ toàn bộ tên đăng nhập, mật khẩu và lệnh; phiên SSH sau bước New Keys chỉ còn Encrypted packet, không đọc được thông tin xác thực hay lệnh.
 
