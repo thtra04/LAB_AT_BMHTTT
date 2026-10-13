@@ -10,7 +10,7 @@
 | Học phần | Thực hành An toàn Bảo mật Hệ thống thông tin – Năm học 2026–2027 |
 | Giảng viên biên soạn | Phạm Trọng Huynh – Bộ môn An toàn Thông tin |
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
-| Link video YouTube | *(dán link video quay quá trình thực hiện nếu lớp yêu cầu)* |
+| Link video YouTube | https://youtu.be/Z_w49hdhxG4 |
 | Đề bài | [LAB3_CacMoiDeDoa_ATTT_2026.pdf](LAB3_CacMoiDeDoa_ATTT_2026.pdf) |
 
 ## 2. Tên bài Lab
