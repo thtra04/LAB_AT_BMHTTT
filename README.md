@@ -16,7 +16,7 @@ Repository lưu trữ các bài thực hành của học phần **An toàn Bảo
 | [LAB3](LAB3/) | Nhận diện và ứng phó các mối đe dọa đến an toàn thông tin (Identifying and Responding to Information Security Threats) |
 | [LAB4](LAB4/) | Khảo sát và đánh giá bề mặt mạng bằng Nmap (Network Attack Surface Assessment with Nmap) |
 | [LAB5](LAB5/) | Thiết lập mô hình tường lửa pfSense (pfSense Firewall Configuration) |
-| [LAB6](LAB6/) | Đang cập nhật |
+| [LAB6](LAB6/) | Xác thực Active Directory và chính sách truy cập trên pfSense (pfSense AD Authentication & Access Policies) |
 | [DT043](DT043/) | Bài giữa kỳ – Phát hiện botnet IoT bằng autoencoder nhẹ (N-BaIoT, per-device AE, lượng tử hóa int8, edge benchmark, MTD lai; hệ thống AI / BE / DB / FE) |
 
 ## Cấu trúc Repository
