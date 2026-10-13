@@ -1,0 +1,8 @@
+# Robustness offline của V1: né tránh (mimicry), nhiễu đầu vào
+description: "E9 robustness V1"
+seeds: [42, 1337, 2024]
+model: {kind: ae, hidden: [32, 8]}
+ablation_grid: false
+robustness:
+  evasion_alphas: [0.0, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99]
+  noise_sigmas: [0.1, 0.5, 1.0]

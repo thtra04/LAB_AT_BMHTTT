@@ -1,0 +1,39 @@
+468 lần chạy, 14 cấu hình
+              config  n_seeds  n_runs  params  macro_f1_mean  macro_f1_ci95  tpr_mean  fpr_mean  f1_balanced_mean  mcc_mean  roc_auc_mean  ws_mean
+      B0 (Meidan AE)        5      45 36876.0         0.7061         0.0658    0.8222    0.0025            0.8841    0.5675        0.9928 151.7333
+           B1 global        5      45 36876.0         0.6843         0.3578    0.8094    0.0000            0.8782    0.5354        0.9939 332.8000
+     B1 chung+pdnorm        5      45 36876.0         0.7748         0.0391    0.8632    0.0022            0.9098    0.6698        0.9951 146.3111
+  B2 IsolationForest        5      45     NaN         0.8857         0.0144    0.9282    0.0025            0.9550    0.8326        0.9525 285.9556
+           V1 AE nhẹ        5      45  8059.0         0.6890         0.0560    0.8115    0.0027            0.8779    0.5424        0.9900 153.3333
+      V2 cửa sổ L001        3      27   699.0         0.8405         0.0516    0.9164    0.0036            0.9470    0.7574        0.9956 127.1111
+       V2 cửa sổ L01        3      27   699.0         0.6846         0.2150    0.7998    0.0017            0.8701    0.5422        0.9931  92.7407
+        V2 cửa sổ L1        3      27   699.0         0.6806         0.0791    0.8076    0.0012            0.8787    0.5291        0.9886  57.6296
+        V2 cửa sổ L3        3      27   699.0         0.6651         0.1609    0.8094    0.0011            0.8832    0.4991        0.9872  58.0741
+        V2 cửa sổ L5        3      27   699.0         0.6520         0.1658    0.7758    0.0006            0.8561    0.4950        0.9888  70.9630
+E6 rò rỉ (đối chứng)        3      27 36876.0         0.6793         0.2360    0.8035    0.0006            0.8729    0.5320        0.9945 107.1852
+        V1 poison 1%        3      27  8059.0         0.4700         0.0005    0.6754    0.0023            0.7888    0.2237        0.9509 122.7407
+        V1 poison 5%        3      27  8059.0         0.4366         0.0012    0.6164    0.0024            0.7375    0.2004        0.8533 112.8148
+      V1 (E9 robust)        3      27  8059.0         0.7009         0.1307    0.8117    0.0027            0.8766    0.5642        0.9897 154.2222
+                                            test   metric  n  mean_diff  wins      p  p_holm
+                        RQ2: per-device > global macro_f1  9     0.0218     4 0.2852  1.0000
+                        RQ2: per-device > global      fpr  9     0.0025     4 0.0625  0.9375
+   RQ2b: model riêng > model chung (cùng pdnorm) macro_f1  9    -0.0686     2 0.9766  1.0000
+   RQ2b: model riêng > model chung (cùng pdnorm)      fpr  9     0.0003     3 0.3750  1.0000
+   RQ2c: pdnorm > global norm (cùng model chung) macro_f1  9     0.0904     6 0.1504  1.0000
+   RQ2c: pdnorm > global norm (cùng model chung)      fpr  9     0.0022     5 0.0312  0.5000
+                                   RQ3: V1 vs B0 macro_f1  9    -0.0171     1 0.1289  1.0000
+                                   RQ3: V1 vs B0      fpr  9     0.0002     3 0.6250  1.0000
+                            B0 > IsolationForest macro_f1  9    -0.1796     4 0.8496  1.0000
+                            B0 > IsolationForest      fpr  9    -0.0000     3 0.6094  1.0000
+                    Rò rỉ: chia đúng vs chia sai macro_f1  9     0.0269     3 0.9531  1.0000
+                    Rò rỉ: chia đúng vs chia sai      fpr  9     0.0019     4 0.4531  1.0000
+           RQ4: int8+recal vs fp32 (E1_baseline) macro_f1  9    -0.0008     2 0.4258  1.0000
+RQ4b: int8 recal > int8 giữ ngưỡng (E1_baseline) macro_f1  9    -0.0792     1 0.9902  1.0000
+              RQ4: int8+recal vs fp32 (E4_light) macro_f1  9     0.0278     5 0.6094  1.0000
+   RQ4b: int8 recal > int8 giữ ngưỡng (E4_light) macro_f1  9    -0.0338     4 0.7344  1.0000
+ RQ                                                   criterion                             value  pass
+RQ1                               TPR ≥ 0.99 và FPR ≤ 0.02 (B0)            TPR=0.8222, FPR=0.0025 False
+RQ2                         B0 > B1 ở ≥7/9 thiết bị và p < 0.05               thắng 4/9, p=0.2852 False
+RQ3                        V1 ≤ 25% tham số và Δmacro-F1 ≤ 0.01          tham số 21.9%, Δ=+0.0171 False
+RQ4 int8+recal: Δmacro-F1 ≤ 0.005 và kích thước ≤ 30% fp32 (V1)       Δ=-0.0278, kích thước 45.5% False
+RQ5   P1: p95 ≤ 1 ms, model ≤ 50 KB, RSS tăng ≤ 50 MB (V1 int8) p95=10.8 µs, 15.3 KB, ΔRSS=4.6 MB  True

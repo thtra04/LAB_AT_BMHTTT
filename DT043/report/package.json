@@ -1,0 +1,13 @@
+{
+  "name": "dt043-report",
+  "private": true,
+  "description": "Sinh slide thuyết trình DT043 (pptxgenjs)",
+  "scripts": { "deck": "node build_deck.js" },
+  "dependencies": {
+    "pptxgenjs": "4.0.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-icons": "5.7.0",
+    "sharp": "0.35.5"
+  }
+}

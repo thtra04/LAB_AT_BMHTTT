@@ -1,0 +1,6 @@
+# Ablation: model dùng chung nhưng scaler + ngưỡng theo từng thiết bị (tách tác dụng của per-device normalization)
+description: "Model chung + per-device normalization + ngưỡng riêng"
+shared_model: true
+normalization: per_device
+shared_threshold: false
+model: {kind: ae, hidden: meidan}

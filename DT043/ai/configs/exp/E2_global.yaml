@@ -1,0 +1,6 @@
+# B1 – một model + một scaler + một ngưỡng chung cho 9 thiết bị
+description: "B1 global: model/scaler/ngưỡng dùng chung"
+shared_model: true
+normalization: global
+shared_threshold: true
+model: {kind: ae, hidden: meidan}

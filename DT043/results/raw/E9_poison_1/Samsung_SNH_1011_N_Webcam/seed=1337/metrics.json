@@ -1,0 +1,98 @@
+{
+ "exp": "E9_poison_1",
+ "device": "Samsung_SNH_1011_N_Webcam",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705078.359573,
+ "wall_s": 23.969629764556885,
+ "score_time_s": 1.5863392000028398,
+ "data": {
+  "n_benign": 49559,
+  "n_train": 16520,
+  "n_opt": 16019,
+  "n_test_benign_before": 16020,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0
+  },
+  "poison_rows": 165,
+  "n_test": {
+   "benign": 16020,
+   "gafgyt/combo": 58636,
+   "gafgyt/junk": 28272,
+   "gafgyt/scan": 27665,
+   "gafgyt/tcp": 90421,
+   "gafgyt/udp": 104650
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 21.565624699986074,
+  "epochs_run": 100,
+  "best_epoch": 100
+ },
+ "result": {
+  "thr": 0.18776212767384104,
+  "ws": 338,
+  "window": {
+   "tp": 113562,
+   "fp": 145,
+   "tn": 15538,
+   "fn": 194397,
+   "tpr": 0.3687568799742823,
+   "fpr": 0.009245680035707454,
+   "precision": 0.998724792668877,
+   "f1_attack": 0.5386348436914524,
+   "f1_benign": 0.1377372372771676,
+   "macro_f1": 0.33818604048431,
+   "balanced_acc": 0.6797555999692875,
+   "mcc": 0.16171020242821973,
+   "f1_balanced": 0.5352049272994225,
+   "accuracy": 0.39889754728990673,
+   "recall_per_attack": {
+    "gafgyt/combo": 1.0,
+    "gafgyt/junk": 1.0,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0
+   },
+   "detect_delay_samples_mean": 338.0,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 114699,
+   "fp": 388,
+   "tn": 15632,
+   "fn": 194945,
+   "tpr": 0.3704221622250068,
+   "fpr": 0.02421972534332085,
+   "precision": 0.9966286374655695,
+   "f1_attack": 0.5401018527020632,
+   "f1_benign": 0.13797181780870885,
+   "macro_f1": 0.339036835255386,
+   "balanced_acc": 0.6731012184408429,
+   "mcc": 0.1566296974862243,
+   "f1_balanced": 0.5312075673718193,
+   "accuracy": 0.4002008204775474
+  },
+  "roc_auc": 0.946450629357114,
+  "pr_auc": 0.996577942559278,
+  "opt_fpr_at_ws": 0.0
+ }
+}

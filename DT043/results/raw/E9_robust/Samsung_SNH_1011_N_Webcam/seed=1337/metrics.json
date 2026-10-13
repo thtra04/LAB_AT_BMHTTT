@@ -1,0 +1,143 @@
+{
+ "exp": "E9_robust",
+ "device": "Samsung_SNH_1011_N_Webcam",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791704137.4011326,
+ "wall_s": 76.2732880115509,
+ "score_time_s": 2.6557936999888625,
+ "data": {
+  "n_benign": 49559,
+  "n_train": 16520,
+  "n_opt": 16019,
+  "n_test_benign_before": 16020,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0
+  },
+  "n_test": {
+   "benign": 16020,
+   "gafgyt/combo": 58669,
+   "gafgyt/junk": 28305,
+   "gafgyt/scan": 27698,
+   "gafgyt/tcp": 90454,
+   "gafgyt/udp": 104683
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 54.79469940002309,
+  "epochs_run": 100,
+  "best_epoch": 100
+ },
+ "result": {
+  "thr": 0.25351847584377496,
+  "ws": 282,
+  "window": {
+   "tp": 308404,
+   "fp": 184,
+   "tn": 15555,
+   "fn": 0,
+   "tpr": 1.0,
+   "fpr": 0.011690704619099053,
+   "precision": 0.9994037357253036,
+   "f1_attack": 0.9997017789533738,
+   "f1_benign": 0.9941202786476641,
+   "macro_f1": 0.996911028800519,
+   "balanced_acc": 0.9941546476904505,
+   "mcc": 0.9938410344998414,
+   "f1_balanced": 0.9941886172699134,
+   "accuracy": 0.9994323493026226,
+   "recall_per_attack": {
+    "gafgyt/combo": 1.0,
+    "gafgyt/junk": 1.0,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 1.0,
+    "gafgyt/udp": 1.0
+   },
+   "detect_delay_samples_mean": 282.0,
+   "undetected_attacks": 0
+  },
+  "instance": {
+   "tp": 309803,
+   "fp": 373,
+   "tn": 15647,
+   "fn": 6,
+   "tpr": 0.9999806332288603,
+   "fpr": 0.02328339575530587,
+   "precision": 0.9987974569276797,
+   "f1_attack": 0.9993886948877796,
+   "f1_benign": 0.9880339721529379,
+   "macro_f1": 0.9937113335203587,
+   "balanced_acc": 0.9883486187367772,
+   "mcc": 0.9874959929681575,
+   "f1_balanced": 0.9884825894235143,
+   "accuracy": 0.9988368131750089
+  },
+  "roc_auc": 0.9891932075148439,
+  "pr_auc": 0.999309505213096,
+  "opt_fpr_at_ws": 0.0,
+  "robustness": {
+   "evasion": [
+    {
+     "alpha": 0.0,
+     "tpr": 1.0
+    },
+    {
+     "alpha": 0.25,
+     "tpr": 1.0
+    },
+    {
+     "alpha": 0.5,
+     "tpr": 0.3690905435727163
+    },
+    {
+     "alpha": 0.75,
+     "tpr": 0.3690905435727163
+    },
+    {
+     "alpha": 0.9,
+     "tpr": 0.3690905435727163
+    },
+    {
+     "alpha": 0.95,
+     "tpr": 0.3690905435727163
+    },
+    {
+     "alpha": 0.99,
+     "tpr": 0.2801909184057276
+    }
+   ],
+   "noise": [
+    {
+     "sigma": 0.1,
+     "fpr": 0.011690704619099053
+    },
+    {
+     "sigma": 0.5,
+     "fpr": 1.0
+    },
+    {
+     "sigma": 1.0,
+     "fpr": 1.0
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "exp": "E9_robust",
+ "device": "Ennio_Doorbell",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791703924.7465208,
+ "wall_s": 32.774664878845215,
+ "score_time_s": 2.6591717999835964,
+ "data": {
+  "n_benign": 35410,
+  "n_train": 11803,
+  "n_opt": 11304,
+  "n_test_benign_before": 11303,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0
+  },
+  "n_test": {
+   "benign": 11303,
+   "gafgyt/combo": 53014,
+   "gafgyt/junk": 29797,
+   "gafgyt/scan": 28120,
+   "gafgyt/tcp": 93903,
+   "gafgyt/udp": 98355
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 11.760874900006456,
+  "epochs_run": 18,
+  "best_epoch": 10
+ },
+ "result": {
+  "thr": 24.340138219178026,
+  "ws": 4,
+  "window": {
+   "tp": 110907,
+   "fp": 0,
+   "tn": 11300,
+   "fn": 192267,
+   "tpr": 0.36581962833224485,
+   "fpr": 0.0,
+   "precision": 1.0,
+   "f1_attack": 0.5356778021691408,
+   "f1_benign": 0.10518134473883844,
+   "macro_f1": 0.32042957345398965,
+   "balanced_acc": 0.6829098141661224,
+   "mcc": 0.14250136867775556,
+   "f1_balanced": 0.5356778021691408,
+   "accuracy": 0.38860764323918673,
+   "recall_per_attack": {
+    "gafgyt/combo": 0.9999434079719304,
+    "gafgyt/junk": 0.9998993085856213,
+    "gafgyt/scan": 0.9993598179037593,
+    "gafgyt/tcp": 9.584664536741214e-05,
+    "gafgyt/udp": 0.0
+   },
+   "detect_delay_samples_mean": 16648.0,
+   "undetected_attacks": 1
+  },
+  "instance": {
+   "tp": 111043,
+   "fp": 1,
+   "tn": 11302,
+   "fn": 192146,
+   "tpr": 0.36625009482534,
+   "fpr": 8.847208705653367e-05,
+   "precision": 0.9999909945607147,
+   "f1_attack": 0.5361378740950141,
+   "f1_benign": 0.10525678576584044,
+   "macro_f1": 0.32069732993042727,
+   "balanced_acc": 0.6830808113691418,
+   "mcc": 0.14261071164121875,
+   "f1_balanced": 0.5361044527243038,
+   "accuracy": 0.3890242041133002
+  },
+  "roc_auc": 0.9845632331775435,
+  "pr_auc": 0.9992855480329121,
+  "opt_fpr_at_ws": 0.0,
+  "robustness": {
+   "evasion": [
+    {
+     "alpha": 0.0,
+     "tpr": 0.36581962833224485
+    },
+    {
+     "alpha": 0.25,
+     "tpr": 0.36581962833224485
+    },
+    {
+     "alpha": 0.5,
+     "tpr": 0.36581962833224485
+    },
+    {
+     "alpha": 0.75,
+     "tpr": 0.36581962833224485
+    },
+    {
+     "alpha": 0.9,
+     "tpr": 0.36580973302459974
+    },
+    {
+     "alpha": 0.95,
+     "tpr": 0.3452439853021697
+    },
+    {
+     "alpha": 0.99,
+     "tpr": 0.2699934690969542
+    }
+   ],
+   "noise": [
+    {
+     "sigma": 0.1,
+     "fpr": 0.0
+    },
+    {
+     "sigma": 0.5,
+     "fpr": 0.0
+    },
+    {
+     "sigma": 1.0,
+     "fpr": 0.0
+    }
+   ]
+  }
+ }
+}

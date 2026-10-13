@@ -1,0 +1,6 @@
+RQ,criterion,value,pass
+RQ1,TPR ≥ 0.99 và FPR ≤ 0.02 (B0),"TPR=0.8222, FPR=0.0025",False
+RQ2,B0 > B1 ở ≥7/9 thiết bị và p < 0.05,"thắng 4/9, p=0.2852",False
+RQ3,V1 ≤ 25% tham số và Δmacro-F1 ≤ 0.01,"tham số 21.9%, Δ=+0.0171",False
+RQ4,int8+recal: Δmacro-F1 ≤ 0.005 và kích thước ≤ 30% fp32 (V1),"Δ=-0.0278, kích thước 45.5%",False
+RQ5,"P1: p95 ≤ 1 ms, model ≤ 50 KB, RSS tăng ≤ 50 MB (V1 int8)","p95=10.8 µs, 15.3 KB, ΔRSS=4.6 MB",True

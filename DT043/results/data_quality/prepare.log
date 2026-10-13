@@ -1,0 +1,103 @@
+Danmini_Doorbell                              benign           raw=   49548 dup=   9153
+Danmini_Doorbell                              gafgyt/combo     raw=   59718 dup=      0
+Danmini_Doorbell                              gafgyt/junk      raw=   29068 dup=      0
+Danmini_Doorbell                              gafgyt/scan      raw=   29849 dup=      0
+Danmini_Doorbell                              gafgyt/tcp       raw=   92141 dup=   6914
+Danmini_Doorbell                              gafgyt/udp       raw=  105874 dup=   5692
+Danmini_Doorbell                              mirai/ack        raw=  102195 dup=      0
+Danmini_Doorbell                              mirai/scan       raw=  107685 dup=      0
+Danmini_Doorbell                              mirai/syn        raw=  122573 dup=      0
+Danmini_Doorbell                              mirai/udp        raw=  237665 dup=      0
+Danmini_Doorbell                              mirai/udpplain   raw=   81982 dup=      0
+Ecobee_Thermostat                             benign           raw=   13113 dup=      2
+Ecobee_Thermostat                             gafgyt/combo     raw=   53012 dup=      0
+Ecobee_Thermostat                             gafgyt/junk      raw=   30312 dup=      0
+Ecobee_Thermostat                             gafgyt/scan      raw=   27494 dup=      0
+Ecobee_Thermostat                             gafgyt/tcp       raw=   95021 dup=   7144
+Ecobee_Thermostat                             gafgyt/udp       raw=  104791 dup=   5596
+Ecobee_Thermostat                             mirai/ack        raw=  113285 dup=      0
+Ecobee_Thermostat                             mirai/scan       raw=   43192 dup=      0
+Ecobee_Thermostat                             mirai/syn        raw=  116807 dup=      0
+Ecobee_Thermostat                             mirai/udp        raw=  151481 dup=      0
+Ecobee_Thermostat                             mirai/udpplain   raw=   87368 dup=      0
+Ennio_Doorbell                                benign           raw=   39100 dup=   3690
+Ennio_Doorbell                                gafgyt/combo     raw=   53014 dup=      0
+Ennio_Doorbell                                gafgyt/junk      raw=   29797 dup=      0
+Ennio_Doorbell                                gafgyt/scan      raw=   28120 dup=      0
+Ennio_Doorbell                                gafgyt/tcp       raw=  101536 dup=   7633
+Ennio_Doorbell                                gafgyt/udp       raw=  103933 dup=   5578
+Philips_B120N10_Baby_Monitor                  benign           raw=  175240 dup=  10099
+Philips_B120N10_Baby_Monitor                  gafgyt/combo     raw=   58152 dup=      0
+Philips_B120N10_Baby_Monitor                  gafgyt/junk      raw=   28349 dup=      0
+Philips_B120N10_Baby_Monitor                  gafgyt/scan      raw=   27859 dup=      0
+Philips_B120N10_Baby_Monitor                  gafgyt/tcp       raw=   92581 dup=   6953
+Philips_B120N10_Baby_Monitor                  gafgyt/udp       raw=  105782 dup=   5689
+Philips_B120N10_Baby_Monitor                  mirai/ack        raw=   91123 dup=      0
+Philips_B120N10_Baby_Monitor                  mirai/scan       raw=  103621 dup=      0
+Philips_B120N10_Baby_Monitor                  mirai/syn        raw=  118128 dup=      0
+Philips_B120N10_Baby_Monitor                  mirai/udp        raw=  217034 dup=      0
+Philips_B120N10_Baby_Monitor                  mirai/udpplain   raw=   80808 dup=      0
+Provision_PT_737E_Security_Camera             benign           raw=   62154 dup=   6985
+Provision_PT_737E_Security_Camera             gafgyt/combo     raw=   61380 dup=      0
+Provision_PT_737E_Security_Camera             gafgyt/junk      raw=   30898 dup=      0
+Provision_PT_737E_Security_Camera             gafgyt/scan      raw=   29297 dup=      0
+Provision_PT_737E_Security_Camera             gafgyt/tcp       raw=  104510 dup=   7852
+Provision_PT_737E_Security_Camera             gafgyt/udp       raw=  104011 dup=   5587
+Provision_PT_737E_Security_Camera             mirai/ack        raw=   60554 dup=      0
+Provision_PT_737E_Security_Camera             mirai/scan       raw=   96781 dup=      0
+Provision_PT_737E_Security_Camera             mirai/syn        raw=   65746 dup=      0
+Provision_PT_737E_Security_Camera             mirai/udp        raw=  156248 dup=      0
+Provision_PT_737E_Security_Camera             mirai/udpplain   raw=   56681 dup=      0
+Provision_PT_838_Security_Camera              benign           raw=   98514 dup=   4519
+Provision_PT_838_Security_Camera              gafgyt/combo     raw=   57530 dup=      0
+Provision_PT_838_Security_Camera              gafgyt/junk      raw=   29068 dup=      0
+Provision_PT_838_Security_Camera              gafgyt/scan      raw=   28397 dup=      0
+Provision_PT_838_Security_Camera              gafgyt/tcp       raw=   89387 dup=   6700
+Provision_PT_838_Security_Camera              gafgyt/udp       raw=  104658 dup=   5630
+Provision_PT_838_Security_Camera              mirai/ack        raw=   57997 dup=      0
+Provision_PT_838_Security_Camera              mirai/scan       raw=   97096 dup=      0
+Provision_PT_838_Security_Camera              mirai/syn        raw=   61851 dup=      0
+Provision_PT_838_Security_Camera              mirai/udp        raw=  158608 dup=      0
+Provision_PT_838_Security_Camera              mirai/udpplain   raw=   53785 dup=      0
+Samsung_SNH_1011_N_Webcam                     benign           raw=   52150 dup=   2591
+Samsung_SNH_1011_N_Webcam                     gafgyt/combo     raw=   58669 dup=      0
+Samsung_SNH_1011_N_Webcam                     gafgyt/junk      raw=   28305 dup=      0
+Samsung_SNH_1011_N_Webcam                     gafgyt/scan      raw=   27698 dup=      0
+Samsung_SNH_1011_N_Webcam                     gafgyt/tcp       raw=   97783 dup=   7329
+Samsung_SNH_1011_N_Webcam                     gafgyt/udp       raw=  110617 dup=   5934
+SimpleHome_XCS7_1002_WHT_Security_Camera      benign           raw=   46585 dup=   3801
+SimpleHome_XCS7_1002_WHT_Security_Camera      gafgyt/combo     raw=   54283 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      gafgyt/junk      raw=   28579 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      gafgyt/scan      raw=   27825 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      gafgyt/tcp       raw=   88816 dup=   6669
+SimpleHome_XCS7_1002_WHT_Security_Camera      gafgyt/udp       raw=  103720 dup=   5539
+SimpleHome_XCS7_1002_WHT_Security_Camera      mirai/ack        raw=  111480 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      mirai/scan       raw=   45930 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      mirai/syn        raw=  125715 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      mirai/udp        raw=  151879 dup=      0
+SimpleHome_XCS7_1002_WHT_Security_Camera      mirai/udpplain   raw=   78244 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      benign           raw=   19528 dup=   1592
+SimpleHome_XCS7_1003_WHT_Security_Camera      gafgyt/combo     raw=   59398 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      gafgyt/junk      raw=   27413 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      gafgyt/scan      raw=   28572 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      gafgyt/tcp       raw=   98075 dup=   7366
+SimpleHome_XCS7_1003_WHT_Security_Camera      gafgyt/udp       raw=  102980 dup=   5542
+SimpleHome_XCS7_1003_WHT_Security_Camera      mirai/ack        raw=  107187 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      mirai/scan       raw=   43674 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      mirai/syn        raw=  122479 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      mirai/udp        raw=  157084 dup=      0
+SimpleHome_XCS7_1003_WHT_Security_Camera      mirai/udpplain   raw=   84436 dup=      0
+                                          rows_dedup_attack  ...  attack_to_benign_ratio
+device                                                       ...                        
+Danmini_Doorbell                                     956144  ...                   23.67
+Ecobee_Thermostat                                    810023  ...                   61.78
+Ennio_Doorbell                                       303189  ...                    8.56
+Philips_B120N10_Baby_Monitor                         910795  ...                    5.52
+Provision_PT_737E_Security_Camera                    752667  ...                   13.64
+Provision_PT_838_Security_Camera                     726047  ...                    7.72
+Samsung_SNH_1011_N_Webcam                            309809  ...                    6.25
+SimpleHome_XCS7_1002_WHT_Security_Camera             804263  ...                   18.80
+SimpleHome_XCS7_1003_WHT_Security_Camera             818390  ...                   45.63
+
+[9 rows x 5 columns]
+Tổng dòng gốc: 7062606 – sau khử trùng: 6904827

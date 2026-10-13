@@ -1,0 +1,4 @@
+# B0 – tái lập AE Meidan 2018: per-device z-score, 115-86-58-38-29-…-115, tr* = mean+std, ws*
+description: "B0 baseline Meidan AE per-device + lượng tử hóa TFLite"
+model: {kind: ae, hidden: meidan}
+quantize: [fp32, fp16, dyn, int8]

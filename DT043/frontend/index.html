@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DT043 – IoT Botnet Detection</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>DT043 · Phát hiện botnet IoT bằng autoencoder nhẹ</h1>
+    <p class="sub">Per-device AE (V1, full-int8, ngưỡng hiệu chỉnh) · Dữ liệu N-BaIoT (CC BY 4.0) · MTD lai mô phỏng</p>
+  </div>
+  <span id="health" class="pill">đang kết nối…</span>
+</header>
+
+<main>
+  <section class="card wide">
+    <h2>Thiết bị & model đang triển khai</h2>
+    <div class="table-wrap"><table id="devices">
+      <thead><tr><th>Thiết bị</th><th>Loại</th><th>Model</th><th>Kích thước</th><th>tr*</th><th>ws*</th><th>Cảnh báo mở</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section class="card wide">
+    <h2>Phát lại lưu lượng (offline, dữ liệu công khai)</h2>
+    <form id="replay-form" class="controls">
+      <label>Thiết bị <select id="r-device"></select></label>
+      <label>Segment
+        <select id="r-segment">
+          <option value="benign">benign (phần test)</option>
+          <option>gafgyt/combo</option><option>gafgyt/junk</option><option>gafgyt/scan</option>
+          <option>gafgyt/tcp</option><option>gafgyt/udp</option>
+          <option>mirai/ack</option><option>mirai/scan</option><option>mirai/syn</option>
+          <option>mirai/udp</option><option>mirai/udpplain</option>
+        </select>
+      </label>
+      <label>Số mẫu <input id="r-n" type="number" value="2000" min="10" max="20000"></label>
+      <label>Offset <input id="r-offset" type="number" value="0" min="0"></label>
+      <button type="submit">Phát lại</button>
+    </form>
+    <div id="replay-summary" class="stats"></div>
+    <canvas id="chart" height="260"></canvas>
+    <p class="legend"><span class="sw sw-mse"></span>MSE tái tạo (thang log) <span class="sw sw-thr"></span>ngưỡng tr* <span class="sw sw-alarm"></span>cửa sổ cảnh báo</p>
+  </section>
+
+  <section class="card">
+    <h2>Cảnh báo</h2>
+    <div class="table-wrap"><table id="alerts">
+      <thead><tr><th>#</th><th>Thiết bị</th><th>Nguồn</th><th>Mức</th><th>Tỷ lệ</th><th>Trạng thái</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <h2>Hành động MTD (mô phỏng) <button id="tick" class="small">Chạy chu kỳ time-based</button></h2>
+    <div class="table-wrap"><table id="mtd">
+      <thead><tr><th>#</th><th>Thiết bị</th><th>Kỹ thuật</th><th>Kích hoạt</th><th>Chi tiết</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+
+  <section class="card wide">
+    <h2>Kết quả thực nghiệm (trung bình 9 thiết bị × seed)</h2>
+    <div class="table-wrap"><table id="experiments"><thead></thead><tbody></tbody></table></div>
+  </section>
+</main>
+<footer>Chỉ xử lý dữ liệu công khai N-BaIoT trên máy cục bộ. MTD chỉ được ghi nhận/mô phỏng, không tác động mạng thật.</footer>
+<script src="/static/app.js"></script>
+</body>
+</html>

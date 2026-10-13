@@ -1,3 +1,14 @@
 LAB4/video/
-LAB1/~$*
+~$*
 LAB1/video/
+DT043/.venv/
+DT043/data/raw/
+DT043/data/download/
+DT043/data/processed/
+DT043/results/scores/
+DT043/artifacts/savedmodel_tmp/
+__pycache__/
+.pytest_cache/
+DT043/.tmp/
+DT043/report/node_modules/
+DT043/db/*.sqlite3

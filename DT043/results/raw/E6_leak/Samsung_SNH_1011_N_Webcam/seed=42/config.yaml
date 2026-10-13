@@ -1,0 +1,50 @@
+paths:
+  raw: data/raw
+  processed: data/processed
+  results: results/raw
+  scores: results/scores
+  models: artifacts/models
+devices:
+- Danmini_Doorbell
+- Ecobee_Thermostat
+- Ennio_Doorbell
+- Philips_B120N10_Baby_Monitor
+- Provision_PT_737E_Security_Camera
+- Provision_PT_838_Security_Camera
+- Samsung_SNH_1011_N_Webcam
+- SimpleHome_XCS7_1002_WHT_Security_Camera
+- SimpleHome_XCS7_1003_WHT_Security_Camera
+seeds:
+- 42
+- 1337
+- 2024
+split:
+  method: random
+  fractions:
+  - 0.3333333
+  - 0.3333333
+  - 0.3333334
+  purge_gap: 0
+  drop_overlap: false
+  scaler_fit_on: all_benign
+features:
+  window: all
+normalization: per_device
+model:
+  kind: ae
+  hidden: meidan
+  activation: relu
+train:
+  optimizer: adam
+  lr: 0.001
+  batch_size: 256
+  max_epochs: 100
+  patience: 8
+threshold:
+  rule: mean_std
+  max_ws: 1000
+quantize: []
+ablation_grid: true
+save_scores_seed: 42
+threads: 2
+description: E6 minh họa rò rỉ dữ liệu (KHÔNG dùng để báo cáo hiệu năng)

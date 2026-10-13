@@ -1,0 +1,10 @@
+device,gafgyt/combo,gafgyt/junk,gafgyt/scan,gafgyt/tcp,gafgyt/udp,mirai/ack,mirai/scan,mirai/syn,mirai/udp,mirai/udpplain
+Danmini_Doorbell,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+Ecobee_Thermostat,1.0,1.0,1.0,0.2,0.2,1.0,1.0,1.0,1.0,1.0
+Ennio_Doorbell,0.9999245468092732,0.9998657537924555,0.9993243002951739,0.00010649400438755298,4.8803302356792815e-05,,,,,
+Philips_B120N10_Baby_Monitor,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+Provision_PT_737E_Security_Camera,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+Provision_PT_838_Security_Camera,1.0,1.0,1.0,0.2,0.2,1.0,1.0,1.0,1.0,1.0
+Samsung_SNH_1011_N_Webcam,1.0,1.0,1.0,0.8,0.8,,,,,
+SimpleHome_XCS7_1002_WHT_Security_Camera,1.0,1.0,0.9999640194580086,0.0,0.0,1.0,0.9968838124496638,1.0,1.0,1.0
+SimpleHome_XCS7_1003_WHT_Security_Camera,1.0,1.0,1.0,0.0,0.0,1.0,0.9993491164943965,1.0,1.0,1.0

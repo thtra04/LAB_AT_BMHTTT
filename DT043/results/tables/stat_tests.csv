@@ -1,0 +1,17 @@
+test,metric,a,b,alternative,n,mean_diff,median_diff,p,wins,ties,p_holm
+RQ2: per-device > global,macro_f1,E1_baseline,E2_global,greater,9,0.02181700455017028,-0.08897090859878398,0.28515625,4,0,1.0
+RQ2: per-device > global,fpr,E1_baseline,E2_global,greater,9,0.002482326930694254,0.0,0.0625,4,5,0.9375
+RQ2b: model riêng > model chung (cùng pdnorm),macro_f1,E1_baseline,E2_shared_pdnorm,greater,9,-0.06862879941358152,-0.00048083035756041337,0.9765625,2,1,1.0
+RQ2b: model riêng > model chung (cùng pdnorm),fpr,E1_baseline,E2_shared_pdnorm,greater,9,0.0002779775366600087,0.0,0.375,3,4,1.0
+RQ2c: pdnorm > global norm (cùng model chung),macro_f1,E2_shared_pdnorm,E2_global,greater,9,0.09044580396375178,0.17819816361805585,0.150390625,6,0,1.0
+RQ2c: pdnorm > global norm (cùng model chung),fpr,E2_shared_pdnorm,E2_global,greater,9,0.0022043493940342457,0.0001504989366922951,0.03125,5,4,0.5
+RQ3: V1 vs B0,macro_f1,E4_light,E1_baseline,two-sided,9,-0.017141577458117317,-0.00011472331258066681,0.12890625,1,0,1.0
+RQ3: V1 vs B0,fpr,E4_light,E1_baseline,two-sided,9,0.00023188200292073872,0.0,0.625,3,4,1.0
+B0 > IsolationForest,macro_f1,E1_baseline,E3_iforest,greater,9,-0.17955070303709567,-0.13399305520390303,0.849609375,4,0,1.0
+B0 > IsolationForest,fpr,E1_baseline,E3_iforest,greater,9,-3.617180696705622e-05,0.0,0.609375,3,2,1.0
+Rò rỉ: chia đúng vs chia sai,macro_f1,E1_baseline,E6_leak,two-sided,9,0.026864394480350964,-0.0019483379367851716,0.953125,3,1,1.0
+Rò rỉ: chia đúng vs chia sai,fpr,E1_baseline,E6_leak,two-sided,9,0.0018970548609962045,0.0,0.453125,4,2,1.0
+RQ4: int8+recal vs fp32 (E1_baseline),macro_f1,int8_recal,fp32,two-sided,9,-0.000752140302095694,-1.9451883449428387e-05,0.42578125,2,0,1.0
+RQ4b: int8 recal > int8 giữ ngưỡng (E1_baseline),macro_f1,int8_recal,int8_keep,greater,9,-0.07923579904951794,-0.08882507613514667,0.990234375,1,0,1.0
+RQ4: int8+recal vs fp32 (E4_light),macro_f1,int8_recal,fp32,two-sided,9,0.027790495672407805,3.6150570359438916e-07,0.609375,5,1,1.0
+RQ4b: int8 recal > int8 giữ ngưỡng (E4_light),macro_f1,int8_recal,int8_keep,greater,9,-0.0338149003730504,0.0,0.734375,4,1,1.0

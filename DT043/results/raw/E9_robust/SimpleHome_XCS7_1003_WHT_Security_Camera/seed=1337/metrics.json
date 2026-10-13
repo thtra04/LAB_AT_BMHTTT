@@ -1,0 +1,158 @@
+{
+ "exp": "E9_robust",
+ "device": "SimpleHome_XCS7_1003_WHT_Security_Camera",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791704223.1864731,
+ "wall_s": 92.9155433177948,
+ "score_time_s": 6.771740700001828,
+ "data": {
+  "n_benign": 17936,
+  "n_train": 5979,
+  "n_opt": 5478,
+  "n_test_benign_before": 5479,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0,
+   "mirai/ack": 0,
+   "mirai/scan": 0,
+   "mirai/syn": 0,
+   "mirai/udp": 0,
+   "mirai/udpplain": 0
+  },
+  "n_test": {
+   "benign": 5479,
+   "gafgyt/combo": 59398,
+   "gafgyt/junk": 27413,
+   "gafgyt/scan": 28572,
+   "gafgyt/tcp": 90709,
+   "gafgyt/udp": 97438,
+   "mirai/ack": 107187,
+   "mirai/scan": 43674,
+   "mirai/syn": 122479,
+   "mirai/udp": 157084,
+   "mirai/udpplain": 84436
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 34.957308999990346,
+  "epochs_run": 100,
+  "best_epoch": 99
+ },
+ "result": {
+  "thr": 16.570289480088604,
+  "ws": 44,
+  "window": {
+   "tp": 629870,
+   "fp": 0,
+   "tn": 5436,
+   "fn": 188090,
+   "tpr": 0.7700498801897403,
+   "fpr": 0.0,
+   "precision": 1.0,
+   "f1_attack": 0.870088339100585,
+   "f1_benign": 0.05464360028548165,
+   "macro_f1": 0.46236596969303334,
+   "balanced_acc": 0.8850249400948702,
+   "mcc": 0.14707182877497355,
+   "f1_balanced": 0.8700883391005849,
+   "accuracy": 0.7715679940150304,
+   "recall_per_attack": {
+    "gafgyt/combo": 1.0,
+    "gafgyt/junk": 1.0,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0,
+    "mirai/ack": 1.0,
+    "mirai/scan": 0.9993353349682566,
+    "mirai/syn": 1.0,
+    "mirai/udp": 1.0,
+    "mirai/udpplain": 1.0
+   },
+   "detect_delay_samples_mean": 44.0,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 630172,
+   "fp": 1,
+   "tn": 5478,
+   "fn": 188218,
+   "tpr": 0.7700142963623701,
+   "fpr": 0.0001825150574922431,
+   "precision": 0.999998413134171,
+   "f1_attack": 0.870065023060785,
+   "f1_benign": 0.05500690347684197,
+   "macro_f1": 0.4625359632688135,
+   "balanced_acc": 0.8849158906524389,
+   "mcc": 0.1475490513369607,
+   "f1_balanced": 0.8699759161183294,
+   "accuracy": 0.771542563198761
+  },
+  "roc_auc": 0.9994549026644605,
+  "pr_auc": 0.9999961188109298,
+  "opt_fpr_at_ws": 0.0,
+  "robustness": {
+   "evasion": [
+    {
+     "alpha": 0.0,
+     "tpr": 0.7700498801897403
+    },
+    {
+     "alpha": 0.25,
+     "tpr": 0.7700413223140495
+    },
+    {
+     "alpha": 0.5,
+     "tpr": 0.7700144261333073
+    },
+    {
+     "alpha": 0.75,
+     "tpr": 0.7693872561005428
+    },
+    {
+     "alpha": 0.9,
+     "tpr": 0.7526468286957797
+    },
+    {
+     "alpha": 0.95,
+     "tpr": 0.6895447210132525
+    },
+    {
+     "alpha": 0.99,
+     "tpr": 3.4231502762971295e-05
+    }
+   ],
+   "noise": [
+    {
+     "sigma": 0.1,
+     "fpr": 0.0
+    },
+    {
+     "sigma": 0.5,
+     "fpr": 0.0
+    },
+    {
+     "sigma": 1.0,
+     "fpr": 0.0
+    }
+   ]
+  }
+ }
+}

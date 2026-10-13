@@ -1,0 +1,3 @@
+# B2 – Isolation Forest per-device (baseline không phải mạng nơ-ron), cùng cách chọn tr*/ws*
+description: "B2 Isolation Forest per-device"
+model: {kind: iforest}

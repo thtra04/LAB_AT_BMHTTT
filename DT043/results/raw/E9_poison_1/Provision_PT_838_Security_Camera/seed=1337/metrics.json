@@ -1,0 +1,113 @@
+{
+ "exp": "E9_poison_1",
+ "device": "Provision_PT_838_Security_Camera",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705057.8177936,
+ "wall_s": 32.35196304321289,
+ "score_time_s": 2.099260700022569,
+ "data": {
+  "n_benign": 93995,
+  "n_train": 31332,
+  "n_opt": 30831,
+  "n_test_benign_before": 30832,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0,
+   "mirai/ack": 0,
+   "mirai/scan": 0,
+   "mirai/syn": 0,
+   "mirai/udp": 0,
+   "mirai/udpplain": 0
+  },
+  "poison_rows": 310,
+  "n_test": {
+   "benign": 30832,
+   "gafgyt/combo": 57499,
+   "gafgyt/junk": 29037,
+   "gafgyt/scan": 28366,
+   "gafgyt/tcp": 82656,
+   "gafgyt/udp": 98997,
+   "mirai/ack": 57966,
+   "mirai/scan": 97065,
+   "mirai/syn": 61820,
+   "mirai/udp": 158577,
+   "mirai/udpplain": 53754
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 28.534331999981077,
+  "epochs_run": 100,
+  "best_epoch": 99
+ },
+ "result": {
+  "thr": 0.16843361683538474,
+  "ws": 168,
+  "window": {
+   "tp": 540721,
+   "fp": 49,
+   "tn": 30616,
+   "fn": 183346,
+   "tpr": 0.7467831015638056,
+   "fpr": 0.0015979129300505463,
+   "precision": 0.9999093884645968,
+   "f1_attack": 0.8550050322689801,
+   "f1_benign": 0.25030761117946915,
+   "macro_f1": 0.5526563217242246,
+   "balanced_acc": 0.8725925943168775,
+   "mcc": 0.3264378105926113,
+   "f1_balanced": 0.8542567042001357,
+   "accuracy": 0.7570064605714346,
+   "recall_per_attack": {
+    "gafgyt/combo": 0.9950289541617247,
+    "gafgyt/junk": 0.943193626602009,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0,
+    "mirai/ack": 1.0,
+    "mirai/scan": 1.0,
+    "mirai/syn": 1.0,
+    "mirai/udp": 1.0,
+    "mirai/udpplain": 0.9980965532685167
+   },
+   "detect_delay_samples_mean": 203.625,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 542012,
+   "fp": 1244,
+   "tn": 29588,
+   "fn": 183725,
+   "tpr": 0.7468435535186989,
+   "fpr": 0.040347690710949666,
+   "precision": 0.9977101035239372,
+   "f1_attack": 0.8542395426925129,
+   "f1_benign": 0.24238055254049848,
+   "macro_f1": 0.5483100476165057,
+   "balanced_acc": 0.8532479314038746,
+   "mcc": 0.3104482218019479,
+   "f1_balanced": 0.8357735143679249,
+   "accuracy": 0.7555160203497632
+  },
+  "roc_auc": 0.8525217855878389,
+  "pr_auc": 0.9934667254604717,
+  "opt_fpr_at_ws": 0.0
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "exp": "E9_poison_1",
+ "device": "Ecobee_Thermostat",
+ "seed": 2024,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705128.2250583,
+ "wall_s": 12.558693170547485,
+ "score_time_s": 1.7793456999934278,
+ "data": {
+  "n_benign": 13111,
+  "n_train": 4370,
+  "n_opt": 3871,
+  "n_test_benign_before": 3870,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0,
+   "mirai/ack": 0,
+   "mirai/scan": 0,
+   "mirai/syn": 0,
+   "mirai/udp": 0,
+   "mirai/udpplain": 0
+  },
+  "poison_rows": 40,
+  "n_test": {
+   "benign": 3870,
+   "gafgyt/combo": 53008,
+   "gafgyt/junk": 30308,
+   "gafgyt/scan": 27490,
+   "gafgyt/tcp": 87873,
+   "gafgyt/udp": 99191,
+   "mirai/ack": 113281,
+   "mirai/scan": 43188,
+   "mirai/syn": 116803,
+   "mirai/udp": 151477,
+   "mirai/udpplain": 87364
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 9.29558510001516,
+  "epochs_run": 100,
+  "best_epoch": 100
+ },
+ "result": {
+  "thr": 0.23091166662146873,
+  "ws": 164,
+  "window": {
+   "tp": 621615,
+   "fp": 0,
+   "tn": 3707,
+   "fn": 186738,
+   "tpr": 0.7689895379864985,
+   "fpr": 0.0,
+   "precision": 1.0,
+   "f1_attack": 0.8694110637440838,
+   "f1_benign": 0.03818657546664469,
+   "macro_f1": 0.4537988196053643,
+   "balanced_acc": 0.8844947689932492,
+   "mcc": 0.12234513968879651,
+   "f1_balanced": 0.8694110637440838,
+   "accuracy": 0.770044085412408,
+   "recall_per_attack": {
+    "gafgyt/combo": 1.0,
+    "gafgyt/junk": 1.0,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0,
+    "mirai/ack": 1.0,
+    "mirai/scan": 1.0,
+    "mirai/syn": 1.0,
+    "mirai/udp": 1.0,
+    "mirai/udpplain": 1.0
+   },
+   "detect_delay_samples_mean": 164.0,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 623107,
+   "fp": 197,
+   "tn": 3673,
+   "fn": 186876,
+   "tpr": 0.7692840467022147,
+   "fpr": 0.05090439276485788,
+   "precision": 0.9996839423459499,
+   "f1_attack": 0.8694797343449009,
+   "f1_benign": 0.03778437292651438,
+   "macro_f1": 0.45363205363570763,
+   "balanced_acc": 0.8591898269686784,
+   "mcc": 0.11670626334735727,
+   "f1_balanced": 0.8452795655898693,
+   "accuracy": 0.770139079170317
+  },
+  "roc_auc": 0.9424101193612635,
+  "pr_auc": 0.9997075569342879,
+  "opt_fpr_at_ws": 0.0
+ }
+}

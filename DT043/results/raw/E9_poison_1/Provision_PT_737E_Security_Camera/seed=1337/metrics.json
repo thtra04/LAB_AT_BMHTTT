@@ -1,0 +1,113 @@
+{
+ "exp": "E9_poison_1",
+ "device": "Provision_PT_737E_Security_Camera",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705030.2922518,
+ "wall_s": 24.10906147956848,
+ "score_time_s": 1.8485133000067435,
+ "data": {
+  "n_benign": 55169,
+  "n_train": 18390,
+  "n_opt": 17889,
+  "n_test_benign_before": 17890,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0,
+   "mirai/ack": 0,
+   "mirai/scan": 0,
+   "mirai/syn": 0,
+   "mirai/udp": 0,
+   "mirai/udpplain": 0
+  },
+  "poison_rows": 180,
+  "n_test": {
+   "benign": 17890,
+   "gafgyt/combo": 61362,
+   "gafgyt/junk": 30880,
+   "gafgyt/scan": 29279,
+   "gafgyt/tcp": 96640,
+   "gafgyt/udp": 98406,
+   "mirai/ack": 60536,
+   "mirai/scan": 96763,
+   "mirai/syn": 65728,
+   "mirai/udp": 156230,
+   "mirai/udpplain": 56663
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 20.65712610000628,
+  "epochs_run": 100,
+  "best_epoch": 100
+ },
+ "result": {
+  "thr": 0.08354434416272537,
+  "ws": 72,
+  "window": {
+   "tp": 556873,
+   "fp": 68,
+   "tn": 17751,
+   "fn": 194904,
+   "tpr": 0.7407422679863842,
+   "fpr": 0.003816151299175038,
+   "precision": 0.9998779044818032,
+   "f1_attack": 0.8510206171230166,
+   "f1_benign": 0.15403906731344968,
+   "macro_f1": 0.5025298422182332,
+   "balanced_acc": 0.8684630583436046,
+   "mcc": 0.2478379083309697,
+   "f1_balanced": 0.8492031677445767,
+   "accuracy": 0.7466566874048202,
+   "recall_per_attack": {
+    "gafgyt/combo": 1.0,
+    "gafgyt/junk": 1.0,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0,
+    "mirai/ack": 1.0,
+    "mirai/scan": 1.0,
+    "mirai/syn": 1.0,
+    "mirai/udp": 1.0,
+    "mirai/udpplain": 1.0
+   },
+   "detect_delay_samples_mean": 72.0,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 557636,
+   "fp": 383,
+   "tn": 17507,
+   "fn": 194851,
+   "tpr": 0.741057320591585,
+   "fpr": 0.02140860816098379,
+   "precision": 0.9993136434422484,
+   "f1_attack": 0.8510239556324046,
+   "f1_benign": 0.15207081060421807,
+   "macro_f1": 0.5015473831183114,
+   "balanced_acc": 0.8598243562153006,
+   "mcc": 0.2425584547460589,
+   "f1_balanced": 0.8409323647079949,
+   "accuracy": 0.7465734309305704
+  },
+  "roc_auc": 0.9401384595043929,
+  "pr_auc": 0.9984791469317718,
+  "opt_fpr_at_ws": 0.0
+ }
+}

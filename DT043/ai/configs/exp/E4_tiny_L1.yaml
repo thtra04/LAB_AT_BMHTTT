@@ -1,0 +1,6 @@
+# V2 – AE siêu nhẹ 23-12-4-12-23 trên 23 đặc trưng của cửa sổ L1
+description: "V2 AE siêu nhẹ, cửa sổ L1"
+features: {window: "L1"}
+model: {kind: ae, hidden: [12, 4]}
+quantize: [fp32, int8]
+seeds: [42, 1337, 2024]   # V2 × 5 cửa sổ: 3 seed (mức tối thiểu) để giới hạn chi phí

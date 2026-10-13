@@ -1,0 +1,10 @@
+device,rows_dedup_attack,rows_dedup_benign,rows_raw_attack,rows_raw_benign,attack_to_benign_ratio
+Danmini_Doorbell,956144,40395,968750,49548,23.67
+Ecobee_Thermostat,810023,13111,822763,13113,61.78
+Ennio_Doorbell,303189,35410,316400,39100,8.56
+Philips_B120N10_Baby_Monitor,910795,165141,923437,175240,5.52
+Provision_PT_737E_Security_Camera,752667,55169,766106,62154,13.64
+Provision_PT_838_Security_Camera,726047,93995,738377,98514,7.72
+Samsung_SNH_1011_N_Webcam,309809,49559,323072,52150,6.25
+SimpleHome_XCS7_1002_WHT_Security_Camera,804263,42784,816471,46585,18.8
+SimpleHome_XCS7_1003_WHT_Security_Camera,818390,17936,831298,19528,45.63

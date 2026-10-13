@@ -9,6 +9,7 @@
 | Lớp | 11_ĐHCNPM_2 |
 | Học phần | Thực hành An toàn Bảo mật Hệ thống thông tin – Năm học 2026–2027 |
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
+| Link video YouTube | https://youtu.be/lk4EdLtkH1o |
 | Đề bài | [LAB5_pfSense_HuongDan_2026.docx](LAB5_pfSense_HuongDan_2026.docx) |
 | Báo cáo | [Lab5_11CNPM2_1150080120_HoangThanhTra.docx](Lab5_11CNPM2_1150080120_HoangThanhTra.docx) |
 
@@ -31,7 +32,9 @@
 ## 4. Phạm vi đã thực hiện
 
 - [x] Trả lời đầy đủ 6 câu hỏi phần D (NAT và firewall rule, lý do dùng DMZ, thứ tự rule, chặn ping nhưng cho web, logging, hardening pfSense) dựa trên mô hình và các tình huống trong đề.
-- [ ] Phần thực hành B và C (dựng pfSense + Domain Controller + DMZ-Web + LAN-Test, 5 tình huống firewall) chưa thực hiện trong lần nộp này; sẽ bổ sung ảnh minh chứng và video khi dựng xong mô hình 4 máy ảo (yêu cầu ~7 GB RAM đồng thời).
+- [x] Báo cáo đã có khung phần B (thực hành) và C (5 tình huống): bảng ánh xạ mạng VMware ↔ VirtualBox, bảng IP, bảng rule từng tình huống, phần giải thích kết quả và 18 vị trí dán ảnh minh chứng (đánh dấu vàng).
+- [x] Quay video quá trình thực hành trên VMware Workstation (pfSense CE 2.7.2 – ISO đã kiểm tra SHA-256 khớp đề): https://youtu.be/lk4EdLtkH1o – đã ghi link vào đầu báo cáo.
+- [ ] Dán ảnh minh chứng (các vị trí đánh dấu vàng) và đối chiếu kết quả thực tế vào báo cáo.
 
 ## 5. Tóm tắt câu trả lời
 

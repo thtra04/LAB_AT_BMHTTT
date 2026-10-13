@@ -1,0 +1,16 @@
+{
+  "device_models": "Danmini_Doorbell",
+  "e_cores": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "pinned_cpu_P1": 19,
+  "core_power_w_assumption": 3.9285714285714284,
+  "note": "energy_proxy_uJ = CPU-time/m\u1eabu \u00d7 55W/14 l\u00f5i"
+}

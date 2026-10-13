@@ -1,0 +1,53 @@
+# Cấu hình chung – mọi thí nghiệm kế thừa file này (configs/exp/*.yaml ghi đè từng khóa)
+paths:
+  raw: data/raw
+  processed: data/processed
+  results: results/raw
+  scores: results/scores
+  models: artifacts/models
+
+devices:
+  - Danmini_Doorbell
+  - Ecobee_Thermostat
+  - Ennio_Doorbell
+  - Philips_B120N10_Baby_Monitor
+  - Provision_PT_737E_Security_Camera
+  - Provision_PT_838_Security_Camera
+  - Samsung_SNH_1011_N_Webcam
+  - SimpleHome_XCS7_1002_WHT_Security_Camera
+  - SimpleHome_XCS7_1003_WHT_Security_Camera
+
+seeds: [42, 1337, 2024, 7, 123]
+
+split:
+  method: chronological      # chronological | random (chỉ dùng cho E6 – minh họa rò rỉ)
+  fractions: [0.3333333, 0.3333333, 0.3333334]   # DStrn | DSopt | DStst-benign (Meidan 2018)
+  purge_gap: 500             # số dòng bỏ ở mỗi ranh giới giữa các tập
+  drop_overlap: true         # xóa khỏi test các dòng trùng hash với DStrn/DSopt
+  scaler_fit_on: train       # train | all_benign (all_benign = rò rỉ, chỉ E6)
+
+features:
+  window: all                # all (115) | L5 | L3 | L1 | L0.1 | L0.01 (23 đặc trưng)
+
+normalization: per_device    # per_device | global
+
+model:
+  kind: ae                   # ae | iforest
+  hidden: meidan             # meidan = [75%, 50%, 33%, 25%] của đầu vào, hoặc danh sách cho encoder
+  activation: relu
+
+train:
+  optimizer: adam
+  lr: 0.001
+  batch_size: 256
+  max_epochs: 100
+  patience: 8
+
+threshold:
+  rule: mean_std             # mean_std | mean_3std | p99 | p99_9
+  max_ws: 1000
+
+quantize: []                 # danh sách: fp32, fp16, dyn, int8
+ablation_grid: true          # tính thêm metric cho các quy tắc ngưỡng/cửa sổ khác (E7)
+save_scores_seed: 42         # lưu điểm MSE từng mẫu test cho seed này (phân tích lỗi)
+threads: 2                   # số luồng TF mỗi process

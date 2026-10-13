@@ -1,0 +1,4 @@
+# V1 – AE nhẹ 115-32-8-32-115 (+ lượng tử hóa, có/không hiệu chỉnh ngưỡng)
+description: "V1 AE nhẹ + lượng tử hóa"
+model: {kind: ae, hidden: [32, 8]}
+quantize: [fp32, fp16, dyn, int8]

@@ -1,0 +1,6 @@
+# Đầu độc DStrn bằng 5% mẫu tấn công (lấy từ đầu mỗi segment tấn công, bỏ khỏi test)
+description: "E9 poisoning 5%"
+seeds: [42, 1337, 2024]
+model: {kind: ae, hidden: [32, 8]}
+ablation_grid: false
+poison_rate: 0.05

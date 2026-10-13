@@ -1,0 +1,98 @@
+{
+ "exp": "E9_poison_1",
+ "device": "Ennio_Doorbell",
+ "seed": 1337,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705019.4736137,
+ "wall_s": 7.230304002761841,
+ "score_time_s": 1.005724500020733,
+ "data": {
+  "n_benign": 35410,
+  "n_train": 11803,
+  "n_opt": 11304,
+  "n_test_benign_before": 11303,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0
+  },
+  "poison_rows": 120,
+  "n_test": {
+   "benign": 11303,
+   "gafgyt/combo": 52990,
+   "gafgyt/junk": 29773,
+   "gafgyt/scan": 28096,
+   "gafgyt/tcp": 93879,
+   "gafgyt/udp": 98331
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 5.529350199998589,
+  "epochs_run": 31,
+  "best_epoch": 23
+ },
+ "result": {
+  "thr": 21.422472420164166,
+  "ws": 2,
+  "window": {
+   "tp": 93919,
+   "fp": 0,
+   "tn": 11302,
+   "fn": 209145,
+   "tpr": 0.3098982393157881,
+   "fpr": 0.0,
+   "precision": 1.0,
+   "f1_attack": 0.47316383825000063,
+   "f1_benign": 0.09753655894955318,
+   "macro_f1": 0.2853501985997769,
+   "balanced_acc": 0.654949119657894,
+   "mcc": 0.12604775337143484,
+   "f1_balanced": 0.47316383825000063,
+   "accuracy": 0.3347085880788635,
+   "recall_per_attack": {
+    "gafgyt/combo": 0.932476551737153,
+    "gafgyt/junk": 0.7871154104527744,
+    "gafgyt/scan": 0.7495995728777363,
+    "gafgyt/tcp": 0.00010652122968107543,
+    "gafgyt/udp": 4.067934506254449e-05
+   },
+   "detect_delay_samples_mean": 24571.2,
+   "undetected_attacks": 0
+  },
+  "instance": {
+   "tp": 94124,
+   "fp": 1,
+   "tn": 11302,
+   "fn": 208945,
+   "tpr": 0.31056954026970757,
+   "fpr": 8.847208705653367e-05,
+   "precision": 0.9999893758300132,
+   "f1_attack": 0.4739447222264183,
+   "f1_benign": 0.0976203843662276,
+   "macro_f1": 0.28578255329632296,
+   "balanced_acc": 0.6552405340913255,
+   "mcc": 0.12621043113550165,
+   "f1_balanced": 0.47391392314652075,
+   "accuracy": 0.33535429363938263
+  },
+  "roc_auc": 0.8925843418490494,
+  "pr_auc": 0.9950529345654678,
+  "opt_fpr_at_ws": 0.0
+ }
+}

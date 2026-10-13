@@ -1,0 +1,113 @@
+{
+ "exp": "E9_poison_5",
+ "device": "Provision_PT_838_Security_Camera",
+ "seed": 42,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705472.986265,
+ "wall_s": 107.54025149345398,
+ "score_time_s": 5.407351200003177,
+ "data": {
+  "n_benign": 93995,
+  "n_train": 31332,
+  "n_opt": 30831,
+  "n_test_benign_before": 30832,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0,
+   "mirai/ack": 0,
+   "mirai/scan": 0,
+   "mirai/syn": 0,
+   "mirai/udp": 0,
+   "mirai/udpplain": 0
+  },
+  "poison_rows": 1570,
+  "n_test": {
+   "benign": 30832,
+   "gafgyt/combo": 57373,
+   "gafgyt/junk": 28911,
+   "gafgyt/scan": 28240,
+   "gafgyt/tcp": 82530,
+   "gafgyt/udp": 98871,
+   "mirai/ack": 57840,
+   "mirai/scan": 96939,
+   "mirai/syn": 61694,
+   "mirai/udp": 158451,
+   "mirai/udpplain": 53628
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 97.09766150001087,
+  "epochs_run": 100,
+  "best_epoch": 97
+ },
+ "result": {
+  "thr": 0.2435645948113752,
+  "ws": 40,
+  "window": {
+   "tp": 531362,
+   "fp": 10,
+   "tn": 30783,
+   "fn": 192725,
+   "tpr": 0.7338372322662885,
+   "fpr": 0.0003247491312960738,
+   "precision": 0.9999811807923639,
+   "f1_attack": 0.8464824418798225,
+   "f1_benign": 0.24209893000813995,
+   "macro_f1": 0.5442906859439812,
+   "balanced_acc": 0.8667562415674962,
+   "mcc": 0.3178213120098199,
+   "f1_balanced": 0.8463306659218526,
+   "accuracy": 0.7446812738448495,
+   "recall_per_attack": {
+    "gafgyt/combo": 0.9798897687236195,
+    "gafgyt/junk": 0.9102244389027432,
+    "gafgyt/scan": 0.9431935037764618,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0,
+    "mirai/ack": 0.9936852303593363,
+    "mirai/scan": 0.978782249742002,
+    "mirai/syn": 0.9924093747465736,
+    "mirai/udp": 0.9884162815948286,
+    "mirai/udpplain": 0.9751628132639161
+   },
+   "detect_delay_samples_mean": 612.5,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 532072,
+   "fp": 632,
+   "tn": 30200,
+   "fn": 192405,
+   "tpr": 0.7344222107810185,
+   "fpr": 0.020498183705241306,
+   "precision": 0.9988136000480567,
+   "f1_attack": 0.8464524996798393,
+   "f1_benign": 0.2383235281351973,
+   "macro_f1": 0.5423880139075183,
+   "balanced_acc": 0.8569620135378886,
+   "mcc": 0.30985229118035623,
+   "f1_balanced": 0.8369863534419922,
+   "accuracy": 0.7444264532793863
+  },
+  "roc_auc": 0.884927873472699,
+  "pr_auc": 0.9948385111480031,
+  "opt_fpr_at_ws": 0.0
+ }
+}

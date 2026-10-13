@@ -1,0 +1,24 @@
+{
+  "os": "Windows 10 (10.0.26200)",
+  "machine": "AMD64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-13650HX",
+  "physical_cores": 14,
+  "logical_cpus": 20,
+  "ram_gb": 23.7,
+  "python": "3.11.9",
+  "packages": {
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyarrow": "26.0.0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.17.1",
+    "psutil": "7.2.2",
+    "PyYAML": "6.0.3",
+    "matplotlib": "3.11.2",
+    "networkx": "3.6.1",
+    "pytest": "9.1.1"
+  },
+  "git_commit": "b03872d"
+}

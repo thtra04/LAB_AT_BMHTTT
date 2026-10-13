@@ -1,0 +1,5 @@
+# Đối chứng rò rỉ: chia ngẫu nhiên, không purge, không loại trùng, scaler fit trên toàn bộ benign
+description: "E6 minh họa rò rỉ dữ liệu (KHÔNG dùng để báo cáo hiệu năng)"
+seeds: [42, 1337, 2024]
+split: {method: random, purge_gap: 0, drop_overlap: false, scaler_fit_on: all_benign}
+model: {kind: ae, hidden: meidan}

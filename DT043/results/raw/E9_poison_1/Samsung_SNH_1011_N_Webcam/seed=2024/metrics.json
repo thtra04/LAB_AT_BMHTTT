@@ -1,0 +1,98 @@
+{
+ "exp": "E9_poison_1",
+ "device": "Samsung_SNH_1011_N_Webcam",
+ "seed": 2024,
+ "git": "b03872d",
+ "python": "3.11.9",
+ "started": 1791705225.0607073,
+ "wall_s": 47.92253494262695,
+ "score_time_s": 1.9591633999953046,
+ "data": {
+  "n_benign": 49559,
+  "n_train": 16520,
+  "n_opt": 16019,
+  "n_test_benign_before": 16020,
+  "overlap_removed": {
+   "benign": 0,
+   "gafgyt/combo": 0,
+   "gafgyt/junk": 0,
+   "gafgyt/scan": 0,
+   "gafgyt/tcp": 0,
+   "gafgyt/udp": 0
+  },
+  "poison_rows": 165,
+  "n_test": {
+   "benign": 16020,
+   "gafgyt/combo": 58636,
+   "gafgyt/junk": 28272,
+   "gafgyt/scan": 27665,
+   "gafgyt/tcp": 90421,
+   "gafgyt/udp": 104650
+  }
+ },
+ "model": {
+  "kind": "ae",
+  "dims": [
+   115,
+   32,
+   8,
+   32,
+   115
+  ],
+  "params": 8059,
+  "macs": 7872
+ },
+ "train": {
+  "train_time_s": 44.211891000013566,
+  "epochs_run": 100,
+  "best_epoch": 100
+ },
+ "result": {
+  "thr": 0.18066252514189293,
+  "ws": 248,
+  "window": {
+   "tp": 113379,
+   "fp": 194,
+   "tn": 15579,
+   "fn": 195030,
+   "tpr": 0.3676254584010194,
+   "fpr": 0.012299499144107018,
+   "precision": 0.9982918475341851,
+   "f1_attack": 0.5373641529733496,
+   "f1_benign": 0.13763461759327156,
+   "macro_f1": 0.3374993852833106,
+   "balanced_acc": 0.6776629796284562,
+   "mcc": 0.160240244341052,
+   "f1_balanced": 0.5328194933948026,
+   "accuracy": 0.3977950657346799,
+   "recall_per_attack": {
+    "gafgyt/combo": 0.9922416893592971,
+    "gafgyt/junk": 1.0,
+    "gafgyt/scan": 1.0,
+    "gafgyt/tcp": 0.0,
+    "gafgyt/udp": 0.0
+   },
+   "detect_delay_samples_mean": 248.0,
+   "undetected_attacks": 2
+  },
+  "instance": {
+   "tp": 114307,
+   "fp": 430,
+   "tn": 15590,
+   "fn": 195337,
+   "tpr": 0.3691561922724161,
+   "fpr": 0.026841448189762796,
+   "precision": 0.9962522987353687,
+   "f1_attack": 0.5386998946701196,
+   "f1_benign": 0.13738890577976356,
+   "macro_f1": 0.3380444002249416,
+   "balanced_acc": 0.6711573720413266,
+   "mcc": 0.1549781108821493,
+   "f1_balanced": 0.5288779602094428,
+   "accuracy": 0.3988681585929056
+  },
+  "roc_auc": 0.9750661447850766,
+  "pr_auc": 0.9983953623124866,
+  "opt_fpr_at_ws": 0.0
+ }
+}

@@ -1,0 +1,23 @@
+ period    policy  asp_mean  asp_std  attack_cost_mean_mean  mtd_moves_per_run_mean
+      5  combined     0.000    0.000                 35.725                   8.000
+      5 diversity     0.203    0.012                 28.493                   3.814
+      5      none     0.498    0.014                 29.387                   0.000
+      5   shuffle     0.000    0.000                 34.803                   4.000
+     10  combined     0.000    0.000                 29.659                   4.000
+     10 diversity     0.358    0.006                 29.019                   1.668
+     10      none     0.498    0.014                 29.387                   0.000
+     10   shuffle     0.000    0.000                 29.250                   2.000
+     20  combined     0.327    0.015                 27.399                   1.673
+     20 diversity     0.437    0.013                 29.387                   0.590
+     20      none     0.498    0.014                 29.387                   0.000
+     20   shuffle     0.409    0.013                 27.930                   0.591
+policy  period  exposure_mean  exposure_p95  moves_per_10k  wasted_moves_per_10k_benign
+ event       0       11835.24      47166.60          15.29                         0.30
+hybrid     100          41.56         84.19         175.40                         0.68
+hybrid     500         135.00        303.36          35.27                         0.34
+hybrid    2000         262.92        916.02           8.88                         0.23
+hybrid   10000         775.60       4129.78           1.83                         0.22
+  time     100          50.14         94.01         100.00                         0.00
+  time     500         250.76        474.35          20.00                         0.00
+  time    2000        1007.76       1890.65           5.00                         0.00
+  time   10000        4936.36       9452.54           1.00                         0.00

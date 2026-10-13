@@ -1,0 +1,14 @@
+{
+  "dataset": "detection_of_IoT_botnet_attacks_N_BaIoT",
+  "source_page": "https://archive.ics.uci.edu/dataset/442/detection+of+iot+botnet+attacks+n+baiot",
+  "url": "https://archive.ics.uci.edu/static/public/442/detection+of+iot+botnet+attacks+n+baiot.zip",
+  "doi": "10.24432/C5RC8J",
+  "license": "CC BY 4.0",
+  "uci_donated": "2018-03-18",
+  "citation": "Meidan Y. et al. (2018) N-BaIoT: Network-based Detection of IoT Botnet Attacks Using Deep Autoencoders. IEEE Pervasive Computing 17(3):12-22.",
+  "downloaded_at_utc": "2026-10-11T04:41:52.241024+00:00",
+  "zip_bytes": 1772922927,
+  "zip_sha256": "64929678b081d8e579a8d7c488cf11cc588403f282d5fb065b4156edbd55de9b",
+  "extractor": "unrar.EXE",
+  "n_files": 107
+}
