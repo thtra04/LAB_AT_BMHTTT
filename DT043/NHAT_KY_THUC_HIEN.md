@@ -172,7 +172,15 @@ Phát hiện chính: (1) suy giảm hoàn toàn do gafgyt tcp/udp (recall 0.42�
 - **Word:** `report/build_report.py` (python-docx, Times New Roman 13, A4) → `report/finalize_word.ps1` (Microsoft Word cập nhật mục lục, xuất PDF). **27 trang, 26 bảng, 12 hình**; mọi số liệu đọc tự động từ `results/tables`. Đã render từng trang kiểm tra; sửa: danh sách đánh số không bắt đầu lại từ 1, sơ đồ ASCII bị xuống dòng, ký tự `*` thừa, legend che dữ liệu trong hình lượng tử hóa, nhãn trục bị cắt.
 - **PowerPoint:** `report/export_deck_data.py` → `report/deck_data.json` → `report/build_deck.js` (pptxgenjs, theme riêng, layout có placeholder, chart gốc PowerPoint, ghi chú thuyết trình từng slide) → `report/export_pptx_pdf.ps1`. **17 slide**, `validate.py`: All validations PASSED. Đã render kiểm tra; sửa: nhãn "500 dòng đệm" chồng chữ, slide kết luận dồn nội dung, thẻ quá cao; thêm slide demo.
 
+## Bước 14 – Tái lập paper chính bằng toàn văn: E11 3-layer THARM (20/10/2026)
+
+- Có toàn văn PDF Open Access của Masud et al. (2025) (`docs/Vulnerability defence using hybrid moving target defence in Internet of.pdf`, 17 trang). Cập nhật `docs/phieu_tai_lap_paper.md`: hết mục "cần đối chiếu toàn văn"; thêm 2 hạn chế phát hiện khi tái lập (công thức bản in mâu thuẫn; topology Definition 2 và Hình 3 không thống nhất).
+- `ai/src/nbaiot/mtd/tharm.py`: dựng lại 3-layer THARM bằng **đúng dữ liệu của paper** – 18 CVE OS (Bảng 1), 14 CVE dịch vụ (Bảng 2), VM→OS (Hình 1), VM→dịch vụ (Hình 3), đồ thị VM (Definition 2), shuffle V5 host 2 → 4 (mục 4.2), diversity đổi OS dự phòng (mục 4.3), redundancy nhân bản V5 (mục 4.4).
+- Phát hiện: Eq. 2 phải hiểu là **tổng** R = Σ E·I (bản in ghi tích) – khớp mọi rủi ro mức VM paper dùng (R_V4 12.47, R_V5 12.58, R_V5 Linux 8.9, R_V7 8.67, R_V8 5.62); ba đường tấn công ví dụ lệch −0.8% (do R_V2 paper 16.28 ≠ 15.94 từ Bảng 1–2). AC Bảng 4 khớp V1, V8; ASP Bảng 4 và tổng toàn mạng (R_s 167.38, R_d 163.73, R_r 260.84) **không** tái lập được từ dữ liệu công bố.
+- Xu hướng định tính: **6/7 kết luận** của paper tái lập được với topology Hình 3 (gồm "shuffle + diversity rủi ro thấp nhất"), chỉ 3/7 với Definition 2 → kết luận nhạy với cạnh V6 → V4.
+- `ai/scripts/10_tharm_paper_replication.py` → `results/tables/tharm_*.csv`, `results/figures/fig_tharm_scenarios.png`, `results/tharm_replication.log`; `ai/tests/test_tharm.py` 12 test → tổng **54 passed**. Tổng hợp: `docs/tai_lap_paper_chinh.md`.
+- Báo cáo Word thêm mục **6.8 E11** (3 bảng, 1 hình), cập nhật phiếu tái lập Chương 2 và bảng ánh xạ Chương 8 → **29 trang**.
+
 ## Việc sinh viên tự làm trước khi nộp
 - Quay video demo ngắn (dashboard + slide).
-- Đối chiếu toàn văn paper chính cho các mục "cần đối chiếu" trong `docs/phieu_tai_lap_paper.md`.
 - Commit/push `DT043/` (dữ liệu thô, `.venv`, `node_modules`, `results/scores` đã nằm trong `.gitignore`).

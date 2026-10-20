@@ -89,28 +89,34 @@ def ch2_background(R: Report, root):
     R.para("**Nhận xét quan trọng:** paper chính **không** dùng autoencoder, N-BaIoT, lượng tử hóa hay đo edge, tức là lệch "
            "với tên đề tài. Vì vậy đề tài chia làm hai track: Track A (lõi, ~70%) làm phần phát hiện botnet bằng AE nhẹ, lấy "
            "Meidan 2018 làm baseline kỹ thuật; Track B (~30%) tái lập **có chọn lọc xu hướng** của paper chính bằng mô hình "
-           "đồ thị tấn công rút gọn, rồi nối hai track bằng biến thể MTD lai kích hoạt bởi cảnh báo của AE.")
+           "đồ thị tấn công rút gọn, rồi nối hai track bằng biến thể MTD lai kích hoạt bởi cảnh báo của AE. Sau khi có toàn văn, "
+           "Track B được bổ sung thí nghiệm **E11 tái lập 3-layer THARM bằng đúng số liệu của paper** (mục 6.8).")
     R.table(pd.DataFrame([
         ["Bài toán", "Hiệu quả MTD kết hợp trong IoT; chi phí tài nguyên của MTD"],
-        ["Pipeline", "3-layer THARM: trạng thái mạng theo thời gian → đồ thị tiếp cận → cây lỗ hổng → metric"],
-        ["Kỹ thuật", "Shuffle, diversity và tổ hợp (cần đối chiếu toàn văn về redundancy, chu kỳ)"],
-        ["Metric", "Xác suất tấn công thành công, attack risk, attack cost, đường tấn công"],
-        ["Kết quả mục tiêu", "Kết hợp shuffle + diversity tốt hơn dùng riêng"],
+        ["Pipeline", "3-layer THARM (N, U, S, L, C): đồ thị VM, đồ thị dịch vụ, cây lỗ hổng OR của từng VM → metric"],
+        ["Kịch bản", "Không dùng dataset; 4 host, 8 VM (Linux/Windows 11/FreeBSD), 14 dịch vụ, V8 là CSDL đích; "
+                     "18 CVE hệ điều hành (Bảng 1) + 14 CVE dịch vụ (Bảng 2) kèm CVSS, impact, exploitability, cost"],
+        ["Kỹ thuật", "Shuffle (VM live migration, IP shuffling qua SDN), diversity (đổi OS), redundancy (nhân bản VM); "
+                     "time-based, chu kỳ 10 phút"],
+        ["Metric", "ASP, attack risk, attack cost, return on attack, độ trung tâm, IPV, PSV"],
+        ["Kết quả mục tiêu", "Ví dụ V5: R_s = 167.38, R_d = 163.73, R_r = 260.84; shuffle + diversity tốt nhất"],
         ["Liên hệ DT043", "Detector AE đóng vai trò bộ kích hoạt event-based của MTD lai"],
     ], columns=["Mục", "Nội dung"]), "Phiếu tái lập rút gọn – paper chính", col_widths_cm=[3.5, 12.5])
     R.h3("Hạn chế và điểm cần tái lập (≥ 5)")
     R.numbered([
-        "Đánh giá bằng mô hình đồ thị tấn công (mô phỏng), không triển khai trên thiết bị thật.",
-        "Xác suất khai thác thường gán tĩnh theo CVSS, không phản ánh kẻ tấn công thích nghi.",
-        "Không mô hình hóa bộ phát hiện kích hoạt MTD và sai số của nó (FP gây move vô ích, FN/độ trễ gây lộ diện) – "
-        "khoảng trống Track B khai thác.",
-        "Chi phí tài nguyên của MTD được nêu là vấn đề nhưng chưa có số đo trên thiết bị edge cụ thể.",
-        "Khả năng mở rộng khi số node/lỗ hổng tăng (bùng nổ số đường tấn công).",
-        "Sự sẵn có của mã nguồn/cấu hình topology quyết định khả năng tái lập số liệu tuyệt đối; DT043 chỉ tái lập xu hướng.",
-        "Độ nhạy của kết quả theo chu kỳ MTD.",
+        "Chỉ đánh giá bằng mô hình đồ thị (mô phỏng), không triển khai thiết bị thật; tác giả tự nêu chưa đo QoS.",
+        "Xác suất khai thác gán tĩnh theo CVSS, không mô hình kẻ tấn công thích nghi (mục 6 tự nêu \"fixed vulnerability\").",
+        "Chỉ xét MTD time-based dù có nêu hybrid; không mô hình hóa bộ phát hiện kích hoạt MTD và sai số của nó (FP gây "
+        "move vô ích, FN gây lộ diện) – khoảng trống Track B khai thác.",
+        "Chi phí tài nguyên của MTD được nêu là vấn đề nhưng không đo trên thiết bị.",
+        "Công thức bản in mâu thuẫn: Eq. 1 \"1 − (∏ + ∏)\" có thể âm, Eq. 2–3 ghi tích nhưng số trong bài là tổng; danh sách "
+        "cạnh sau shuffle bị cắt bằng \"…\".",
+        "Không công bố mã nguồn và dữ liệu (\"No data was used\"); Bảng 4 không nêu đủ cách tính để tái lập.",
+        "Topology không nhất quán: Definition 2 thiếu cạnh V6 → V4 có trong Hình 3, và kết luận \"S+D tốt nhất\" phụ thuộc "
+        "vào cạnh này (phát hiện khi tái lập E11).",
     ])
-    R.para("Các mục 2, 4, 5, 6, 7 được đánh dấu cần đối chiếu với toàn văn (xem docs/phieu_tai_lap_paper.md), vì khi lập "
-           "phiếu chỉ truy cập được metadata và abstract chính thức.", italic=True, size=11)
+    R.para("Phiếu đã đối chiếu với toàn văn PDF Open Access (docs/phieu_tai_lap_paper.md); mục 5 và 7 là phát hiện "
+           "trong quá trình tái lập E11.", italic=True, size=11)
 
     R.h2("2.2 Paper tham chiếu kỹ thuật: N-BaIoT (Meidan et al., 2018)")
     R.para("Meidan và cộng sự lây nhiễm Mirai và BASHLITE vào 9 thiết bị IoT thương mại, trích 115 đặc trưng thống kê cho "

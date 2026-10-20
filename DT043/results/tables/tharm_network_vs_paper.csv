@@ -1,0 +1,10 @@
+MTD,chỉ số,ours,paper
+shuffle,R,173.632,167.38
+shuffle,AC,113.94,666.2
+shuffle,RoC,6.11598181382411,1.01
+diversity,R,142.263,163.73
+diversity,AC,101.99,624.73
+diversity,RoC,5.567002609980811,1.04
+redundancy,R,217.57600000000002,260.84
+redundancy,AC,150.99,878.3
+redundancy,RoC,8.597435906643216,1.46

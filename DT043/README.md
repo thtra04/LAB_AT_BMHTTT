@@ -9,8 +9,11 @@
 | Dữ liệu | N-BaIoT – UCI, DOI 10.24432/C5RC8J, CC BY 4.0 |
 | Paper chính | Masud et al. (2025), *Vulnerability defence using hybrid moving target defence in IoT systems*, Computers & Security 153, 104380 |
 | Paper tham chiếu kỹ thuật | Meidan et al. (2018), *N-BaIoT*, IEEE Pervasive Computing (arXiv:1805.03409) |
-| Báo cáo (27 trang) | [report/BaoCao_DT043_1150080120_HoangThanhTra.docx](report/BaoCao_DT043_1150080120_HoangThanhTra.docx) · [PDF](report/BaoCao_DT043_1150080120_HoangThanhTra.pdf) |
+| Báo cáo (29 trang) | [report/BaoCao_DT043_1150080120_HoangThanhTra.docx](report/BaoCao_DT043_1150080120_HoangThanhTra.docx) · [PDF](report/BaoCao_DT043_1150080120_HoangThanhTra.pdf) |
 | Slide thuyết trình (17 slide, có ghi chú) | [report/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx](report/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) · [PDF](report/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pdf) |
+| Kịch bản thuyết trình 5 phút (có demo) | [KICH_BAN_THUYET_TRINH_5P.md](KICH_BAN_THUYET_TRINH_5P.md) |
+| Câu hỏi phòng hờ khi bảo vệ | [HOI_DAP_BAO_VE.md](HOI_DAP_BAO_VE.md) |
+| Notebook trình bày (đã chạy, có output) | [DT043_walkthrough.ipynb](DT043_walkthrough.ipynb) – dataset/manifest → EDA → chia chống rò rỉ → huấn luyện V1 → int8 → edge → kết quả 468 lần chạy → MTD → demo API; cần `pip install ipykernel` trong `.venv` để chạy lại |
 | Kế hoạch / nhật ký | [KE_HOACH.md](KE_HOACH.md) · [NHAT_KY_THUC_HIEN.md](NHAT_KY_THUC_HIEN.md) |
 
 ## 1. Kiến trúc 4 tầng
@@ -59,6 +62,7 @@ $env:PYTHONIOENCODING = "utf-8"
 | 7. Mô phỏng MTD | `.venv\Scripts\python ai/scripts/07_mtd_sim.py` | ~2 phút |
 | 8. Tổng hợp bảng/hình/kiểm định | `.venv\Scripts\python ai/scripts/06_aggregate.py` | ~1 phút |
 | 8b. Phân tích hậu kiểm ngưỡng | `.venv\Scripts\python ai/scripts/09_posthoc_threshold.py` | ~1 phút |
+| 8c. Tái lập paper chính (E11, THARM) | `.venv\Scripts\python ai/scripts/10_tharm_paper_replication.py` | vài giây |
 | 9. Xuất gói triển khai AI → BE | `.venv\Scripts\python ai/scripts/08_export_deploy.py` | vài giây |
 | 10. Sinh báo cáo Word | `.venv\Scripts\python report/build_report.py` rồi `report/finalize_word.ps1` (cập nhật mục lục, xuất PDF) | ~1 phút |
 | 11. Sinh slide PowerPoint | `.venv\Scripts\python report/export_deck_data.py`, rồi trong `report/`: `npm install` (lần đầu) và `node build_deck.js` | ~1 phút |
@@ -101,13 +105,14 @@ Mẹo demo/quay video: mở `http://127.0.0.1:8000/?replay=Danmini_Doorbell:mira
 - Edge (V1 int8, 1 luồng ghim 1 E-core): **p95 = 10.8 µs/mẫu, ~103.000 mẫu/s, RAM +4.6 MB** → đạt tiêu chí RQ5. Chạy 20 luồng với batch 1 chậm hơn ~50 lần.
 - Tiêu chí chốt trước: RQ5 **đạt**; RQ1–RQ4 **không đạt** (giải thích đầy đủ trong báo cáo, không chỉnh tiêu chí).
 - MTD (HARM rút gọn, chu kỳ 20 bước): ASP không MTD 0.498 → shuffle 0.409, diversity 0.437, **kết hợp 0.327** (khớp xu hướng paper chính). MTD lai kích hoạt bởi AE có thời gian lộ diện thấp hơn time-based ở cùng chi phí.
+- **Tái lập paper chính bằng toàn văn (E11, 3-layer THARM với đúng CVE/topology của paper):** rủi ro mức VM khớp ±0.01, ba đường tấn công ví dụ lệch −0.8%; tổng toàn mạng không tái lập được số tuyệt đối; **6/7 kết luận định tính** tái lập được với topology Hình 3 (gồm "shuffle + diversity tốt nhất"). Chạy: `.venv\Scripts\python ai/scripts/10_tharm_paper_replication.py`; chi tiết [docs/tai_lap_paper_chinh.md](docs/tai_lap_paper_chinh.md).
 
 Chi tiết: `results/tables/` (CSV), `results/figures/` (PNG), Chương 6–8 của báo cáo, và [NHAT_KY_THUC_HIEN.md](NHAT_KY_THUC_HIEN.md).
 
 ## 5. Phần sinh viên tự làm trước khi nộp
 
 - [ ] Quay **video demo ngắn** (dashboard + slide): công cụ không quay video thay được.
-- [ ] Đối chiếu toàn văn PDF paper chính với các mục đánh dấu "cần đối chiếu toàn văn" trong [docs/phieu_tai_lap_paper.md](docs/phieu_tai_lap_paper.md).
+- [x] Đối chiếu toàn văn PDF paper chính: [docs/phieu_tai_lap_paper.md](docs/phieu_tai_lap_paper.md) và tái lập E11 [docs/tai_lap_paper_chinh.md](docs/tai_lap_paper_chinh.md).
 - [ ] Commit và push thư mục `DT043/` lên GitHub.
 
 ## 6. An toàn và đạo đức

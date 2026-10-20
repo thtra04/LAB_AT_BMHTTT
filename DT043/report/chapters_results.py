@@ -37,6 +37,11 @@ class Results:
         self.nz = pd.read_csv(T / "robust_noise.csv")
         self.harm = pd.read_csv(T / "mtd_harm_policies.csv")
         self.hyb = pd.read_csv(T / "mtd_hybrid_policy.csv")
+        self.th_vm = pd.read_csv(T / "tharm_vm_vs_paper.csv")
+        self.th_paths = pd.read_csv(T / "tharm_paths_vs_paper.csv")
+        self.th_net = pd.read_csv(T / "tharm_network_vs_paper.csv")
+        self.th_scen = pd.read_csv(T / "tharm_scenarios.csv")
+        self.th_trend = pd.read_csv(T / "tharm_trends.csv")
 
     def s(self, exp, key):
         return self.summ.loc[exp, f"{key}_mean"], self.summ.loc[exp, f"{key}_std"], self.summ.loc[exp, f"{key}_ci95"]
@@ -209,7 +214,46 @@ def ch6_results(R: Report, X: Results):
            "rất thấp nhờ FPR mức cửa sổ thấp.")
     R.figure(X.F / "fig_mtd_hybrid_tradeoff.png", "Trade-off an ninh (thời gian lộ diện) và chi phí (số move) của MTD", 12)
 
-    R.h2("6.8 Bảng đối chiếu tiêu chí đã chốt trước")
+    R.page_break()
+    R.h2("6.8 E11 – Tái lập 3-layer THARM bằng đúng số liệu của paper chính")
+    R.para("Sau khi có toàn văn, mô hình 3-layer THARM được dựng lại bằng **dữ liệu của chính paper**: 18 CVE hệ điều hành "
+           "(Bảng 1) và 14 CVE dịch vụ (Bảng 2) với exploitability E, impact I, cost; gán OS cho 8 VM theo Hình 1, dịch vụ "
+           "theo Hình 3, đồ thị tấn công theo Definition 2; shuffle (V5 di trú host 2 → host 4), diversity (đổi OS dự phòng) "
+           "và redundancy (nhân bản V5) theo mục 4.2–4.4 (ai/src/nbaiot/mtd/tharm.py, 12 test so khớp số của paper).")
+    vm = X.th_vm
+    keep = vm[vm["R_paper(mục 4.2–4.3)"].notna()]
+    rows = [[r.VM, f"{r['R_paper(mục 4.2–4.3)']:.2f}", f"{r['R_ours(ΣE·I)']:.3f}"] for _, r in keep.iterrows()]
+    rows += [[p["đường (ví dụ của paper)"], f"{p.R_paper:.2f}", f"{p.R_ours:.2f} ({p['lệch %']:+.1f}%)"]
+             for _, p in X.th_paths.iterrows()]
+    R.table(pd.DataFrame(rows, columns=["Rủi ro (VM / đường tấn công)", "Paper", "Tái lập"]),
+            "Rủi ro mức VM và mức đường tấn công so với số paper công bố", font=9, col_widths_cm=[7.5, 3.0, 5.5])
+    R.para("Rủi ro mức VM khớp tới ±0.01 khi diễn giải Eq. 2 là **tổng** R = Σ E·I (bản in ghi tích); chỉ R_V2 lệch "
+           "(paper 16.28, Bảng 1–2 cho 15.94) và chính sai khác này tạo ra mức lệch −0.8% ở cả ba đường tấn công ví dụ. "
+           "Attack cost từng VM khớp Bảng 4 ở V1 (8.17) và V8 (6.27); ASP của Bảng 4 không tái lập được vì Eq. 1 bản in có thể "
+           "âm và paper không công bố mã nguồn.")
+    net = X.th_net.pivot(index="MTD", columns="chỉ số", values=["paper", "ours"])
+    R.table(pd.DataFrame([[m, f"{net.loc[m, ('paper', 'R')]:.2f}", f"{net.loc[m, ('ours', 'R')]:.2f}",
+                           f"{net.loc[m, ('paper', 'AC')]:.1f}", f"{net.loc[m, ('ours', 'AC')]:.1f}"]
+                          for m in ("shuffle", "diversity", "redundancy")],
+                         columns=["MTD trên V5", "R paper", "R tái lập", "AC paper", "AC tái lập"]),
+            "Tổng toàn mạng: không tái lập được số tuyệt đối", font=9)
+    tr = X.th_trend.pivot(index="kết luận của paper", columns="topology", values="tái lập")
+    tr = tr.loc[X.th_trend["kết luận của paper"].drop_duplicates()]
+    R.table(pd.DataFrame({"Kết luận của paper": tr.index,
+                          "Definition 2": tr["Definition 2"].map({True: "Tái lập", False: "Không"}).values,
+                          "Hình 3 (+V6→V4)": tr["Hình 3 (+V6→V4)"].map({True: "Tái lập", False: "Không"}).values}),
+            "Xu hướng định tính của paper trên hai topology", font=9, col_widths_cm=[9.5, 3.2, 3.3])
+    n_fig3 = int(X.th_trend[X.th_trend.topology != "Definition 2"]["tái lập"].sum())
+    n_def2 = int(X.th_trend[X.th_trend.topology == "Definition 2"]["tái lập"].sum())
+    R.para(f"Tổng toàn mạng của paper không suy ra được từ dữ liệu công bố (danh sách cạnh sau shuffle bị cắt; AC theo VM "
+           f"ở mục 4.2 lớn gấp 5–8 lần tổng cost của Bảng 1–2; RoC toàn mạng không bằng R/AC của chính paper), nên chỉ so "
+           f"xu hướng. Với topology vẽ trong Hình 3, **{n_fig3}/7 kết luận định tính** tái lập được, gồm kết luận chính "
+           f"\"shuffle + diversity có rủi ro thấp nhất\"; với đúng danh sách cạnh của Definition 2 chỉ còn {n_def2}/7 – kết "
+           "luận của paper nhạy với một cạnh (V6 → V4) mà định nghĩa và hình vẽ ghi không thống nhất. Chi tiết: "
+           "docs/tai_lap_paper_chinh.md.")
+    R.figure(X.F / "fig_tharm_scenarios.png", "Tái lập 3-layer THARM: rủi ro, chi phí và ASP theo kịch bản MTD", 15.5)
+
+    R.h2("6.9 Bảng đối chiếu tiêu chí đã chốt trước")
     R.table(pd.DataFrame({"RQ": X.crit.RQ, "Tiêu chí": X.crit.criterion, "Giá trị đo": X.crit.value,
                           "Kết luận": X.crit["pass"].map({True: "Đạt", False: "Không đạt"})}),
             "Kết quả so với tiêu chí thành công (docs/tieu_chi_thanh_cong.md)", font=9,
@@ -351,10 +395,15 @@ def ch8_conclusion(R: Report, X: Results):
         "Ánh xạ với Meidan 2018", font=9, col_widths_cm=[3.0, 3.0, 3.6, 3.4, 3.0])
     h20 = X.harm[X.harm.period == 20].set_index("policy")
     R.table(pd.DataFrame([
-        ["Xếp hạng chiến lược", "Kết hợp shuffle + diversity tốt nhất",
+        ["Xếp hạng chiến lược (HARM rút gọn)", "Kết hợp shuffle + diversity tốt nhất",
          f"Kết hợp {h20.loc['combined', 'asp_mean']:.3f} < shuffle {h20.loc['shuffle', 'asp_mean']:.3f} < diversity "
          f"{h20.loc['diversity', 'asp_mean']:.3f} < không MTD {h20.loc['none', 'asp_mean']:.3f}", "Khớp xu hướng"],
-        ["Số liệu tuyệt đối", "Theo topology/CVE của paper", "Topology và xác suất giả định", "Không so được"],
+        ["Rủi ro mức VM / đường (E11)", "R_V4 12.47, R_V5 12.58, R_V7 8.67, R_V8 5.62; đường 43.15 / 43.31",
+         "Khớp ±0.01 mức VM; −0.8% mức đường", "Tái lập được"],
+        ["Tổng toàn mạng (E11)", "R_s 167.38, R_d 163.73, R_r 260.84", "173.6 / 142.3 / 217.6",
+         "Không tái lập số tuyệt đối"],
+        ["Kết luận định tính (E11)", "S+D tốt nhất; D < R", "6/7 với topology Hình 3; 3/7 với Definition 2",
+         "Khớp với Hình 3"],
         ["Bộ kích hoạt MTD", "Không mô hình hóa detector", "AE V1 thật làm trigger event-based", "Mở rộng của DT043"],
     ], columns=["Khía cạnh", "Paper chính (Masud 2025)", "DT043", "Nhận xét"]), "Ánh xạ với paper chính", font=9,
         col_widths_cm=[3.0, 4.2, 5.8, 3.0])

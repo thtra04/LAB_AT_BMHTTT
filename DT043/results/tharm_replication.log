@@ -1,0 +1,73 @@
+== Chỉ số VM so với paper
+VM         OS dịch vụ  ASP_ours  ASP_paper  AC_ours  AC_paper  AR_ours(ASP_paper×ΣBS)  AR_paper  R_ours(ΣE·I)  R_paper(mục 4.2–4.3)
+V1      Linux   s1,s2    0.9885     0.9750     8.17      8.17                 47.1900     47.19        10.493                   NaN
+V2 Windows 11   s3,s4    0.9942     0.9860     4.84      6.54                 36.6792     36.68        15.941                 16.28
+V3    FreeBSD   s5,s6    0.9999     0.9900     7.24      8.64                 46.4310     51.07        19.220                   NaN
+V4      Linux   s7,s8    0.9927     0.9800     8.57      9.97                 45.0800     47.64        12.473                 12.47
+V5 Windows 11  s9,s10    0.9603     0.9745     7.44      7.34                 42.3908     40.70        12.578                 12.58
+V6    FreeBSD s11,s12    0.9998     0.9900     6.84      8.84                 48.6090     52.12        17.255                   NaN
+V7      Linux s13,s14    0.9861     0.9700     8.37      8.57                 39.8670     47.57         8.667                  8.67
+V8      Linux       –    0.9626     0.9500     6.27      6.27                 33.6300     33.73         5.625                  5.62
+
+R_V5 sau diversity (Linux): ours 8.934 – paper 8.9
+
+== Rủi ro đường tấn công
+       đường (ví dụ của paper)  R_ours  R_paper  lệch %
+         shuffle A-V2-V7-V5-V8  42.811    43.15  -0.786
+diversity A-V2-V4-V5(Linux)-V8  42.973    43.31  -0.778
+     redundancy A-V2-V4-V5'-V8  42.973    43.31  -0.778
+
+== Kịch bản MTD
+       topology   MTD  n_paths       R     AC    RoC  ASP_mean_path  ASP_max_path  AC_min_path
+   Definition 2  none        4 149.551  98.53  6.047          0.927         0.944        19.48
+   Definition 2     S        4 173.632 113.94  6.116          0.922         0.944        19.48
+   Definition 2     D        4 142.263 101.99  5.567          0.938         0.944        19.48
+   Definition 2     R        6 217.576 150.99  8.597          0.930         0.944        19.48
+   Definition 2   S+D        4 166.344 117.40  5.733          0.933         0.944        19.48
+   Definition 2 S+D+R        6 276.008 185.01  8.993          0.936         0.944        19.48
+Hình 3 (+V6→V4)  none        5 213.423 132.49  7.928          0.924         0.944        19.48
+Hình 3 (+V6→V4)     S        4 173.632 113.94  6.116          0.922         0.944        19.48
+Hình 3 (+V6→V4)     D        5 202.491 137.68  7.255          0.937         0.944        19.48
+Hình 3 (+V6→V4)     R        8 341.676 220.64 12.166          0.928         0.944        19.48
+Hình 3 (+V6→V4)   S+D        4 166.344 117.40  5.733          0.933         0.944        19.48
+Hình 3 (+V6→V4) S+D+R        6 276.008 185.01  8.993          0.936         0.944        19.48
+
+== Tổng toàn mạng
+       MTD chỉ số    ours  paper
+   shuffle      R 173.632 167.38
+   shuffle     AC 113.940 666.20
+   shuffle    RoC   6.116   1.01
+ diversity      R 142.263 163.73
+ diversity     AC 101.990 624.73
+ diversity    RoC   5.567   1.04
+redundancy      R 217.576 260.84
+redundancy     AC 150.990 878.30
+redundancy    RoC   8.597   1.46
+
+== Xu hướng định tính
+[KHÔNG] Definition 2: Shuffle làm giảm rủi ro mạng so với không MTD
+[ĐÚNG] Definition 2: Diversity làm giảm rủi ro mạng so với không MTD
+[ĐÚNG] Definition 2: Redundancy làm tăng rủi ro (thêm VM, thêm lỗ hổng)
+[ĐÚNG] Definition 2: Rủi ro diversity < redundancy (paper: 163.73 < 260.84)
+[KHÔNG] Definition 2: S+D có rủi ro mạng thấp nhất trong các phương án
+[KHÔNG] Definition 2: S+D có ASP trung bình các đường thấp hơn S và D riêng
+[KHÔNG] Definition 2: S+D+R giảm rủi ro so với chỉ R
+[ĐÚNG] Hình 3 (+V6→V4): Shuffle làm giảm rủi ro mạng so với không MTD
+[ĐÚNG] Hình 3 (+V6→V4): Diversity làm giảm rủi ro mạng so với không MTD
+[ĐÚNG] Hình 3 (+V6→V4): Redundancy làm tăng rủi ro (thêm VM, thêm lỗ hổng)
+[ĐÚNG] Hình 3 (+V6→V4): Rủi ro diversity < redundancy (paper: 163.73 < 260.84)
+[ĐÚNG] Hình 3 (+V6→V4): S+D có rủi ro mạng thấp nhất trong các phương án
+[KHÔNG] Hình 3 (+V6→V4): S+D có ASP trung bình các đường thấp hơn S và D riêng
+[ĐÚNG] Hình 3 (+V6→V4): S+D+R giảm rủi ro so với chỉ R
+
+== Độ trung tâm (Eq. 5–7), V* = V2 (paper: V5)
+    closeness  degree  betweenness
+V1      0.571   0.375        0.143
+V2      0.667   0.500        0.393
+V3      0.500   0.250        0.036
+V5      0.571   0.375        0.143
+V7      0.615   0.375        0.214
+V6      0.421   0.125        0.000
+V4      0.533   0.250        0.071
+
+PSV giữa không MTD → shuffle V5: 0.500

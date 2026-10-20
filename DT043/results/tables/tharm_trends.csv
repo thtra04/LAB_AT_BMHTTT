@@ -1,0 +1,15 @@
+topology,kết luận của paper,tái lập
+Definition 2,Shuffle làm giảm rủi ro mạng so với không MTD,False
+Definition 2,Diversity làm giảm rủi ro mạng so với không MTD,True
+Definition 2,"Redundancy làm tăng rủi ro (thêm VM, thêm lỗ hổng)",True
+Definition 2,Rủi ro diversity < redundancy (paper: 163.73 < 260.84),True
+Definition 2,S+D có rủi ro mạng thấp nhất trong các phương án,False
+Definition 2,S+D có ASP trung bình các đường thấp hơn S và D riêng,False
+Definition 2,S+D+R giảm rủi ro so với chỉ R,False
+Hình 3 (+V6→V4),Shuffle làm giảm rủi ro mạng so với không MTD,True
+Hình 3 (+V6→V4),Diversity làm giảm rủi ro mạng so với không MTD,True
+Hình 3 (+V6→V4),"Redundancy làm tăng rủi ro (thêm VM, thêm lỗ hổng)",True
+Hình 3 (+V6→V4),Rủi ro diversity < redundancy (paper: 163.73 < 260.84),True
+Hình 3 (+V6→V4),S+D có rủi ro mạng thấp nhất trong các phương án,True
+Hình 3 (+V6→V4),S+D có ASP trung bình các đường thấp hơn S và D riêng,False
+Hình 3 (+V6→V4),S+D+R giảm rủi ro so với chỉ R,True

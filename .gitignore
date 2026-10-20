@@ -12,3 +12,4 @@ __pycache__/
 DT043/.tmp/
 DT043/report/node_modules/
 DT043/db/*.sqlite3
+DT043/video/
