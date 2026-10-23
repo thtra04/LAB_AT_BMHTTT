@@ -10,7 +10,10 @@
 | Học phần | Thực hành An toàn Bảo mật Hệ thống thông tin – Năm học 2026–2027 |
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
 | Đề bài | [LAB7/LAB7_pfSense_Web_Protection_2026.docx](LAB7/LAB7_pfSense_Web_Protection_2026.docx) + bộ tài nguyên [LAB7_pfSense_Web_Protection_2026.zip](LAB7/LAB7_pfSense_Web_Protection_2026.zip) |
-| Báo cáo | [11CNPM2-Lab7_1150080120-HoangThanhTra.docx](11CNPM2-Lab7_1150080120-HoangThanhTra.docx) (theo mẫu `LAB7_Report_Template.docx`) |
+| Báo cáo hoàn chỉnh | [11CNPM2-Lab7_1150080120-HoangThanhTra_HoanChinh.docx](11CNPM2-Lab7_1150080120-HoangThanhTra_HoanChinh.docx) – 39 hình, đủ kết quả 10 kịch bản |
+| Báo cáo bản cũ (khung) | [11CNPM2-Lab7_1150080120-HoangThanhTra.docx](11CNPM2-Lab7_1150080120-HoangThanhTra.docx) |
+| Cấu hình | [config_lab7.xml](config_lab7.xml) (pfSense) · [cau_hinh_web_proxy/](cau_hinh_web_proxy/) (squid.conf, e2guardian*.conf, site.story, danh sách, trang block, script) |
+| Ảnh minh chứng | [hinh/](hinh/) |
 
 ## 2. Tên bài Lab
 
@@ -38,8 +41,12 @@ Ruleset LAN (first-match): DNS → DC01 · Client → proxy :8080 · mail ports 
 
 - [x] Đọc đề và bộ tài nguyên; soạn báo cáo theo mẫu: thông tin sinh viên, bảng IP, bảng kiểm thử 10 kịch bản (kỳ vọng), ruleset pfSense kèm giải thích thứ tự rule, cấu hình E2Guardian/Squid/Schedule.
 - [x] Trả lời 4 câu hỏi của mẫu báo cáo và **10 câu hỏi phân tích** (mục I.2 của đề).
-- [ ] Thực hành trên máy ảo: dựng WEB-PROXY, DNS `lab7.test`, website DMZ, alias/rule pfSense, các chính sách web.
-- [ ] Dán ảnh minh chứng và kết quả thực tế vào các ô đánh dấu vàng trong báo cáo (đề yêu cầu ảnh chụp từ môi trường của chính sinh viên).
+- [x] Thực hành trên máy ảo: WEB-PROXY Ubuntu 24.04 (Squid 6.14, E2Guardian 5.3.5, ClamAV 1.5.4), DNS `lab7.test` trên DC01, 13 site trên DMZ-WEB, alias/rule pfSense, schedule `LAB7_ENT_60M`; **cả 10 kịch bản Đạt** (kể cả 110MB bị Squid từ chối).
+  - Ghi chú kỹ thuật: bật lại `checknobypasslists`/`checknoscan*` trong `site.story`; clamd chạy root để đọc file tạm; `download.lab7.test` không đặt vào exception (exception bỏ qua quét AV); entertainment/games trỏ IP phụ 172.16.6.30 để pfSense áp schedule theo IP đích; Squid `cache deny all`.
+- [x] Dán ảnh minh chứng và kết quả thực tế vào báo cáo hoàn chỉnh (file `_HoanChinh`).
+- [x] Quay video (OBS + webcam), ghép thành video hoàn chỉnh.
+- [ ] Upload video lên YouTube và dán link vào báo cáo.
+- [ ] (Tùy chọn) HTTPS inspection – chưa làm.
 
 ## 5. Tóm tắt câu trả lời phần câu hỏi phân tích
 

@@ -1,0 +1,4 @@
+china.lab7.test
+mideast.lab7.test
+jobs.lab7.test
+blockedgame.lab7.test

@@ -1,0 +1,5 @@
+windowsupdate.microsoft.com
+normal.lab7.test
+education.lab7.test
+entertainment.lab7.test
+games.lab7.test

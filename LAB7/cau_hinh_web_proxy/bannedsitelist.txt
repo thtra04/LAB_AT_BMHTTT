@@ -1,0 +1,8 @@
+china.lab7.test
+mideast.lab7.test
+jobs.lab7.test
+blockedgame.lab7.test
+weapons.lab7.test
+politics.lab7.test
+religion.lab7.test
+streaming.lab7.test
