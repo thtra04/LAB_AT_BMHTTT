@@ -11,7 +11,7 @@
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
 | Link video YouTube | https://youtu.be/wbYPjNC55e8 |
 | Đề bài | [LAB5_pfSense_HuongDan_2026.docx](LAB5_pfSense_HuongDan_2026.docx) |
-| Báo cáo | [Lab5_11CNPM2_1150080120_HoangThanhTra.docx](Lab5_11CNPM2_1150080120_HoangThanhTra.docx) |
+| Báo cáo | [Lab5_11CNPM2_1150080120_HoangThanhTra_HoanChinh.docx](Lab5_11CNPM2_1150080120_HoangThanhTra_HoanChinh.docx) |
 
 ## 2. Tên bài Lab
 

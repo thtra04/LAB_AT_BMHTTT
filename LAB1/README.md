@@ -13,4 +13,3 @@
 ## 2. Tên bài Lab
 
 **Lab 1: Bắt gói tin Telnet – SSH** – Thực hành An toàn Hệ thống thông tin.
-
