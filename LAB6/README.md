@@ -11,8 +11,10 @@
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
 | Link video YouTube | *(cập nhật sau khi quay)* |
 | Đề bài | [LAB6_pfSense_AD_Access_Policies_2026.pdf](LAB6_pfSense_AD_Access_Policies_2026.pdf) |
-| Báo cáo | [11CNPM2-Lab6_1150080120-HoangThanhTra.docx](11CNPM2-Lab6_1150080120-HoangThanhTra.docx) *(đặt tên theo yêu cầu `[Mã lớp]-Lab6_MSSV-TenSV.docx`)* |
-| File cấu hình | `config.xml` (Diagnostics → Backup & Restore → Download configuration) |
+| Báo cáo hoàn chỉnh | [11CNPM2-Lab6_1150080120-HoangThanhTra_HoanChinh.docx](11CNPM2-Lab6_1150080120-HoangThanhTra_HoanChinh.docx) – đã dán 51 ảnh minh chứng, điền kết quả thực tế |
+| Báo cáo bản cũ (khung) | [11CNPM2-Lab6_1150080120-HoangThanhTra.docx](11CNPM2-Lab6_1150080120-HoangThanhTra.docx) |
+| Ảnh minh chứng | thư mục [hinh/](hinh/) |
+| File cấu hình | [config.xml](config.xml) (Diagnostics → Backup & Restore → Download configuration, hostname `ThanhTra-Lab6`) |
 
 ## 2. Tên bài Lab
 
@@ -163,12 +165,12 @@ Trước mỗi kịch bản: **Apply Changes**, tạo kết nối mới; nếu v
 
 | Nguồn | Đích | Trong schedule | Ngoài schedule | Kết quả thực tế |
 |---|---|---|---|---|
-| Client-A | GENERAL_SITE .10 | Allow | Allow | *(chưa thực hiện)* |
-| Client-A | JOB_SITE .20 | Block | Block | *(chưa thực hiện)* |
-| Client-A | RESTRICTED_SITE .40 | Block | Block | *(chưa thực hiện)* |
-| Client-B | SOCIAL_SITE .30 | Allow trong LUNCH | Block | *(chưa thực hiện)* |
-| Client-B | RESTRICTED_SITE .40 | Block | Block | *(chưa thực hiện)* |
-| DMZ-WEB | DC01 10.6.0.10 | Block | Block | *(chưa thực hiện)* |
+| Client-A | GENERAL_SITE .10 | Allow | Allow | Allow / Allow ✔ |
+| Client-A | JOB_SITE .20 | Block | Block | Block / Block ✔ (log R1) |
+| Client-A | RESTRICTED_SITE .40 | Block | Block | Block / Block ✔ |
+| Client-B | SOCIAL_SITE .30 | Allow trong LUNCH | Block | Allow (TEST_NOW) / Block ✔ |
+| Client-B | RESTRICTED_SITE .40 | Block | Block | Block / Block ✔ |
+| DMZ-WEB | DC01 10.6.0.10 | Block | Block | Block / Block ✔ (ping, TCP 53/389) |
 
 ## 7. Xử lý sự cố theo trình tự
 
@@ -204,9 +206,11 @@ Trước mỗi kịch bản: **Apply Changes**, tạo kết nối mới; nếu v
 - [x] Đọc đề, tổng hợp mô hình, bảng IP, cấu hình LDAP/Captive Portal/Alias/Schedule, 7 kịch bản và ruleset tổng hợp vào README.
 - [x] Soạn tóm tắt trả lời 12 câu hỏi phần J.
 - [x] Báo cáo Word: đủ các phần B–K theo đề, trả lời đầy đủ 12 câu hỏi, giải thích thứ tự ruleset tổng hợp; 33 vị trí dán ảnh minh chứng và các ô kết quả thực tế đánh dấu vàng.
-- [ ] Dựng môi trường riêng Lab 6 (pfSense-LAB6 4 adapter, DC01, Client-A/B, DMZ-WEB).
-- [ ] Thực hiện LDAP, Captive Portal, Alias, Schedule và 7 kịch bản; chụp ảnh rule + ảnh kiểm thử cho từng kịch bản, Firewall Log, State Table.
-- [ ] Điền bảng kết quả thực tế, hoàn thiện báo cáo Word, xuất `config.xml` và quay video.
+- [x] Dựng môi trường riêng Lab 6 trên VMware: pfSense-LAB6 (4 adapter: NAT, LAN Segment LAB6-MGMT / lab6-lan / lab6-dmz), DC01 (Windows Server 2025), Client-A/B (Windows 11 Enterprise Eval), DMZ-WEB (Ubuntu 24.04 + Nginx 4 IP), máy quản trị Kali (user `hoangthanhtra`, 192.168.56.1).
+- [x] Thực hiện LDAP, Captive Portal, Alias, Schedule và 7 kịch bản; chụp ảnh rule + ảnh kiểm thử cho từng kịch bản, Firewall Log, State Table (thư mục `hinh/`).
+  - Lưu ý: Windows Server 2025 mặc định bắt buộc LDAP signing → simple bind TCP/389 bị từ chối; đã đặt *LDAP server signing requirements Enforcement = Disabled* trong Default Domain Controllers Policy (chỉ trong lab).
+- [x] Điền bảng kết quả thực tế, hoàn thiện báo cáo Word (file `_HoanChinh`), xuất `config.xml`, quay video (OBS, có webcam).
+- [ ] Upload video lên YouTube và dán link vào báo cáo + README.
 
 ## 10. Yêu cầu nộp bài (theo đề)
 
