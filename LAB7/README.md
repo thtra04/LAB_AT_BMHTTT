@@ -9,6 +9,7 @@
 | Lớp | 11_ĐHCNPM_2 |
 | Học phần | Thực hành An toàn Bảo mật Hệ thống thông tin – Năm học 2026–2027 |
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
+| Link video YouTube | https://youtu.be/opThPopNHfc |
 | Đề bài | [LAB7/LAB7_pfSense_Web_Protection_2026.docx](LAB7/LAB7_pfSense_Web_Protection_2026.docx) + bộ tài nguyên [LAB7_pfSense_Web_Protection_2026.zip](LAB7/LAB7_pfSense_Web_Protection_2026.zip) |
 | Báo cáo hoàn chỉnh | [11CNPM2-Lab7_1150080120-HoangThanhTra_HoanChinh.docx](11CNPM2-Lab7_1150080120-HoangThanhTra_HoanChinh.docx) – 39 hình, đủ kết quả 10 kịch bản |
 | Cấu hình | [config_lab7.xml](config_lab7.xml) (pfSense) · [cau_hinh_web_proxy/](cau_hinh_web_proxy/) (squid.conf, e2guardian*.conf, site.story, danh sách, trang block, script) |
