@@ -27,14 +27,18 @@
 | Nội dung | File |
 |---|---|
 | Đề bài (bản giảng viên phát) | `LAB5_pfSense_HuongDan_2026.docx` |
-| Báo cáo: trả lời phần **D. CÂU HỎI** (6 câu) | `Lab5_11CNPM2_1150080120_HoangThanhTra.docx` |
+| Báo cáo bản cũ (B + D) | `Lab5_11CNPM2_1150080120_HoangThanhTra.docx` |
+| **Báo cáo hoàn chỉnh** (B + C 5 tình huống + D) | `Lab5_11CNPM2_1150080120_HoangThanhTra_HoanChinh.docx` |
+| Ảnh minh chứng | thư mục `hinh/` (10–26 là phần C mới) |
 
 ## 4. Phạm vi đã thực hiện
 
 - [x] Trả lời đầy đủ 6 câu hỏi phần D (NAT và firewall rule, lý do dùng DMZ, thứ tự rule, chặn ping nhưng cho web, logging, hardening pfSense) dựa trên mô hình và các tình huống trong đề.
 - [x] Báo cáo đã có khung phần B (thực hành) và C (5 tình huống): bảng ánh xạ mạng VMware ↔ VirtualBox, bảng IP, bảng rule từng tình huống, phần giải thích kết quả và 18 vị trí dán ảnh minh chứng (đánh dấu vàng).
 - [x] Quay video quá trình thực hành trên VMware Workstation (pfSense CE 2.7.2 – ISO đã kiểm tra SHA-256 khớp đề): https://youtu.be/lk4EdLtkH1o – đã ghi link vào đầu báo cáo.
-- [ ] Dán ảnh minh chứng (các vị trí đánh dấu vàng) và đối chiếu kết quả thực tế vào báo cáo.
+- [x] Thực hành phần C trên mô hình 4 VM (pfSense, DC 10.0.0.2, LAN-Test Ubuntu 24.04 10.0.0.3, DMZ-Web Windows Server 2025 + IIS 172.16.0.2): cả 5 tình huống đều **Đạt** – xem bảng tổng hợp trong báo cáo hoàn chỉnh.
+- [x] Quay video mới cho phần C (có webcam), ghép thành video hoàn chỉnh ~21 phút.
+- [ ] Upload video LAB5 mới lên YouTube và thay link.
 
 ## 5. Tóm tắt câu trả lời
 
