@@ -1,10 +1,10 @@
 """Dựng video mẫu thuyết trình 5 phút (slide + demo thật trên dashboard + phụ đề lời thoại + đồng hồ)
 và sinh kịch bản KICH_BAN_THUYET_TRINH_5P.md từ CÙNG một dòng thời gian, để video và kịch bản khớp nhau.
 
-Chạy (Python hệ thống có playwright, pymupdf, pillow, imageio-ffmpeg), tại thư mục DT043:
+Chạy (Python hệ thống có playwright, pymupdf, pillow, imageio-ffmpeg), tại thư mục DT043/src:
     python report/build_demo_video.py            # sinh kịch bản + video
     python report/build_demo_video.py --md-only  # chỉ sinh kịch bản
-Video ra: video/Video_mau_thuyet_trinh_DT043.mp4 (không commit – thư mục video/ nằm trong .gitignore).
+Video ra: ../tailieu/video/Video_mau_thuyet_trinh_DT043.mp4 (không commit – thư mục video/ nằm trong .gitignore).
 """
 import json
 import os
@@ -17,9 +17,10 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SLIDES_PDF = ROOT / "report" / "SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pdf"
-OUT_MD = ROOT / "KICH_BAN_THUYET_TRINH_5P.md"
-OUT_MP4 = ROOT / "video" / "Video_mau_thuyet_trinh_DT043.mp4"
+DOCS = ROOT.parent / "tailieu"
+SLIDES_PDF = DOCS / "thuyet_trinh" / "SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pdf"
+OUT_MD = DOCS / "thuyet_trinh" / "KICH_BAN_THUYET_TRINH_5P.md"
+OUT_MP4 = DOCS / "video" / "Video_mau_thuyet_trinh_DT043.mp4"
 TOTAL = 300
 
 W, H = 1920, 1080
@@ -136,10 +137,10 @@ def build_md():
     L.append("# Kịch bản thuyết trình 5 phút (có demo) – DT043\n")
     L.append("**Đề tài:** Phát hiện botnet IoT bằng autoencoder nhẹ · **Người trình bày:** Hoàng Thanh Trà – MSSV "
              "1150080120 – 11CNPM2  ")
-    L.append("**Tài liệu dùng:** [slide 17 trang](report/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) (chiếu 13 "
+    L.append("**Tài liệu dùng:** [slide 17 trang](SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) (chiếu 13 "
              "slide chính, các slide 8, 11, 14 để trả lời câu hỏi) + dashboard demo `http://127.0.0.1:8000/`.  ")
-    L.append("**Video mẫu để tập theo:** `video/Video_mau_thuyet_trinh_DT043.mp4` – dựng từ CÙNG dòng thời gian với kịch "
-             "bản này (script `report/build_demo_video.py`), phụ đề trong video trùng từng chữ với lời thoại bên dưới; "
+    L.append("**Video mẫu để tập theo:** `../video/Video_mau_thuyet_trinh_DT043.mp4` – dựng từ CÙNG dòng thời gian với kịch "
+             "bản này (script `src/report/build_demo_video.py`), phụ đề trong video trùng từng chữ với lời thoại bên dưới; "
              "video không có tiếng, bạn đọc theo phụ đề và mốc giờ ở góc phải.\n")
     L.append("## 1. Phân bổ thời gian\n")
     L.append("| Thời điểm | Phần | Slide / màn hình | Thời lượng |")
@@ -150,7 +151,7 @@ def build_md():
         L.append(f"| {fmt(s['start'])} – {fmt(s['end'])} | {name} | {where} | {s['end'] - s['start']} s |")
     L.append("")
     L.append("## 2. Chuẩn bị trước khi lên trình bày (≈ 5 phút trước)\n")
-    L.append("1. Mở PowerShell tại thư mục `DT043`, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo lại), "
+    L.append("1. Mở PowerShell tại thư mục `DT043\\src`, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo lại), "
              "rồi bật server:")
     L.append("   ```powershell")
     L.append("   Remove-Item db\\dt043.sqlite3 -ErrorAction SilentlyContinue")

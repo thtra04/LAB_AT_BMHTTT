@@ -1,7 +1,7 @@
 """Sinh báo cáo DT043 (.docx) từ kết quả trong results/.
 
 Chạy:  python report/build_report.py
-Đầu ra: report/BaoCao_DT043_1150080120_HoangThanhTra.docx
+Đầu ra: ../tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from chapters_results import Results, appendix, ch6_results, ch7_analysis, ch8_c
 from chapters_static import ch1_intro, ch2_background, ch3_data, ch4_method, ch5_setup, cover  # noqa: E402
 from docx_helpers import Report  # noqa: E402
 
-OUT = HERE / "BaoCao_DT043_1150080120_HoangThanhTra.docx"
+OUT = ROOT.parent / "tailieu" / "bao_cao" / "BaoCao_DT043_1150080120_HoangThanhTra.docx"
 
 
 def main() -> None:

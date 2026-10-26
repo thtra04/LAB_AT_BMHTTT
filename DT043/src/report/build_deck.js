@@ -12,7 +12,7 @@ const HERE = __dirname;
 const ROOT = path.resolve(HERE, "..");
 const FIG = path.join(ROOT, "results", "figures");
 const D = JSON.parse(fs.readFileSync(path.join(HERE, "deck_data.json"), "utf8"));
-const OUT = path.join(HERE, "SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx");
+const OUT = path.join(ROOT, "..", "tailieu", "thuyet_trinh", "SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx");
 
 const THEME = {
   name: "DT043 Edge Defense",

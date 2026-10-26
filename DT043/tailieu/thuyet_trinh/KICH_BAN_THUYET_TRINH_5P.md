@@ -1,8 +1,8 @@
 # Kịch bản thuyết trình 5 phút (có demo) – DT043
 
 **Đề tài:** Phát hiện botnet IoT bằng autoencoder nhẹ · **Người trình bày:** Hoàng Thanh Trà – MSSV 1150080120 – 11CNPM2  
-**Tài liệu dùng:** [slide 17 trang](report/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) (chiếu 13 slide chính, các slide 8, 11, 14 để trả lời câu hỏi) + dashboard demo `http://127.0.0.1:8000/`.  
-**Video mẫu để tập theo:** `video/Video_mau_thuyet_trinh_DT043.mp4` – dựng từ CÙNG dòng thời gian với kịch bản này (script `report/build_demo_video.py`), phụ đề trong video trùng từng chữ với lời thoại bên dưới; video không có tiếng, bạn đọc theo phụ đề và mốc giờ ở góc phải.
+**Tài liệu dùng:** [slide 17 trang](SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) (chiếu 13 slide chính, các slide 8, 11, 14 để trả lời câu hỏi) + dashboard demo `http://127.0.0.1:8000/`.  
+**Video mẫu để tập theo:** `../video/Video_mau_thuyet_trinh_DT043.mp4` – dựng từ CÙNG dòng thời gian với kịch bản này (script `src/report/build_demo_video.py`), phụ đề trong video trùng từng chữ với lời thoại bên dưới; video không có tiếng, bạn đọc theo phụ đề và mốc giờ ở góc phải.
 
 ## 1. Phân bổ thời gian
 
@@ -26,7 +26,7 @@
 
 ## 2. Chuẩn bị trước khi lên trình bày (≈ 5 phút trước)
 
-1. Mở PowerShell tại thư mục `DT043`, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo lại), rồi bật server:
+1. Mở PowerShell tại thư mục `DT043\src`, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo lại), rồi bật server:
    ```powershell
    Remove-Item db\dt043.sqlite3 -ErrorAction SilentlyContinue
    .venv\Scripts\python -m uvicorn backend.app.main:app --port 8000

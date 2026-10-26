@@ -13,7 +13,7 @@ const HERE = __dirname;
 const ROOT = path.resolve(HERE, "..");
 const FIG = path.join(ROOT, "results", "figures");
 const D = JSON.parse(fs.readFileSync(path.join(HERE, "deck_data.json"), "utf8"));
-const OUT = path.join(HERE, "SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pptx");
+const OUT = path.join(ROOT, "..", "tailieu", "thuyet_trinh", "SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pptx");
 const TAB = path.join(ROOT, "results", "tables");
 function csv(name) {
   // đọc CSV chuẩn (có trường đặt trong ngoặc kép chứa dấu phẩy)

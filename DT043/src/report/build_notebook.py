@@ -1,6 +1,6 @@
 """Sinh DT043/DT043_walkthrough.ipynb rồi chạy toàn bộ bằng nbclient (kernel = .venv).
 
-Chạy tại thư mục DT043:  .venv\Scripts\python report/build_notebook.py DT043_walkthrough.ipynb --execute
+Chạy tại thư mục DT043/src:  .venv\Scripts\python report/build_notebook.py DT043_walkthrough.ipynb --execute
 Cần thêm: .venv\Scripts\python -m pip install ipykernel nbformat nbclient
 """
 import sys

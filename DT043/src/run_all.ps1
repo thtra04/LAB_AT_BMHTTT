@@ -20,9 +20,9 @@ if (-not (Test-Path "data/processed")) { & $py ai/scripts/03_prepare.py }
 & $py ai/scripts/08_export_deploy.py
 # Báo cáo Word (+ cập nhật mục lục, xuất PDF bằng Microsoft Word nếu có)
 & $py report/build_report.py
-powershell -NoProfile -ExecutionPolicy Bypass -File report/finalize_word.ps1 -Docx report/BaoCao_DT043_1150080120_HoangThanhTra.docx
+powershell -NoProfile -ExecutionPolicy Bypass -File report/finalize_word.ps1 -Docx ../tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx
 # Slide PowerPoint (cần Node.js; lần đầu: cd report; npm install)
 & $py report/export_deck_data.py
 Push-Location report; if (-not (Test-Path node_modules)) { npm install }; node build_deck.js; Pop-Location
-powershell -NoProfile -ExecutionPolicy Bypass -File report/export_pptx_pdf.ps1 -Pptx report/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx
+powershell -NoProfile -ExecutionPolicy Bypass -File report/export_pptx_pdf.ps1 -Pptx ../tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx
 Write-Host "Xong. Chạy demo: $py -m uvicorn backend.app.main:app --port 8000"
