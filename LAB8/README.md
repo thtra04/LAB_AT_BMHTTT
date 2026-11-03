@@ -9,7 +9,7 @@
 | Lớp | 11_ĐHCNPM_2 |
 | Học phần | Thực hành An toàn Bảo mật Hệ thống thông tin – Năm học 2026–2027 |
 | Repository | https://github.com/thtra04/LAB_AT_BMHTTT |
-| Link video YouTube | *(cập nhật sau khi đăng)* |
+| Link video YouTube | https://youtu.be/CzY6DpWF968 |
 | Đề bài | [đề/LAB8_Local_DNS_Attack_pfSense_2026.docx](đề/LAB8_Local_DNS_Attack_pfSense_2026.docx) + bộ tài nguyên [đề/LAB8_Local_DNS_Attack_pfSense_2026_FINAL.zip](đề/LAB8_Local_DNS_Attack_pfSense_2026_FINAL.zip) |
 | Báo cáo | [Baocao/11CNPM2-Lab8_1150080120-HoangThanhTra.docx](Baocao/11CNPM2-Lab8_1150080120-HoangThanhTra.docx) |
 | Cấu hình & script | [cau_hinh_dns/](cau_hinh_dns/) |
