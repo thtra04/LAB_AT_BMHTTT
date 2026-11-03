@@ -181,6 +181,22 @@ Phát hiện chính: (1) suy giảm hoàn toàn do gafgyt tcp/udp (recall 0.42�
 - `ai/scripts/10_tharm_paper_replication.py` → `results/tables/tharm_*.csv`, `results/figures/fig_tharm_scenarios.png`, `results/tharm_replication.log`; `ai/tests/test_tharm.py` 12 test → tổng **54 passed**. Tổng hợp: `docs/tai_lap_paper_chinh.md`.
 - Báo cáo Word thêm mục **6.8 E11** (3 bảng, 1 hình), cập nhật phiếu tái lập Chương 2 và bảng ánh xạ Chương 8 → **29 trang**.
 
+## Bước 15 – Vẽ lại đúng dạng biểu đồ của bài báo theo yêu cầu của thầy (27/10/2026)
+
+- `ai/scripts/11_paper_figures.py` vẽ lại Hình 6, Hình 7 của Masud et al. (2025) và Hình 2 (a, b) của Meidan et al. (2018) cùng trục, cùng chuỗi dữ liệu với hình gốc → `results/figures/fig_paper_*.png`, `results/tables/paper_fig*.csv`.
+- Thêm `tharm.shuffle(h, vm, host)` (tổng quát hóa ví dụ V5 → host 4 của mục 4.2) và 2 test chứng minh cho đúng kết quả ví dụ đó → `pytest ai/tests backend/tests`: **56 passed**.
+- Kết quả: Hình 6 – diversity khớp 7/7 VM (lệch ≤ 5%), shuffle và S+D khớp ở V5, redundancy và S+D+R cao hơn; Hình 7 không tái lập được (5 đường so với 8 đường, công thức ASP đường không công bố); Hình 2 Meidan – FPR khớp, TPR của AE thấp hơn.
+- Báo cáo Word thêm mục **6.9** (hình gốc đặt cạnh hình chạy lại, 1 bảng) và 2 dòng ở bảng ánh xạ Chương 8; ghép hình gốc và hình chạy lại cạnh nhau, thu nhỏ vài hình để giữ **30 trang**; slide thêm phần phân tích bài báo, slide "Chạy lại Hình 6" và phụ lục.
+
+## Bước 16 – Dịch bài báo chính và kiểm tra lại phần tái lập (11/10/2026)
+
+- Dịch toàn văn Masud et al. (2025) sang tiếng Việt: `docs/ban_dich_bai_bao_chinh.md` → `report/build_bandich_baibao.py` → `docs/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.docx` (+ PDF, 45 trang, đủ 5 bảng, 3 thuật toán, 9 hình cắt từ PDF gốc bằng `report/extract_paper_figs.py`).
+- Kiểm tra độc lập E11 (`docs/kiem_tra_tai_lap.md`): toàn bộ CVE, topology, OS khớp bài. Sửa 3 điểm:
+  - `tharm.centrality()` tính trên **đồ thị tấn công có hướng** (closeness, in-degree, betweenness) → Eq. 8 chọn **V5 như paper** (bản trước vô hướng ra V2); thêm 2 test → `test_tharm.py` **16 passed**.
+  - RoC toàn mạng của paper là tổng RoC theo đường (1,01 ≈ 4 × 0,259), không mâu thuẫn như ghi trước đây.
+  - Số tổng của paper ứng với khoảng 4 / 4 / 6 đường → khớp Definition 2 hơn Hình 3; ghi rõ "6/7 kết luận" chỉ đạt với topology Hình 3 (Definition 2: 3/7).
+- Cập nhật `docs/tai_lap_paper_chinh.md`, README, báo cáo Word mục 6.8, hỏi – đáp, kịch bản thuyết trình.
+
 ## Việc sinh viên tự làm trước khi nộp
 - Quay video demo ngắn (dashboard + slide).
 - Commit/push `DT043/` (dữ liệu thô, `.venv`, `node_modules`, `results/scores` đã nằm trong `.gitignore`).

@@ -57,6 +57,7 @@ EDGES_DEF2 = [("A", "V1"), ("A", "V2"), ("V1", "V3"), ("V1", "V5"), ("V5", "V8")
               ("V2", "V6"), ("V2", "V4"), ("V4", "V5"), ("V2", "V7"), ("V7", "V8")]
 EDGE_FIG3 = ("V6", "V4")
 BACKUP_OS = {"Windows 11": "Linux", "FreeBSD": "Windows 11", "Linux": "FreeBSD"}   # mục 4.3
+HOSTS = {"V1": "H1", "V2": "H1", "V3": "H2", "V4": "H2", "V5": "H2", "V6": "H3", "V7": "H3", "V8": "H4"}  # Hình 1, 4
 
 # Số liệu paper dùng để đối chiếu
 PAPER_TABLE4 = {"ASP": [0.975, 0.986, 0.99, 0.98, 0.9745, 0.99, 0.97, 0.95],
@@ -79,6 +80,7 @@ class Tharm:
     entry: str = "A"
     target: str = "V8"
     log: list[str] = field(default_factory=list)
+    host: dict[str, str] = field(default_factory=lambda: dict(HOSTS))
 
     def vulns(self, vm: str) -> list[tuple]:
         return OS_VULNS[self.os[vm]] + [SERVICE_VULNS[i - 1] for i in self.services.get(vm, [])]
@@ -113,16 +115,23 @@ class Tharm:
                 "ASP_max_path": max(p["ASP"] for p in ps), "AC_min_path": min(p["AC"] for p in ps)}
 
     def centrality(self) -> dict[str, dict]:
-        """Closeness, degree, betweenness (Eq. 5–7) trên đồ thị VM; dùng để chọn V* (Eq. 8)."""
-        g = self.graph.to_undirected()
-        cl, dg, bt = nx.closeness_centrality(g), nx.degree_centrality(g), nx.betweenness_centrality(g)
+        """Closeness, degree, betweenness (Eq. 5–7) trên đồ thị tấn công CÓ HƯỚNG; dùng để chọn V* (Eq. 8).
+
+        Kẻ tấn công chỉ đi theo chiều cạnh nên closeness tính theo khoảng cách đi tới nút và degree là in-degree.
+        Tính trên đồ thị vô hướng ra V2; tính có hướng ra V5 như paper (mục 4.2).
+        """
+        g = self.graph
+        cl, dg, bt = nx.closeness_centrality(g), nx.in_degree_centrality(g), nx.betweenness_centrality(g)
         return {v: {"closeness": cl[v], "degree": dg[v], "betweenness": bt[v]}
-                for v in self.graph.nodes if v not in (self.entry, self.target)}
+                for v in g.nodes if v not in (self.entry, self.target)}
 
     def select_vm(self) -> str:
-        """Eq. 8: V* = rank(argmax(C, D, B)) – xếp hạng theo tổng ba độ đo trung tâm."""
+        """Eq. 8: V* = rank(argmax(C, D, B)) – xếp hạng theo tổng ba độ đo trung tâm.
+
+        Với Definition 2, V5 và V7 bằng nhau ở cả ba độ đo; hòa thì lấy VM có chỉ số nhỏ hơn (V5).
+        """
         c = self.centrality()
-        return max(c, key=lambda v: (c[v]["closeness"] + c[v]["degree"] + c[v]["betweenness"], v))
+        return max(sorted(c), key=lambda v: round(c[v]["closeness"] + c[v]["degree"] + c[v]["betweenness"], 9))
 
 
 def build(with_fig3_edge: bool = False) -> Tharm:
@@ -141,6 +150,21 @@ def shuffle_v5_host2_to_host4(h: Tharm) -> Tharm:
     return n
 
 
+def shuffle(h: Tharm, vm: str, dst: str) -> Tharm:
+    """Di trú `vm` sang host `dst` (tổng quát hóa ví dụ mục 4.2): bỏ mọi cạnh vào `vm`, thêm cạnh từ mọi nút
+    vốn tới được một VM trên host đích; giữ cạnh ra. Với V5 → H4 cho đúng kết quả của shuffle_v5_host2_to_host4."""
+    n = copy.deepcopy(h)
+    sources = {u for w, hw in h.host.items() if hw == dst and w != vm and w in h.graph
+               for u, _ in h.graph.in_edges(w) if u != vm}
+    for u in [u for u, _ in n.graph.in_edges(vm)]:
+        n.graph.remove_edge(u, vm)
+    for u in sorted(sources):
+        n.graph.add_edge(u, vm)
+    n.log.append(f"shuffle {vm}: {h.host[vm]} → {dst}")
+    n.host[vm] = dst
+    return n
+
+
 def diversity(h: Tharm, vm: str) -> Tharm:
     n = copy.deepcopy(h)
     old = n.os[vm]
@@ -156,6 +180,7 @@ def redundancy(h: Tharm, vm: str, replicas: int = 1, replica_os: str = "backup")
         new = vm + "'" * r
         n.os[new] = BACKUP_OS[n.os[vm]] if replica_os == "backup" else n.os[vm]
         n.services[new] = list(n.services[vm])
+        n.host[new] = n.host[vm]
         for u, _ in list(h.graph.in_edges(vm)):
             n.graph.add_edge(u, new)
         for _, w in list(h.graph.out_edges(vm)):

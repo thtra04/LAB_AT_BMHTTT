@@ -35,7 +35,8 @@ Notebook này đi lại toàn bộ quy trình của đề tài **bằng đúng m
 6. Edge benchmark rút gọn
 7. Kết quả chính thức của ma trận 468 lần chạy, kiểm định, đối chiếu tiêu chí
 8. MTD
-9. Demo API backend
+9. Tái lập hai bài báo: bảng % khớp, vẽ lại Hình 6, 7 (Masud) và Hình 2 (Meidan)
+10. Demo API backend
 
 **Cách chạy:** mở bằng VS Code/Jupyter, chọn kernel `DT043/.venv` (Python 3.11), chạy lần lượt từ trên xuống.
 Phần 4–6 chạy thật trên dữ liệu (≈ 1–3 phút); phần 7 đọc kết quả đã lưu trong `results/` của ma trận thí nghiệm đầy đủ (chạy lại mất ~4–5 giờ bằng `ai/scripts/04_run_matrix.py`).
@@ -255,7 +256,109 @@ display(Image(filename=str(ROOT / "results/figures/fig_mtd_hybrid_tradeoff.png")
 """)
 
 md("""
-## 9. Demo API backend (FastAPI + SQLite + gói triển khai V1 int8)
+## 9. Tái lập hai bài báo: so từng con số và vẽ lại đúng dạng biểu đồ
+**Bài chính – Masud et al. (2025):** dựng lại 3-layer THARM chỉ bằng dữ liệu bài công bố – 18 CVE hệ điều hành (Bảng 1),
+14 CVE dịch vụ (Bảng 2), VM → OS và host (Hình 1), VM → dịch vụ (Hình 3), đồ thị tấn công (Definition 2, Hình 3 thêm cạnh
+V6 → V4), cách áp shuffle / diversity / redundancy (mục 4.2–4.4) – rồi so với số bài công bố.
+**Bài tham chiếu – Meidan et al. (2018):** so TPR/FPR của B0 (cùng kiến trúc AE, cùng quy tắc `tr* = mean + std` và `ws*`).
+
+Quy ước: **lệch % = (tái lập − bài báo) / bài báo × 100**; một giá trị được tính là **khớp khi |lệch| ≤ 5%** (ngưỡng do đề tài chọn).
+""")
+md("### 9.1 Chạy trực tiếp mô hình THARM và so với số trong bài (mục 4.2–4.3)")
+code(r"""
+from nbaiot.mtd import tharm as T
+b = T.build()
+d5 = T.diversity(b, "V5")
+rows = [(f"R_{v}", T.PAPER_VM_RISK[v], b.risk(v)) for v in ["V2", "V4", "V5", "V7", "V8"]]
+rows.append(("R_V5 sau diversity (Linux)", T.PAPER_VM_RISK["V5_linux"], d5.risk("V5")))
+sc = T.scenarios()
+for name, (st, path) in {"shuffle A-V2-V7-V5-V8": (sc["S"], ["A", "V2", "V7", "V5", "V8"]),
+                         "diversity A-V2-V4-V5(Linux)-V8": (sc["D"], ["A", "V2", "V4", "V5", "V8"]),
+                         "redundancy A-V2-V4-V5'-V8": (sc["R"], ["A", "V2", "V4", "V5'", "V8"])}.items():
+    rows.append((f"Đường {name}", T.PAPER_PATHS[name], st.path_metrics(path)["R"]))
+live = pd.DataFrame(rows, columns=["giá trị", "bài báo", "tái lập"])
+live["lệch %"] = 100 * (live["tái lập"] - live["bài báo"]) / live["bài báo"]
+live["khớp (≤ 5%)"] = live["lệch %"].abs() <= 5
+live.round(3)
+""")
+md("""
+### 9.2 Vẽ lại Hình 6, Hình 7 (Masud) và Hình 2 (Meidan) theo đúng dạng hình gốc
+Dùng chính các hàm của `ai/scripts/11_paper_figures.py` (ghi lại `results/figures/fig_paper_*.png` và `results/tables/paper_fig*.csv`).
+Bài chỉ nêu host đích khi shuffle của V5 (host 4) và V2 (host 3); các VM khác giả định chuyển sang host 4.
+Giá trị Hình 6 phía bài báo được **đọc bằng mắt từ hình** (sai số ≈ ±5) vì bài không in bảng số.
+""")
+code(r"""
+spec = importlib.util.spec_from_file_location("paper_figs", ROOT / "ai/scripts/11_paper_figures.py")
+PF = importlib.util.module_from_spec(spec); spec.loader.exec_module(PF)
+fig6, fig7, fig2 = PF.masud_fig6(), PF.masud_fig7(), PF.meidan_fig2()
+PFIG = ROOT / "report/paper_figs"
+display(Markdown("**Hình 6 – bài báo (gốc)**")); display(Image(filename=str(PFIG / "masud_fig6_metrics.png"), width=700))
+display(Markdown("**Hình 6 – chạy lại**")); display(Image(filename=str(ROOT / "results/figures/fig_paper_masud_fig6.png"), width=760))
+""")
+code(r"""
+display(Markdown("**Hình 7 – bài báo (gốc)**")); display(Image(filename=str(PFIG / "masud_fig7_asp.png"), width=480))
+display(Markdown("**Hình 7 – chạy lại**")); display(Image(filename=str(ROOT / "results/figures/fig_paper_masud_fig7.png"), width=600))
+display(fig7.round(4))
+""")
+code(r"""
+display(Markdown("**Hình 2 (a, b) Meidan – bài báo (gốc)**")); display(Image(filename=str(PFIG / "meidan_fig2_results.png"), width=800))
+display(Markdown("**Hình 2 (a, b) Meidan – chạy lại**")); display(Image(filename=str(ROOT / "results/figures/fig_paper_meidan_fig2.png"), width=800))
+""")
+md("### 9.3 Bảng % khớp theo từng mức (tính từ các CSV trong `results/tables/`)")
+code(r"""
+TB = ROOT / "results/tables"
+def dev(ours, paper):
+    return 100 * (np.asarray(ours, float) - np.asarray(paper, float)) / np.asarray(paper, float)
+def row(paper, level, d, note, src):
+    d = np.atleast_1d(d)
+    k = int((np.abs(d) <= 5).sum())
+    return {"bài báo": paper, "mức so sánh": level, "số giá trị": len(d), "khớp ≤ 5%": k, "tỷ lệ khớp": f"{100 * k / len(d):.0f}%",
+            "lệch |TB|": f"{np.abs(d).mean():.1f}%", "ghi chú": note, "nguồn": src}
+
+vm = pd.read_csv(TB / "tharm_vm_vs_paper.csv")
+r = vm[vm["R_paper(mục 4.2–4.3)"].notna()]
+paths = pd.read_csv(TB / "tharm_paths_vs_paper.csv")
+net = pd.read_csv(TB / "tharm_network_vs_paper.csv")
+f6 = pd.read_csv(TB / "paper_fig6_masud_vs_paper.csv")
+tr = pd.read_csv(TB / "tharm_trends.csv")
+tr3 = tr[tr.topology != "Definition 2"]["tái lập"].astype(str).eq("True")
+m = pd.read_csv(TB / "per_device_B0_vs_meidan.csv")
+
+rows = [
+    row("Masud 2025", "Rủi ro từng VM (mục 4.2–4.3)", list(dev(r["R_ours(ΣE·I)"], r["R_paper(mục 4.2–4.3)"])) + [dev(d5.risk("V5"), 8.9)],
+        "R = Σ E·I", "tharm_vm_vs_paper.csv"),
+    row("Masud 2025", "Rủi ro 3 đường tấn công ví dụ", paths["lệch %"], "lệch do R_V2", "tharm_paths_vs_paper.csv"),
+    row("Masud 2025", "Bảng 4 – ASP từng VM", dev(vm.ASP_ours, vm.ASP_paper), "OR độc lập", "tharm_vm_vs_paper.csv"),
+    row("Masud 2025", "Bảng 4 – AC, AR từng VM", list(dev(vm.AC_ours, vm.AC_paper)) + list(dev(vm["AR_ours(ASP_paper×ΣBS)"], vm.AR_paper)),
+        "khớp V1, V8", "tharm_vm_vs_paper.csv"),
+    row("Masud 2025", "Tổng toàn mạng R, AC, RoC (3 MTD)", dev(net.ours, net.paper), "bài không nêu đủ cách tính",
+        "tharm_network_vs_paper.csv"),
+    row("Masud 2025", "Hình 6 – AR (5 MTD × 7 VM)", f6["lệch %"], "diversity 7/7; số bài đọc từ hình",
+        "paper_fig6_masud_vs_paper.csv"),
+    {"bài báo": "Masud 2025", "mức so sánh": "Hình 7 – ASP theo đường", "số giá trị": 8, "khớp ≤ 5%": 0, "tỷ lệ khớp": "0%",
+     "lệch |TB|": "–", "ghi chú": "5 đường so với 8 đường; công thức ASP đường không công bố", "nguồn": "paper_fig7_masud.csv"},
+    {"bài báo": "Masud 2025", "mức so sánh": "Kết luận định tính (topology Hình 3)", "số giá trị": len(tr3), "khớp ≤ 5%": int(tr3.sum()),
+     "tỷ lệ khớp": f"{100 * tr3.mean():.0f}%", "lệch |TB|": "–", "ghi chú": "đúng / sai, không tính lệch %", "nguồn": "tharm_trends.csv"},
+    {"bài báo": "Meidan 2018", "mức so sánh": "FPR ≤ 0.02 theo thiết bị (bài: 0.007 ± 0.01)", "số giá trị": len(m),
+     "khớp ≤ 5%": int((m.fpr_mean <= 0.02).sum()), "tỷ lệ khớp": f"{100 * (m.fpr_mean <= 0.02).mean():.0f}%",
+     "lệch |TB|": "–", "ghi chú": f"FPR TB {m.fpr_mean.mean():.4f}", "nguồn": "per_device_B0_vs_meidan.csv"},
+    {"bài báo": "Meidan 2018", "mức so sánh": "TPR = 100% theo thiết bị", "số giá trị": len(m),
+     "khớp ≤ 5%": int((m.tpr_mean >= 0.95).sum()), "tỷ lệ khớp": f"{100 * (m.tpr_mean >= 0.95).mean():.0f}%",
+     "lệch |TB|": f"{100 * (1 - m.tpr_mean.mean()):.1f}%", "ghi chú": f"TPR TB {m.tpr_mean.mean():.3f} (flood tcp/udp)",
+     "nguồn": "per_device_B0_vs_meidan.csv"},
+]
+match = pd.DataFrame(rows)
+match
+""")
+md("""
+Đọc bảng: phần bài báo cho **đủ dữ liệu** (rủi ro từng VM, đường tấn công, ASP từng VM, diversity ở Hình 6) khớp gần như
+tuyệt đối; phần lệch đều rơi vào chỗ bài **không công bố đủ** (danh sách cạnh sau shuffle bị cắt, công thức ASP bản in có thể
+âm, AC toàn mạng không có công thức, không có mã nguồn). Tỷ lệ gộp tất cả các mức phụ thuộc vào việc chọn đem số nào ra so,
+nên nên đọc theo từng mức thay vì một con số chung.
+""")
+
+md("""
+## 10. Demo API backend (FastAPI + SQLite + gói triển khai V1 int8)
 Dùng CSDL tạm để không ghi vào `db/dt043.sqlite3`. Dashboard đầy đủ: `.venv\\Scripts\\python -m uvicorn backend.app.main:app --port 8000` rồi mở http://127.0.0.1:8000/.
 """)
 code(r"""
@@ -278,7 +381,7 @@ with TestClient(app) as c:
 """)
 
 md("""
-## 10. Kết luận
+## 11. Kết luận
 - AE per-device bắt gần tuyệt đối 8/10 loại tấn công với FPR rất thấp (B0 0,0025); bỏ sót flood tcp/udp giả mạo nguồn của BASHLITE.
 - V1 int8 ≈ 15 KB, vài µs/mẫu trên 1 lõi → khả thi cho edge (RQ5 đạt); RQ1–RQ4 không đạt và được giữ nguyên tiêu chí.
 - Kết quả dao động theo seed → cần nhiều lần chạy và kiểm định; MTD kết hợp shuffle + diversity cho ASP thấp nhất, MTD lai dùng cảnh báo AE giảm thời gian lộ diện.

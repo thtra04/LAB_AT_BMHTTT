@@ -284,9 +284,9 @@ FE (frontend/) HTML/CSS/JS: thiết bị, phát lại, biểu đồ MSE, cảnh 
     R.para("Tầng AI và tầng BE chỉ giao tiếp qua \"gói triển khai\" nên có thể thay model mà không sửa backend. CSDL chỉ "
            "lưu metadata và kết quả suy luận, không lưu dữ liệu thô. Khi có cửa sổ cảnh báo, backend tạo bản ghi alert và "
            "gọi MTD event-based (shuffle địa chỉ ảo + đổi biến thể firmware ảo); endpoint /api/mtd/tick chạy MTD time-based.")
-    R.figure(root / "results" / "figures" / "demo_dashboard.png",
+    R.figure(root / "results" / "figures" / "demo_dashboard_crop.png",
              "Dashboard demo: phát lại 2.000 mẫu mirai/syn của Danmini → 100% cửa sổ cảnh báo, sinh cảnh báo và 2 hành "
-             "động MTD (event-based); suy luận V1 int8 vài µs/mẫu", 15)
+             "động MTD (event-based); suy luận V1 int8 vài µs/mẫu", 13)
     R.para("Demo cũng tái hiện đúng các kết quả nghiên cứu: phát lại benign (phần test) không sinh cảnh báo, còn gafgyt/tcp "
            "trên Ennio_Doorbell không vượt ngưỡng – đúng lỗi bỏ sót được phân tích ở Chương 7.")
 

@@ -109,9 +109,9 @@ class Report:
                     p.add_run(part).bold = i % 2 == 1
             p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    def numbered(self, items: list[str]):
-        """Danh sách đánh số 1, 2, 3… (bắt đầu lại từ 1 ở mỗi danh sách)."""
-        for k, it in enumerate(items, 1):
+    def numbered(self, items: list[str], start: int = 1):
+        """Danh sách đánh số 1, 2, 3… (bắt đầu lại từ `start` ở mỗi danh sách)."""
+        for k, it in enumerate(items, start):
             p = self.doc.add_paragraph()
             p.paragraph_format.left_indent = Cm(0.9)
             p.paragraph_format.first_line_indent = Cm(-0.6)

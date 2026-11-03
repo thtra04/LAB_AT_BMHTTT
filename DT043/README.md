@@ -7,11 +7,15 @@
 | Lớp | 11_ĐHCNPM_2 |
 | Học phần | An toàn Bảo mật Hệ thống thông tin – Bài giữa kỳ (mã đề DT043) |
 | Dữ liệu | N-BaIoT – UCI, DOI 10.24432/C5RC8J, CC BY 4.0 |
-| Paper chính | Masud et al. (2025), *Vulnerability defence using hybrid moving target defence in IoT systems*, Computers & Security 153, 104380 |
-| Paper tham chiếu kỹ thuật | Meidan et al. (2018), *N-BaIoT*, IEEE Pervasive Computing (arXiv:1805.03409) |
-| Báo cáo (29 trang) | [tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx) · [PDF](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.pdf) |
-| Slide thuyết trình (17 slide, có ghi chú) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pdf) · bản rút gọn 10 slide: [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pdf) |
-| Kịch bản thuyết trình 5 phút (có demo) | [tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P.md) |
+| Paper chính | Masud et al. (2025), *Vulnerability defence using hybrid moving target defence in IoT systems*, Computers & Security 153, 104380 · [PDF](tailieu/docs/b%C3%A1o/Vulnerability%20defence%20using%20hybrid%20moving%20target%20defence%20in%20Internet%20of.pdf) |
+| Bản dịch tiếng Việt paper chính · kiểm tra tái lập | [Word](tailieu/docs/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.docx) · [PDF](tailieu/docs/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.pdf) · [Markdown](tailieu/docs/ban_dich_bai_bao_chinh.md) · [kiem_tra_tai_lap.md](tailieu/docs/kiem_tra_tai_lap.md) |
+| Paper tham chiếu kỹ thuật | Meidan et al. (2018), *N-BaIoT*, IEEE Pervasive Computing (arXiv:1805.03409) · [PDF](tailieu/docs/b%C3%A1o/N-BaIoT%20Network-based%20detection%20of%20IoT%20botnet%20attacks%20using%20deep%20autoencoders.pdf) |
+| Báo cáo (30 trang) | [tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx) · [PDF](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.pdf) |
+| Slide thuyết trình (có ghi chú) – bộ đầy đủ 30 slide (20 chính + 10 phụ lục) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pdf) · bộ rút gọn 23 slide (13 chính + 10 phụ lục): [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pdf) |
+| Kịch bản thuyết trình ≈ 4:53 (khung 5 phút, có demo) – bộ đầy đủ | [tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P.md) · [bản Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_1150080120_HoangThanhTra.docx) |
+| Kịch bản thuyết trình ≈ 4:50 (khung 5 phút, có demo) – bộ rút gọn | [tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P_10slide.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P_10slide.md) · [bản Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.docx) |
+| **Bản ngắn 8 slide để báo cáo** (≈ 3:12, demo rút gọn) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_ngan_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_ngan_1150080120_HoangThanhTra.pdf) · kịch bản [.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P_ngan.md) · [Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_ngan_1150080120_HoangThanhTra.docx) |
+| Hỏi – đáp về bài báo và đề tài · giải thích notebook | [HoiDap_BaiBao (Word)](tailieu/thuyet_trinh/HoiDap_BaiBao_DT043_1150080120_HoangThanhTra.docx) · [GiaiThich_Notebook (Word)](tailieu/thuyet_trinh/GiaiThich_Notebook_DT043_1150080120_HoangThanhTra.docx) |
 | Câu hỏi phòng hờ khi bảo vệ | [tailieu/thuyet_trinh/HOI_DAP_BAO_VE.md](tailieu/thuyet_trinh/HOI_DAP_BAO_VE.md) |
 | Notebook trình bày (đã chạy, có output) | [src/DT043_walkthrough.ipynb](src/DT043_walkthrough.ipynb) – dataset/manifest → EDA → chia chống rò rỉ → huấn luyện V1 → int8 → edge → kết quả 468 lần chạy → MTD → demo API; cần `pip install ipykernel` trong `.venv` để chạy lại |
 | Kế hoạch / nhật ký | [tailieu/KE_HOACH.md](tailieu/KE_HOACH.md) · [tailieu/NHAT_KY_THUC_HIEN.md](tailieu/NHAT_KY_THUC_HIEN.md) |
@@ -41,9 +45,9 @@ DT043/
 │   └── .venv/                 # môi trường Python (không commit)
 └── tailieu/                   # TÀI LIỆU
     ├── bao_cao/               # báo cáo Word + PDF
-    ├── thuyet_trinh/          # slide 17 và 10 trang (pptx + pdf), kịch bản 5 phút, câu hỏi bảo vệ
+    ├── thuyet_trinh/          # 3 bộ slide: đầy đủ, rút gọn, ngắn 8 slide (pptx + pdf), kịch bản từng bộ (.md + .docx), hỏi – đáp, câu hỏi bảo vệ
     ├── video/                 # video mẫu thuyết trình (không commit)
-    ├── docs/                  # paper chính (PDF), phiếu tái lập, tái lập E11, data card, threat model, tiêu chí thành công
+    ├── docs/                  # báo/ (PDF hai bài báo), phiếu tái lập, tái lập E11, data card, threat model, tiêu chí thành công
     ├── KE_HOACH.md
     └── NHAT_KY_THUC_HIEN.md
 ```
@@ -75,6 +79,7 @@ $env:PYTHONIOENCODING = "utf-8"
 | 8. Tổng hợp bảng/hình/kiểm định | `.venv\Scripts\python ai/scripts/06_aggregate.py` | ~1 phút |
 | 8b. Phân tích hậu kiểm ngưỡng | `.venv\Scripts\python ai/scripts/09_posthoc_threshold.py` | ~1 phút |
 | 8c. Tái lập paper chính (E11, THARM) | `.venv\Scripts\python ai/scripts/10_tharm_paper_replication.py` | vài giây |
+| 8d. Vẽ lại Hình 6, 7 (Masud) và Hình 2 (Meidan) đúng dạng gốc | `.venv\Scripts\python ai/scripts/11_paper_figures.py` | vài giây |
 | 9. Xuất gói triển khai AI → BE | `.venv\Scripts\python ai/scripts/08_export_deploy.py` | vài giây |
 | 10. Sinh báo cáo Word (ghi vào `../tailieu/bao_cao/`) | `.venv\Scripts\python report/build_report.py` rồi `report/finalize_word.ps1` (cập nhật mục lục, xuất PDF) | ~1 phút |
 | 11. Sinh slide PowerPoint (ghi vào `../tailieu/thuyet_trinh/`) | `.venv\Scripts\python report/export_deck_data.py`, rồi trong `report/`: `npm install` (lần đầu) và `node build_deck.js` | ~1 phút |
@@ -118,7 +123,8 @@ Mẹo demo/quay video: mở `http://127.0.0.1:8000/?replay=Danmini_Doorbell:mira
 - Edge (V1 int8, 1 luồng ghim 1 E-core): **p95 = 10.8 µs/mẫu, ~103.000 mẫu/s, RAM +4.6 MB** → đạt tiêu chí RQ5. Chạy 20 luồng với batch 1 chậm hơn ~50 lần.
 - Tiêu chí chốt trước: RQ5 **đạt**; RQ1–RQ4 **không đạt** (giải thích đầy đủ trong báo cáo, không chỉnh tiêu chí).
 - MTD (HARM rút gọn, chu kỳ 20 bước): ASP không MTD 0.498 → shuffle 0.409, diversity 0.437, **kết hợp 0.327** (khớp xu hướng paper chính). MTD lai kích hoạt bởi AE có thời gian lộ diện thấp hơn time-based ở cùng chi phí.
-- **Tái lập paper chính bằng toàn văn (E11, 3-layer THARM với đúng CVE/topology của paper):** rủi ro mức VM khớp ±0.01, ba đường tấn công ví dụ lệch −0.8%; tổng toàn mạng không tái lập được số tuyệt đối; **6/7 kết luận định tính** tái lập được với topology Hình 3 (gồm "shuffle + diversity tốt nhất"). Chạy: `.venv\Scripts\python ai/scripts/10_tharm_paper_replication.py`; chi tiết [tailieu/docs/tai_lap_paper_chinh.md](tailieu/docs/tai_lap_paper_chinh.md).
+- **Tái lập paper chính bằng toàn văn (E11, 3-layer THARM với đúng CVE/topology của paper):** rủi ro mức VM khớp ±0.01, ba đường tấn công ví dụ lệch −0.8%; tổng toàn mạng không tái lập được số tuyệt đối; độ trung tâm trên đồ thị tấn công có hướng chọn **V5 như paper**; **6/7 kết luận định tính** tái lập được với topology Hình 3 (gồm "shuffle + diversity tốt nhất"), chỉ 3/7 với Definition 2 – và số tổng của paper gợi ý họ tính trên Definition 2. Chạy: `.venv\Scripts\python ai/scripts/10_tharm_paper_replication.py`; chi tiết [tailieu/docs/tai_lap_paper_chinh.md](tailieu/docs/tai_lap_paper_chinh.md).
+- **Vẽ lại đúng dạng biểu đồ của bài báo (báo cáo mục 6.9):** Hình 6 của Masud – đường diversity khớp 7/7 VM (lệch ≤ 5%), shuffle và S+D khớp ở V5 (VM duy nhất bài nêu host đích), redundancy cao hơn; Hình 7 không tái lập được (topology công bố chỉ có 5 đường, bài không nêu cách tính ASP đường); Hình 2 của Meidan – FPR khớp, TPR của AE thấp hơn do flood tcp/udp.
 
 Chi tiết: `src/results/tables/` (CSV), `src/results/figures/` (PNG), Chương 6–8 của báo cáo, và [tailieu/NHAT_KY_THUC_HIEN.md](tailieu/NHAT_KY_THUC_HIEN.md).
 

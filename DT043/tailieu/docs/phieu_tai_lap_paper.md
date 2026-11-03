@@ -3,7 +3,7 @@
 ## A. Paper chính (đề giao)
 **Masud M.T., Keshk M., Moustafa N., Turnbull B., Susilo W.** (2025). *Vulnerability defence using hybrid moving target defence in Internet of Things systems.* Computers & Security, 153, 104380. DOI 10.1016/j.cose.2025.104380. Open Access (CC BY), online 28/02/2025.
 
-> Nguồn thông tin: **toàn văn PDF Open Access** (17 trang) lưu tại `docs/Vulnerability defence using hybrid moving target defence in Internet of.pdf`, đã đọc đầy đủ ngày 20/10/2026. Kết quả tái lập chi tiết: [tai_lap_paper_chinh.md](tai_lap_paper_chinh.md).
+> Nguồn thông tin: **toàn văn PDF Open Access** (17 trang) lưu tại `docs/báo/Vulnerability defence using hybrid moving target defence in Internet of.pdf`, đã đọc đầy đủ ngày 20/10/2026. Kết quả tái lập chi tiết: [tai_lap_paper_chinh.md](tai_lap_paper_chinh.md).
 
 | Mục | Nội dung (theo toàn văn) |
 |---|---|

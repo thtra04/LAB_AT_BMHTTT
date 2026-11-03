@@ -1,8 +1,8 @@
 # Tái lập paper chính – Masud et al. (2025), 3-layer THARM (thí nghiệm E11)
 
-**Paper:** *Vulnerability defence using hybrid moving target defence in Internet of Things systems*, Computers & Security 153 (2025) 104380, DOI 10.1016/j.cose.2025.104380 (Open Access, CC BY). Toàn văn: `docs/Vulnerability defence using hybrid moving target defence in Internet of.pdf`.
+**Paper:** *Vulnerability defence using hybrid moving target defence in Internet of Things systems*, Computers & Security 153 (2025) 104380, DOI 10.1016/j.cose.2025.104380 (Open Access, CC BY). Toàn văn: `docs/báo/Vulnerability defence using hybrid moving target defence in Internet of.pdf`.
 
-**Mã nguồn:** `ai/src/nbaiot/mtd/tharm.py` · **Script:** `ai/scripts/10_tharm_paper_replication.py` · **Test:** `ai/tests/test_tharm.py` (12 test, so khớp số của paper) · **Kết quả:** `results/tables/tharm_*.csv`, `results/figures/fig_tharm_scenarios.png`, `results/tharm_replication.log`.
+**Mã nguồn:** `ai/src/nbaiot/mtd/tharm.py` · **Script:** `ai/scripts/10_tharm_paper_replication.py` · **Test:** `ai/tests/test_tharm.py` (16 test, so khớp số của paper) · **Kết quả:** `results/tables/tharm_*.csv`, `results/figures/fig_tharm_scenarios.png`, `results/tharm_replication.log`.
 
 ```powershell
 .venv\Scripts\python ai/scripts/10_tharm_paper_replication.py
@@ -64,9 +64,11 @@ Toàn bộ phần lệch 0.8% ở mức đường đến từ R_V2. Để khớp
 Nguyên nhân:
 - Danh sách cạnh sau shuffle trong paper bị cắt bằng "…".
 - AC theo VM mà paper dùng ở mục 4.2 (37.5, 43.2, 46.4, 39.4) lớn gấp khoảng 5–8 lần tổng cost trong Bảng 1–2 và không có công thức đi kèm.
-- RoC toàn mạng của paper không bằng R/AC của chính paper (167.38 / 666.2 = 0.25, trong khi paper ghi 1.01).
+- RoC toàn mạng của paper là **tổng RoC theo từng đường**, giống cách tái lập tính (ví dụ RoC_ap1 = 0.259 và 1.01 ≈ 4 × 0.25), chứ không phải R/AC toàn mạng. RoC tái lập lớn hơn vì AC theo VM của tái lập nhỏ hơn 5–8 lần.
 
 Vì vậy chỉ so được **xu hướng**.
+
+**Paper tính trên topology nào?** Chia tổng toàn mạng của paper cho giá trị của đường ví dụ sẽ ước lượng được số đường paper đã cộng: R cho khoảng 3.9 / 3.8 / 6.0 đường (shuffle / diversity / redundancy), RoC cho khoảng 3.9 / 3.3 / 4.6. Definition 2 có 4 / 4 / 6 đường, Hình 3 có 4 / 5 / 8. Đây chỉ là ước lượng vì các đường có giá trị khác nhau, nhưng số liệu nghiêng về **Definition 2**.
 
 ### 2.4 Xu hướng định tính – **tái lập được với topology Hình 3**
 
@@ -82,10 +84,11 @@ Vì vậy chỉ so được **xu hướng**.
 
 **Kết luận E11:**
 - Với dữ liệu lỗ hổng và topology vẽ trong Hình 3, **6/7 kết luận định tính** của paper tái lập được, trong đó có kết luận chính "shuffle + diversity tốt nhất".
-- Nếu dùng đúng danh sách cạnh trong Definition 2 thì chỉ còn 3/7. Kết luận của paper **nhạy với một cạnh** (V6 → V4) mà phần định nghĩa và hình vẽ của paper ghi không thống nhất.
-- Chọn VM bằng độ trung tâm (Eq. 8) ra **V2**, trong khi paper chọn V5. Paper không nêu cách gộp 3 độ đo.
+- Nếu dùng đúng danh sách cạnh trong Definition 2 thì chỉ còn **3/7**. Kết luận của paper **nhạy với một cạnh** (V6 → V4) mà phần định nghĩa và hình vẽ của paper ghi không thống nhất. Số liệu tổng của chính paper lại gợi ý họ tính trên Definition 2 (mục 2.3), nên kết luận "shuffle + diversity tốt nhất" **chỉ tái lập được khi dùng topology Hình 3**.
+- Chọn VM bằng độ trung tâm (Eq. 8) ra **V5, đúng như paper**, khi tính closeness, in-degree, betweenness trên **đồ thị tấn công có hướng** rồi cộng ba độ đo. Với Definition 2, V5 và V7 bằng nhau ở cả ba độ đo (lấy V5 theo chỉ số nhỏ hơn); với Hình 3, V5 đứng đầu riêng. Bản trước tính trên đồ thị vô hướng nên ra V2.
 
 ## 3. Giới hạn của lần tái lập
 - Không có mã nguồn hay dữ liệu gốc ("No data was used"). Mọi số được dựng lại từ bảng, hình và văn bản.
+- Shuffle V5 dùng quy tắc "bỏ mọi cạnh vào V5, thêm V7 → V5" suy từ đường ví dụ A→V2→V7→V5→V8. Danh sách cạnh E′ in trong mục 4.2 mâu thuẫn với đường này (vẫn còn V1→V5, V2→V5, V4→V5, thiếu A→V2 và V7→V5); dùng nguyên văn E′ thì R mạng = 188.87, cũng không khớp 167.38.
 - Chưa tái lập Hình 5 (IPV/PSV theo kích thước mạng n = 10–200), Hình 8 (mạng 400 VM) và Hình 9 (theo thời gian), vì paper không mô tả đủ cách sinh các mạng đó.
 - Chỉ áp MTD lên V5 như ví dụ của paper. Hình 6 áp lên từng VM nhưng không có số liệu dạng bảng để so.

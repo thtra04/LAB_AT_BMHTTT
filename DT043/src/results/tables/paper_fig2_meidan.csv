@@ -1,0 +1,28 @@
+exp,device,tpr,fpr,delay_samples,thuật toán,Device ID
+E1_baseline,Danmini_Doorbell,1.0,0.00840320257183362,66.0,Autoencoder,1
+E1_baseline,Ecobee_Thermostat,0.8151945452692579,0.0,161.6,Autoencoder,2
+E1_baseline,Ennio_Doorbell,0.3658365876827273,0.0,11228.4,Autoencoder,3
+E1_baseline,Philips_B120N10_Baby_Monitor,1.0,0.0,330.8,Autoencoder,4
+E1_baseline,Provision_PT_737E_Security_Camera,1.0,0.004020674956557941,88.0,Autoencoder,5
+E1_baseline,Provision_PT_838_Security_Camera,0.7996412479368231,0.0,246.0,Autoencoder,6
+E1_baseline,Samsung_SNH_1011_N_Webcam,0.8737626365920645,0.00800735610498774,387.2,Autoencoder,7
+E1_baseline,SimpleHome_XCS7_1002_WHT_Security_Camera,0.7755932995794808,0.0019097087428687598,42.2,Autoencoder,8
+E1_baseline,SimpleHome_XCS7_1003_WHT_Security_Camera,0.7700513459986796,0.0,42.0,Autoencoder,9
+E3_iforest,Danmini_Doorbell,1.0,0.01703511656260524,122.0,IsolationForest,1
+E3_iforest,Ecobee_Thermostat,1.0,0.0,186.8,IsolationForest,2
+E3_iforest,Ennio_Doorbell,1.0,8.868707696567617e-05,27.2,IsolationForest,3
+E3_iforest,Philips_B120N10_Baby_Monitor,1.0,0.00093786732948614,569.6,IsolationForest,4
+E3_iforest,Provision_PT_737E_Security_Camera,0.7066477059301357,0.00062427707997606,270.4,IsolationForest,5
+E3_iforest,Provision_PT_838_Security_Camera,0.646831097234179,0.0039805405899185405,443.5333333333333,IsolationForest,6
+E3_iforest,Samsung_SNH_1011_N_Webcam,1.0,0.0,517.6,IsolationForest,7
+E3_iforest,SimpleHome_XCS7_1002_WHT_Security_Camera,1.0,0.0,243.6,IsolationForest,8
+E3_iforest,SimpleHome_XCS7_1003_WHT_Security_Camera,1.0,0.0,200.0,IsolationForest,9
+E4_light,Danmini_Doorbell,1.0,0.00885192977495932,64.8,AE nhẹ (V1),1
+E4_light,Ecobee_Thermostat,0.8613943365619245,0.0,167.6,AE nhẹ (V1),2
+E4_light,Ennio_Doorbell,0.3658328384687316,0.0,12729.8,AE nhẹ (V1),3
+E4_light,Philips_B120N10_Baby_Monitor,0.959214696334184,0.0,360.4,AE nhẹ (V1),4
+E4_light,Provision_PT_737E_Security_Camera,0.948147507639178,0.00227078891201872,103.2,AE nhẹ (V1),5
+E4_light,Provision_PT_838_Security_Camera,0.7495339081600738,0.0008378882597453599,268.8,AE nhẹ (V1),6
+E4_light,Samsung_SNH_1011_N_Webcam,0.873744617003449,0.01074575709378408,316.4,AE nhẹ (V1),7
+E4_light,SimpleHome_XCS7_1002_WHT_Security_Camera,0.7756217498259146,0.00172151636202728,53.2,AE nhẹ (V1),8
+E4_light,SimpleHome_XCS7_1003_WHT_Security_Camera,0.7700530091427692,0.0,42.8,AE nhẹ (V1),9

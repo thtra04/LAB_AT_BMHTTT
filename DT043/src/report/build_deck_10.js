@@ -8,41 +8,17 @@ const ReactDOMServer = require("react-dom/server");
 const sharp = require("sharp");
 const fa = require("react-icons/fa6");
 const { applyTheme } = require("./apply_theme.js");
+const { paperSlides, fig6Slide, appendixSlides, csv } = require("./deck_paper.js");
 
 const HERE = __dirname;
 const ROOT = path.resolve(HERE, "..");
 const FIG = path.join(ROOT, "results", "figures");
 const D = JSON.parse(fs.readFileSync(path.join(HERE, "deck_data.json"), "utf8"));
 const OUT = path.join(ROOT, "..", "tailieu", "thuyet_trinh", "SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pptx");
-const TAB = path.join(ROOT, "results", "tables");
-function csv(name) {
-  // đọc CSV chuẩn (có trường đặt trong ngoặc kép chứa dấu phẩy)
-  const raw = fs.readFileSync(path.join(TAB, name), "utf8").replace(String.fromCharCode(0xFEFF), "");
-  const NL = String.fromCharCode(10), CR = String.fromCharCode(13);
-  const rows = [];
-  let row = [], cur = "", inQ = false;
-  for (let i = 0; i < raw.length; i++) {
-    const ch = raw[i];
-    if (inQ) {
-      if (ch === '"' && raw[i + 1] === '"') { cur += '"'; i++; }
-      else if (ch === '"') inQ = false;
-      else cur += ch;
-    } else if (ch === '"') inQ = true;
-    else if (ch === ",") { row.push(cur); cur = ""; }
-    else if (ch === NL || ch === CR) {
-      if (ch === CR && raw[i + 1] === NL) i++;
-      row.push(cur); cur = ""; if (row.some((v) => v !== "")) rows.push(row); row = [];
-    } else cur += ch;
-  }
-  if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
-  const head = rows[0];
-  return rows.slice(1).map((r) => Object.fromEntries(r.map((v, i) => [head[i], v])));
-}
-
 const THEME = {
   name: "DT043 Edge Defense",
-  headFontFace: "Cambria",
-  bodyFontFace: "Calibri",
+  headFontFace: "Times New Roman",
+  bodyFontFace: "Times New Roman",
   colors: {
     dk1: "1B2430", lt1: "FFFFFF", dk2: "0B1F33", lt2: "EAF2F5",
     accent1: "0E9F8E", accent2: "F2A541", accent3: "D64545", accent4: "5B6B7C",
@@ -63,9 +39,9 @@ pres.defineSlideMaster({
   title: "DARK",
   background: { color: HEX.dk2 },
   objects: [
-    { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.0, w: 11.7, h: 1.9, fontSize: 40, bold: true,
+    { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.0, w: 11.7, h: 0.88, fontSize: 40, bold: true,
       color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-    { placeholder: { options: { name: "body", type: "body", x: 0.8, y: 4.1, w: 11.7, h: 1.6, fontSize: 18,
+    { placeholder: { options: { name: "body", type: "body", x: 0.8, y: 3.17, w: 11.7, h: 2.6, fontSize: 32,
       color: C.background2, valign: "top", margin: 0 }, text: "" } },
   ],
 });
@@ -127,15 +103,18 @@ async function main() {
   const cf = D.configs, q = D.quant, e = D.edge;
   const lbl = { E1_baseline: "B0 AE", E2_global: "B1 global", E2_shared_pdnorm: "B1 chung+pdnorm", E3_iforest: "B2 IForest", E4_light: "V1 AE nhẹ" };
   let s;
+  const ctx = { pres, D, FIG, HEX, C, fa, text, card, iconCircle, stat, content, f, nf };
 
   // ================================================================ 1. Tiêu đề
   pres.addSection({ title: "Mở đầu" });
   s = pres.addSlide({ masterName: "DARK", sectionTitle: "Mở đầu" });
+  // bìa theo bản sinh viên chỉnh trong PowerPoint (27/10): tên, MSSV, lớp mỗi thứ một dòng, cỡ 32
   s.addText("Phát hiện botnet IoT bằng autoencoder nhẹ", { placeholder: "title" });
   s.addText([
     { text: "Đề tài DT043 · Bài giữa kỳ An toàn Bảo mật Hệ thống thông tin", options: { breakLine: true } },
-    { text: "Hoàng Thanh Trà · MSSV 1150080120 · Lớp 11CNPM2", options: { breakLine: true } },
-    { text: "Per-device AE · lượng tử hóa int8 · edge benchmark · MTD lai · tái lập 3-layer THARM", options: { italic: true, color: C.accent2 } },
+    { text: "Tên: Hoàng Thanh Trà", options: { breakLine: true } },
+    { text: "MSSV: 1150080120", options: { breakLine: true } },
+    { text: "Lớp: 11CNPM2" },
   ], { placeholder: "body" });
   await iconCircle(s, fa.FaShieldHalved, 0.8, 0.7, 1.0, HEX.accent1, "logo");
   s.addNotes("Em chào thầy và các bạn. Đề tài DT043: phát hiện thiết bị IoT bị nhiễm botnet ngay tại thiết bị biên bằng autoencoder huấn luyện "
@@ -165,28 +144,9 @@ async function main() {
   s.addNotes("Thiết bị IoT dễ bị chiếm, edge có tài nguyên hạn chế, mỗi thiết bị một hành vi. Sáu câu hỏi nghiên cứu, tiêu chí định lượng chốt "
     + "và lưu checksum trước khi chạy để không chỉnh theo kết quả.");
 
-  // ================================================================ 3. Hai track
-  s = content("Mở đầu");
-  s.addText("Paper chính nói về MTD → chiến lược hai track", { placeholder: "title" });
-  text(s, "Masud et al. (2025, Computers & Security 153:104380) – hybrid Moving Target Defence trên mô hình 3-layer THARM; "
-    + "không dùng autoencoder, N-BaIoT hay edge.", { x: 0.6, y: 1.35, w: 12.1, h: 0.7, fontSize: 15, color: C.accent4 });
-  const tracks = [
-    ["Track A · phát hiện", fa.FaBrain, HEX.accent1, ["Per-device AE trên N-BaIoT, baseline Meidan 2018", "Model nhẹ + int8 + hiệu chỉnh ngưỡng", "Edge benchmark trên 1 lõi E-core"]],
-    ["Track B · MTD", fa.FaShuffle, HEX.accent2, ["Tái lập 3-layer THARM bằng đúng CVE/topology của paper (E11)", "Shuffle / diversity / redundancy và tổ hợp", "MTD lai: cảnh báo AE kích hoạt move"]],
-  ];
-  for (let i = 0; i < 2; i++) {
-    const x = 0.6 + i * 6.35;
-    card(s, x, 2.25, 5.75, 3.4, HEX.lt2, "track" + i);
-    await iconCircle(s, tracks[i][1], x + 0.3, 2.5, 0.8, tracks[i][2], "trackicon" + i);
-    text(s, tracks[i][0], { x: x + 1.3, y: 2.65, w: 4.2, h: 0.5, fontSize: 20, bold: true, color: C.text2 });
-    s.addText(tracks[i][3].map((t, j) => ({ text: t, options: { bullet: true, breakLine: j < tracks[i][3].length - 1 } })),
-      { x: x + 0.4, y: 3.55, w: 5.0, h: 1.95, fontSize: 16, color: C.text1, paraSpaceAfter: 8, valign: "top", margin: 0, isTextBox: true });
-  }
-  s.addShape(pres.shapes.RIGHT_ARROW, { x: 6.12, y: 3.7, w: 0.6, h: 0.5, fill: { color: HEX.accent3 }, line: { color: HEX.accent3 }, objectName: "track-arrow" });
-  text(s, "Cầu nối: cửa sổ cảnh báo của AE (Track A) là sự kiện kích hoạt MTD event-based (Track B)",
-    { x: 0.6, y: 5.95, w: 12.1, h: 0.5, fontSize: 16, bold: true, color: C.accent3, align: "center" });
-  s.addNotes("Paper chính nói về MTD, không dùng autoencoder. Em chia hai track: A phát hiện bằng AE theo Meidan; B tái lập 3-layer THARM "
-    + "bằng đúng dữ liệu của paper và dùng cảnh báo AE để kích hoạt MTD lai.");
+  // ================================================================ 3–5. Phân tích bài báo tham khảo (→ hai track)
+  pres.addSection({ title: "Bài báo tham khảo" });
+  await paperSlides(ctx, "Bài báo tham khảo");
 
   // ================================================================ 4. Dữ liệu & chống rò rỉ
   pres.addSection({ title: "Dữ liệu & phương pháp" });
@@ -231,7 +191,7 @@ async function main() {
     text(s, tiers[i][1], { x: 8.45, y: y - 0.04, w: 4.2, h: 0.35, fontSize: 16, bold: true, color: C.text2 });
     text(s, tiers[i][2], { x: 8.45, y: y + 0.3, w: 4.2, h: 0.4, fontSize: 13 });
   }
-  text(s, "54 test tự động: unit · integration · negative (gói bị sửa 1 byte, path traversal, sai số chiều)", { x: 0.6, y: 6.3, w: 12.1, h: 0.4, fontSize: 13, italic: true, color: C.accent4 });
+  text(s, "56 test tự động: unit · integration · negative (gói bị sửa 1 byte, path traversal, sai số chiều)", { x: 0.6, y: 6.3, w: 12.1, h: 0.4, fontSize: 13, italic: true, color: C.accent4 });
   s.addNotes("Pipeline theo Meidan: chuẩn hóa per-device, AE học benign, ngưỡng mean + std, vote cửa sổ; cải tiến là V1 chỉ 8 nghìn tham số, "
     + "int8 rồi hiệu chỉnh ngưỡng. Hệ thống tách 4 tầng, AI và backend chỉ nói chuyện qua gói có checksum. Tiếp theo em demo.");
 
@@ -323,6 +283,9 @@ async function main() {
   s.addNotes("Track B: em dựng lại 3-layer THARM bằng đúng 32 CVE, 8 VM và topology của paper. Rủi ro từng VM khớp tới 0,01, ba đường tấn công lệch 0,8%; "
     + "tổng toàn mạng không ra đúng vì paper cắt danh sách cạnh và in công thức mâu thuẫn. Với topology Hình 3 tái lập 6/7 kết luận, gồm S+D tốt nhất.");
 
+  // ================================================================ Chạy lại Hình 6 của bài báo
+  await fig6Slide(ctx, "Kết quả");
+
   // ================================================================ 10. Tiêu chí & kết luận
   pres.addSection({ title: "Kết luận" });
   s = content("Kết luận");
@@ -344,6 +307,9 @@ async function main() {
     { x: 7.7, y: 1.65, w: 4.8, h: 4.8, fontSize: 16, paraSpaceAfter: 10, valign: "top", margin: 0, isTextBox: true, objectName: "concl-text" });
   s.addNotes("RQ5 về edge đạt với biên lớn, RQ1 đến RQ4 không đạt và em giữ nguyên tiêu chí. Tóm lại: AE nhẹ bắt gần tuyệt đối 8/10 loại tấn công, "
     + "chạy được trên edge, nhưng cần thêm đặc trưng cho flood giả mạo nguồn. Mã nguồn và hướng dẫn chạy lại có trên GitHub. Em cảm ơn thầy và các bạn.");
+
+  // ================================================================ Phụ lục (trả lời câu hỏi)
+  await appendixSlides(ctx);
 
   await pres.writeFile({ fileName: OUT });
   await applyTheme(OUT, THEME);

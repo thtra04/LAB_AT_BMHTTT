@@ -55,3 +55,15 @@ def test_fig3_topology_trend_shuffle_diversity_best():
 
 def test_asp_is_probability(base):
     assert all(0.0 <= base.asp(v) <= 1.0 for v in T.VM_OS)
+
+
+@pytest.mark.parametrize("fig3", [False, True])
+def test_general_shuffle_reproduces_paper_v5_example(fig3):
+    b = T.build(with_fig3_edge=fig3)
+    assert set(T.shuffle(b, "V5", "H4").graph.edges) == set(T.shuffle_v5_host2_to_host4(b).graph.edges)
+
+
+@pytest.mark.parametrize("fig3", [False, True])
+def test_select_vm_is_v5_like_paper(fig3):
+    """Eq. 8 trên đồ thị tấn công có hướng chọn V5 như mục 4.2 (cả Definition 2 và topology Hình 3)."""
+    assert T.build(with_fig3_edge=fig3).select_vm() == "V5"

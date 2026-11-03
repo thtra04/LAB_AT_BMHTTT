@@ -7,17 +7,18 @@ const ReactDOMServer = require("react-dom/server");
 const sharp = require("sharp");
 const fa = require("react-icons/fa6");
 const { applyTheme } = require("./apply_theme.js");
+const { paperSlides, fig6Slide, appendixSlides } = require("./deck_paper.js");
 
 const HERE = __dirname;
 const ROOT = path.resolve(HERE, "..");
 const FIG = path.join(ROOT, "results", "figures");
 const D = JSON.parse(fs.readFileSync(path.join(HERE, "deck_data.json"), "utf8"));
-const OUT = path.join(ROOT, "..", "tailieu", "thuyet_trinh", "SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx");
+const OUT = process.env.DECK_OUT || path.join(ROOT, "..", "tailieu", "thuyet_trinh", "SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx");
 
 const THEME = {
   name: "DT043 Edge Defense",
-  headFontFace: "Cambria",
-  bodyFontFace: "Calibri",
+  headFontFace: "Times New Roman",
+  bodyFontFace: "Times New Roman",
   colors: {
     dk1: "1B2430", lt1: "FFFFFF", dk2: "0B1F33", lt2: "EAF2F5",
     accent1: "0E9F8E", accent2: "F2A541", accent3: "D64545", accent4: "5B6B7C",
@@ -38,9 +39,9 @@ pres.defineSlideMaster({
   title: "DARK",
   background: { color: HEX.dk2 },
   objects: [
-    { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.0, w: 11.7, h: 1.9, fontSize: 40, bold: true,
+    { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.0, w: 11.7, h: 0.88, fontSize: 40, bold: true,
       color: C.background1, fontFace: THEME.headFontFace, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-    { placeholder: { options: { name: "body", type: "body", x: 0.8, y: 4.1, w: 11.7, h: 1.6, fontSize: 18,
+    { placeholder: { options: { name: "body", type: "body", x: 0.8, y: 3.17, w: 11.7, h: 2.6, fontSize: 32,
       color: C.background2, valign: "top", margin: 0 }, text: "" } },
   ],
 });
@@ -102,15 +103,18 @@ async function main() {
   const cf = D.configs;
   const q = D.quant;
   const e = D.edge;
+  const ctx = { pres, D, FIG, HEX, C, fa, text, card, iconCircle, stat, content, f, nf };
 
   // ================================================================ 1. Tiêu đề
   pres.addSection({ title: "Mở đầu" });
   let s = pres.addSlide({ masterName: "DARK", sectionTitle: "Mở đầu" });
+  // bìa theo bản sinh viên chỉnh trong PowerPoint (27/10): tên, MSSV, lớp mỗi thứ một dòng, cỡ 32
   s.addText("Phát hiện botnet IoT bằng autoencoder nhẹ", { placeholder: "title" });
   s.addText([
     { text: "Đề tài DT043 · Bài giữa kỳ An toàn Bảo mật Hệ thống thông tin", options: { breakLine: true } },
-    { text: "Hoàng Thanh Trà · MSSV 1150080120 · Lớp 11CNPM2", options: { breakLine: true } },
-    { text: "Per-device AE · lượng tử hóa int8 · edge benchmark · MTD lai", options: { italic: true, color: C.accent2 } },
+    { text: "Tên: Hoàng Thanh Trà", options: { breakLine: true } },
+    { text: "MSSV: 1150080120", options: { breakLine: true } },
+    { text: "Lớp: 11CNPM2" },
   ], { placeholder: "body" });
   await iconCircle(s, fa.FaShieldHalved, 0.8, 0.7, 1.0, HEX.accent1, "logo");
   s.addNotes("Giới thiệu đề tài: phát hiện thiết bị IoT bị nhiễm botnet ngay tại edge bằng autoencoder huấn luyện riêng "
@@ -139,28 +143,9 @@ async function main() {
   text(s, "Tiêu chí thành công chốt trước khi chạy (SHA-256 ghi trong nhật ký)", { x: 7.6, y: 5.85, w: 4.9, h: 0.6, fontSize: 12, italic: true, color: C.accent4 });
   s.addNotes("Ba lý do của bài toán. Sáu câu hỏi nghiên cứu, mỗi câu có tiêu chí định lượng được chốt và lưu checksum trước khi chạy để không chỉnh tiêu chí theo kết quả.");
 
-  // ================================================================ 3. Hai track
-  s = content("Mở đầu");
-  s.addText("Paper chính nói về MTD → chiến lược hai track", { placeholder: "title" });
-  text(s, "Masud et al. (2025, Computers & Security) – hybrid Moving Target Defence + mô hình đồ thị tấn công 3-layer THARM; "
-    + "không dùng autoencoder, N-BaIoT hay edge.", { x: 0.6, y: 1.35, w: 12.1, h: 0.7, fontSize: 15, color: C.accent4 });
-  const tracks = [
-    ["Track A · lõi · ~70%", fa.FaBrain, HEX.accent1, ["Per-device AE trên N-BaIoT", "Baseline: Meidan 2018", "Model nhẹ + int8 + hiệu chỉnh ngưỡng", "Edge benchmark"]],
-    ["Track B · cầu nối · ~30%", fa.FaShuffle, HEX.accent2, ["Tái lập xu hướng MTD: shuffle / diversity / kết hợp", "Mô hình HARM rút gọn", "MTD lai: cảnh báo AE kích hoạt move"]],
-  ];
-  for (let i = 0; i < 2; i++) {
-    const x = 0.6 + i * 6.35;
-    card(s, x, 2.25, 5.75, 3.4, HEX.lt2, "track" + i);
-    await iconCircle(s, tracks[i][1], x + 0.3, 2.5, 0.8, tracks[i][2], "trackicon" + i);
-    text(s, tracks[i][0], { x: x + 1.3, y: 2.65, w: 4.2, h: 0.5, fontSize: 20, bold: true, color: C.text2 });
-    s.addText(tracks[i][3].map((t, j) => ({ text: t, options: { bullet: true, breakLine: j < tracks[i][3].length - 1 } })),
-      { x: x + 0.4, y: 3.55, w: 5.0, h: 1.95, fontSize: 16, color: C.text1, paraSpaceAfter: 8, valign: "top", margin: 0, isTextBox: true });
-  }
-  text(s, "Cầu nối: cửa sổ cảnh báo của AE (Track A) là sự kiện kích hoạt MTD event-based (Track B)",
-    { x: 0.6, y: 5.95, w: 12.1, h: 0.5, fontSize: 16, bold: true, color: C.accent3, align: "center" });
-  s.addShape(pres.shapes.RIGHT_ARROW, { x: 6.12, y: 3.7, w: 0.6, h: 0.5, fill: { color: HEX.accent3 }, line: { color: HEX.accent3 }, objectName: "track-arrow" });
-  s.addNotes("Phát hiện quan trọng khi đọc paper: paper chính lệch chủ đề. Em không gượng ép tái lập số liệu MTD bằng autoencoder mà chia hai track; "
-    + "track B nối hai mảng bằng cách dùng cảnh báo AE làm bộ kích hoạt event-based cho MTD lai.");
+  // ================================================================ 3–5. Phân tích bài báo tham khảo (→ hai track)
+  pres.addSection({ title: "Bài báo tham khảo" });
+  await paperSlides(ctx, "Bài báo tham khảo");
 
   // ================================================================ 4. Dữ liệu
   pres.addSection({ title: "Dữ liệu & phương pháp" });
@@ -231,7 +216,7 @@ async function main() {
     text(s, tiers[i][1], { x: x + 0.2, y: 2.95, w: 2.4, h: 0.5, fontSize: 20, bold: true, color: C.text2, align: "center" });
     text(s, tiers[i][2], { x: x + 0.25, y: 3.5, w: 2.3, h: 2.0, fontSize: 13 });
   }
-  text(s, "Hợp đồng AI → BE: artifacts/deploy/<thiết bị>/{model.tflite, scaler.json, meta.json} · 42 test tự động (30 AI + 12 BE/DB)",
+  text(s, "Hợp đồng AI → BE: artifacts/deploy/<thiết bị>/{model.tflite, scaler.json, meta.json} · 56 test tự động (44 AI + 12 BE/DB)",
     { x: 0.6, y: 5.5, w: 12.1, h: 0.6, fontSize: 14, italic: true, color: C.accent4 });
   s.addNotes("Tầng AI và BE chỉ nói chuyện qua gói triển khai có checksum, nên thay model không phải sửa backend. Có test từ chối gói bị sửa 1 byte và chặn path traversal.");
 
@@ -378,7 +363,11 @@ async function main() {
   s.addImage({ path: path.join(FIG, "fig_mtd_hybrid_tradeoff.png"), x: 6.6, y: 1.45, w: 6.1, h: 3.77, objectName: "hybrid-fig" });
   text(s, `Cùng chi phí, hybrid lộ diện ít hơn time-based. Chỉ event-based: lộ diện TB ${nf(Math.round(D.hybrid.event_exposure))} mẫu vì tấn công AE bỏ sót không kích hoạt move → time-based là lưới an toàn.`,
     { x: 6.6, y: 5.35, w: 6.1, h: 1.4, fontSize: 14 });
-  s.addNotes("Track B: mô hình HARM rút gọn với tham số giả định, chỉ so xu hướng. MTD lai dùng chuỗi cảnh báo thật của V1 trên luồng test.");
+  s.addNotes("Track B: mô hình HARM rút gọn với tham số giả định, chỉ so xu hướng. MTD lai dùng chuỗi cảnh báo thật của V1 trên luồng test. "
+    + "Tái lập bằng đúng dữ liệu của bài báo (E11) ở phụ lục.");
+
+  // ================================================================ Chạy lại Hình 6 của bài báo
+  await fig6Slide(ctx, "Kết quả");
 
   // ================================================================ 15. Tiêu chí
   pres.addSection({ title: "Kết luận" });
@@ -404,6 +393,9 @@ async function main() {
     { text: "Tiếp theo: chọn ngưỡng có kiểm định trên dữ liệu mới · Raspberry Pi + đo điện thật · đặc trưng cho flood giả mạo", options: { bullet: true, color: C.accent2 } },
   ], { placeholder: "body", fontSize: 20, paraSpaceAfter: 14 });
   s.addNotes("Tóm tắt năm ý chính và hướng phát triển. Mã nguồn, cấu hình, log, manifest và hướng dẫn chạy lại ở thư mục DT043 trên GitHub.");
+
+  // ================================================================ Phụ lục (trả lời câu hỏi)
+  await appendixSlides(ctx);
 
   await pres.writeFile({ fileName: OUT });
   await applyTheme(OUT, THEME);

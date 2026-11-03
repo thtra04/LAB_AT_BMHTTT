@@ -5,6 +5,7 @@ import json
 
 import numpy as np
 import pandas as pd
+from PIL import Image
 
 from docx_helpers import Report
 
@@ -42,6 +43,7 @@ class Results:
         self.th_net = pd.read_csv(T / "tharm_network_vs_paper.csv")
         self.th_scen = pd.read_csv(T / "tharm_scenarios.csv")
         self.th_trend = pd.read_csv(T / "tharm_trends.csv")
+        self.fig6 = pd.read_csv(T / "paper_fig6_masud_vs_paper.csv")
 
     def s(self, exp, key):
         return self.summ.loc[exp, f"{key}_mean"], self.summ.loc[exp, f"{key}_std"], self.summ.loc[exp, f"{key}_ci95"]
@@ -49,6 +51,18 @@ class Results:
     def test(self, name, metric="macro_f1"):
         r = self.tests[(self.tests.test == name) & (self.tests.metric == metric)]
         return r.iloc[0] if len(r) else None
+
+
+def side_by_side(left, right, out, gap=40):
+    """Ghép hình gốc (trái) và hình chạy lại (phải) cùng chiều cao để tiết kiệm trang."""
+    a, b = Image.open(left).convert("RGB"), Image.open(right).convert("RGB")
+    h = min(a.height, b.height)
+    a, b = (im.resize((round(im.width * h / im.height), h)) for im in (a, b))
+    img = Image.new("RGB", (a.width + gap + b.width, h), "white")
+    img.paste(a, (0, 0))
+    img.paste(b, (a.width + gap, 0))
+    img.save(out)
+    return out
 
 
 def ch6_results(R: Report, X: Results):
@@ -86,7 +100,7 @@ def ch6_results(R: Report, X: Results):
     R.table(df, "B0 theo thiết bị, đối chiếu tr*/ws* của Meidan 2018 (tr* phụ thuộc cách chuẩn hóa nên chỉ để tham khảo)",
             font=8.5, decimals=4, fmt={"tr* (DT043)": lambda v: f"{v:.3g}", "tr* Meidan": lambda v: f"{v:.3f}",
                                         "ws* Meidan": lambda v: str(int(v))})
-    R.figure(X.F / "fig_macro_f1_per_device.png", "macro-F1 theo thiết bị cho các cấu hình chính (mean ± std qua seed)")
+    R.figure(X.F / "fig_macro_f1_per_device.png", "macro-F1 theo thiết bị cho các cấu hình chính (mean ± std qua seed)", 14)
 
     R.h2("6.3 RQ2 – Per-device so với model chung")
     for name, lab in (("RQ2: per-device > global", "B0 so với B1 global"),
@@ -214,12 +228,11 @@ def ch6_results(R: Report, X: Results):
            "rất thấp nhờ FPR mức cửa sổ thấp.")
     R.figure(X.F / "fig_mtd_hybrid_tradeoff.png", "Trade-off an ninh (thời gian lộ diện) và chi phí (số move) của MTD", 12)
 
-    R.page_break()
     R.h2("6.8 E11 – Tái lập 3-layer THARM bằng đúng số liệu của paper chính")
     R.para("Sau khi có toàn văn, mô hình 3-layer THARM được dựng lại bằng **dữ liệu của chính paper**: 18 CVE hệ điều hành "
            "(Bảng 1) và 14 CVE dịch vụ (Bảng 2) với exploitability E, impact I, cost; gán OS cho 8 VM theo Hình 1, dịch vụ "
            "theo Hình 3, đồ thị tấn công theo Definition 2; shuffle (V5 di trú host 2 → host 4), diversity (đổi OS dự phòng) "
-           "và redundancy (nhân bản V5) theo mục 4.2–4.4 (ai/src/nbaiot/mtd/tharm.py, 12 test so khớp số của paper).")
+           "và redundancy (nhân bản V5) theo mục 4.2–4.4 (ai/src/nbaiot/mtd/tharm.py, 14 test so khớp số của paper).")
     vm = X.th_vm
     keep = vm[vm["R_paper(mục 4.2–4.3)"].notna()]
     rows = [[r.VM, f"{r['R_paper(mục 4.2–4.3)']:.2f}", f"{r['R_ours(ΣE·I)']:.3f}"] for _, r in keep.iterrows()]
@@ -246,14 +259,56 @@ def ch6_results(R: Report, X: Results):
     n_fig3 = int(X.th_trend[X.th_trend.topology != "Definition 2"]["tái lập"].sum())
     n_def2 = int(X.th_trend[X.th_trend.topology == "Definition 2"]["tái lập"].sum())
     R.para(f"Tổng toàn mạng của paper không suy ra được từ dữ liệu công bố (danh sách cạnh sau shuffle bị cắt; AC theo VM "
-           f"ở mục 4.2 lớn gấp 5–8 lần tổng cost của Bảng 1–2; RoC toàn mạng không bằng R/AC của chính paper), nên chỉ so "
-           f"xu hướng. Với topology vẽ trong Hình 3, **{n_fig3}/7 kết luận định tính** tái lập được, gồm kết luận chính "
-           f"\"shuffle + diversity có rủi ro thấp nhất\"; với đúng danh sách cạnh của Definition 2 chỉ còn {n_def2}/7 – kết "
-           "luận của paper nhạy với một cạnh (V6 → V4) mà định nghĩa và hình vẽ ghi không thống nhất. Chi tiết: "
-           "docs/tai_lap_paper_chinh.md.")
-    R.figure(X.F / "fig_tharm_scenarios.png", "Tái lập 3-layer THARM: rủi ro, chi phí và ASP theo kịch bản MTD", 15.5)
+           f"ở mục 4.2 lớn gấp 5–8 lần tổng cost của Bảng 1–2), nên chỉ so xu hướng. RoC toàn mạng của paper là tổng RoC "
+           f"theo từng đường (1,01 ≈ 4 × 0,259), giống cách tái lập tính. Với topology vẽ trong Hình 3, **{n_fig3}/7 kết "
+           f"luận định tính** tái lập được, gồm kết luận chính \"shuffle + diversity có rủi ro thấp nhất\"; với đúng danh "
+           f"sách cạnh của Definition 2 chỉ còn {n_def2}/7 – kết luận của paper nhạy với một cạnh (V6 → V4) mà định nghĩa "
+           "và hình vẽ ghi không thống nhất. Chia tổng toàn mạng của paper cho giá trị đường ví dụ ra khoảng 4 / 4 / 6 đường "
+           "(shuffle / diversity / redundancy), khớp Definition 2 hơn Hình 3 (4 / 5 / 8), nên kết luận \"shuffle + "
+           "diversity tốt nhất\" chỉ tái lập được khi dùng topology Hình 3. Độ trung tâm (Eq. 8) tính trên đồ thị tấn công "
+           "có hướng chọn V5, đúng như paper. Chi tiết: docs/tai_lap_paper_chinh.md.")
+    R.figure(X.F / "fig_tharm_scenarios.png", "Tái lập 3-layer THARM: rủi ro, chi phí và ASP theo kịch bản MTD", 15)
 
-    R.h2("6.9 Bảng đối chiếu tiêu chí đã chốt trước")
+    R.h2("6.9 Chạy lại đúng dạng biểu đồ của hai bài báo")
+    R.para("Để so trực tiếp với bài báo, các biểu đồ chính được vẽ lại theo **đúng dạng của hình gốc** (cùng trục, cùng chuỗi "
+           "dữ liệu, cùng ký hiệu) bằng kết quả chạy lại (ai/scripts/11_paper_figures.py). Hình gốc được cắt từ bản PDF Open "
+           "Access (CC BY) của từng bài và đặt cạnh hình chạy lại (trái: bài báo, phải: chạy lại).")
+    R.para("**Hình 6 của Masud et al. (2025)** – AR, AC, RoC của toàn mạng khi áp S, D, R, S+D, S+D+R lên từng VM theo thứ tự "
+           "trục x của bài (V5, V4, V7, V2, V1, V3, V6), dùng đúng CVE và topology Hình 3. Bài chỉ nêu host đích của V5 (host 4, "
+           "mục 4.2) và V2 (host 3, Hình 4a); các VM còn lại được giả định di trú sang host 4, quy tắc cạnh tổng quát hóa từ ví dụ "
+           "V5 (hàm tharm.shuffle, có test cho đúng kết quả của ví dụ V5).")
+    PF = X.root / "report" / "paper_figs"
+    R.figure(side_by_side(PF / "masud_fig6_metrics.png", X.F / "fig_paper_masud_fig6.png", PF / "cmp_masud_fig6.png"),
+             "Hình 6 của Masud et al. (2025): bài báo (trái) và chạy lại bằng dữ liệu của bài, topology Hình 3 (phải)", 16)
+    c6 = X.fig6.assign(ok=X.fig6["lệch %"].abs() <= 5)
+    agg = c6.groupby("MTD").agg(n=("ok", "sum"), mean=("lệch %", "mean"), vmin=("lệch %", "min"), vmax=("lệch %", "max"))
+    names = {"s": "Shuffle", "d": "Diversity", "r": "Redundancy", "s+d": "S+D", "s+d+r": "S+D+R"}
+    R.table(pd.DataFrame([[names[m], f"{int(agg.loc[m, 'n'])}/7", f"{agg.loc[m, 'mean']:+.1f}%",
+                           f"{agg.loc[m, 'vmin']:+.1f}% … {agg.loc[m, 'vmax']:+.1f}%"] for m in names],
+                         columns=["MTD", "VM lệch ≤ 5%", "Lệch AR trung bình", "Khoảng lệch"]),
+            "AR chạy lại so với Hình 6(a) của bài báo (giá trị bài báo đọc từ hình, sai số đọc ≈ ±5)", font=9,
+            col_widths_cm=[3.0, 3.0, 4.0, 6.0])
+    R.para("Đường **diversity khớp cả 7/7 VM**; shuffle và S+D khớp ở V5 – VM duy nhất bài nêu host đích – còn ở VM khác phụ "
+           "thuộc host đích mà bài không công bố. Redundancy và S+D+R cao hơn bài vì bài không nêu bản sao nối vào những VM nào. "
+           "AC và RoC khác thang đo (AC của bài gấp 5–8 lần tổng cost Bảng 1–2, như mục 6.8). Số liệu: "
+           "results/tables/paper_fig6_masud_vs_paper.csv.")
+    R.para("**Hình 7 của Masud et al. (2025)** – ASP từng đường tấn công trước và sau diversity.")
+    R.figure(side_by_side(PF / "masud_fig7_asp.png", X.F / "fig_paper_masud_fig7.png", PF / "cmp_masud_fig7.png"),
+             "Hình 7 của Masud et al. (2025): bài báo, 8 đường (trái) và chạy lại, 5 đường tới V8 (phải)", 14)
+    R.para("Hình 7 **không tái lập được**: topology bài công bố chỉ có 5 đường tấn công tới V8 trong khi bài vẽ 8 đường; ASP "
+           "đường của bài nằm trong 0.2–0.43 trong khi ASP từng VM ở Bảng 4 là 0.95–0.99, tức bài dùng một cách tính ASP đường "
+           "không được công bố. Với OR độc lập, đổi V5 từ Windows 11 sang Linux làm ASP các đường qua V5 tăng nhẹ.")
+    R.para("**Hình 2 (a, b) của Meidan et al. (2018)** – TPR/FPR theo thuật toán (boxplot trên 9 thiết bị) và thời gian phát "
+           "hiện theo thiết bị.")
+    R.figure(PF / "meidan_fig2_results.png", "Hình 2 (a, b) của bài báo Meidan et al. (2018) – hình gốc", 13)
+    R.figure(X.F / "fig_paper_meidan_fig2.png", "Chạy lại Hình 2 (a, b) trên N-BaIoT (trung bình theo seed)", 13)
+    R.para("FPR gần 0 ở mọi thuật toán như bài báo; TPR của autoencoder có trung vị 0.82 thay vì 100% do flood tcp/udp giả "
+           "mạo nguồn (Chương 7), và Isolation Forest chạy lại tốt hơn autoencoder. Bài đo thời gian phát hiện bằng giây trên "
+           "lưu lượng thật; N-BaIoT không có timestamp nên đo bằng số mẫu – thiết bị 3 (Ennio) trễ lớn vì bỏ sót tcp/udp. "
+           "LOF và One-class SVM chưa nằm trong ma trận thí nghiệm; Hình 2 (c, d) cần lưu lượng theo giờ nên không vẽ lại "
+           "được. Số liệu: results/tables/paper_fig2_meidan.csv.")
+
+    R.h2("6.10 Bảng đối chiếu tiêu chí đã chốt trước")
     R.table(pd.DataFrame({"RQ": X.crit.RQ, "Tiêu chí": X.crit.criterion, "Giá trị đo": X.crit.value,
                           "Kết luận": X.crit["pass"].map({True: "Đạt", False: "Không đạt"})}),
             "Kết quả so với tiêu chí thành công (docs/tieu_chi_thanh_cong.md)", font=9,
@@ -278,8 +333,8 @@ def ch7_analysis(R: Report, X: Results):
            "của chúng (≈ 0.17 ở Ennio) chỉ cao hơn phần lớn benign chứ không cao hơn đuôi phân phối benign; trong khi ngưỡng "
            "mean + std bị đuôi dài của MSE trên DSopt kéo lên rất cao (vd. 22.5 ở Ennio).")
     R.figure(X.F / "fig_error_mse_hist.png",
-             "Phân phối MSE của B0 trên Ennio: tcp và udp trùng nhau ở MSE ≈ 0.17, dưới ngưỡng mean+std", 14)
-    R.figure(X.F / "fig_recall_per_attack.png", "Recall theo loại tấn công", 14)
+             "Phân phối MSE của B0 trên Ennio: tcp và udp trùng nhau ở MSE ≈ 0.17, dưới ngưỡng mean+std", 12.5)
+    R.figure(X.F / "fig_recall_per_attack.png", "Recall theo loại tấn công", 12.5)
     R.para("**Vì sao Meidan đạt TPR 100% còn DT043 thì không?** Các khác biệt có thể giải thích: (1) DT043 khử trùng lặp "
            "và thêm purge gap; (2) DT043 dùng Adam + early stopping thống nhất thay vì tối ưu η/epochs (100–800) riêng từng "
            "thiết bị; (3) cách chuẩn hóa của paper không được mô tả, trong khi z-score làm các cột gần hằng có độ lệch rất "
@@ -303,7 +358,7 @@ def ch7_analysis(R: Report, X: Results):
     R.h2("7.2 Độ ổn định theo seed")
     sd = X.runs[X.runs.exp.isin(["E1_baseline", "E4_light"])].groupby(["exp", "device"])["tpr"].agg(["min", "max", "std"])
     unstable = sd[sd["max"] - sd["min"] > 0.05].reset_index()
-    R.figure(X.F / "fig_seed_stability.png", "Phân bố macro-F1 qua 5 seed theo thiết bị (B0 và V1)", 14)
+    R.figure(X.F / "fig_seed_stability.png", "Phân bố macro-F1 qua 5 seed theo thiết bị (B0 và V1)", 12.5)
     if len(unstable):
         R.table(pd.DataFrame({"Model": unstable.exp.map({"E1_baseline": "B0", "E4_light": "V1"}),
                               "Thiết bị": unstable.device.map(SHORT), "TPR min": unstable["min"], "TPR max": unstable["max"]}),
@@ -319,7 +374,7 @@ def ch7_analysis(R: Report, X: Results):
                           "macro-F1": a.macro_f1_mean, "F1 cân bằng": a.f1_balanced_mean}),
             "B0: quy tắc ngưỡng × kích thước cửa sổ (trung bình 9 thiết bị × 5 seed)", font=9,
             fmt={"ws TB": lambda v: f"{v:.0f}"})
-    R.figure(X.F / "fig_ablation_threshold.png", "Ablation quy tắc ngưỡng và cửa sổ (B0)", 14)
+    R.figure(X.F / "fig_ablation_threshold.png", "Ablation quy tắc ngưỡng và cửa sổ (B0)", 12.5)
     R.bullets([
         "**Cửa sổ:** ws = 1 (quyết định từng mẫu) cho FPR cao hơn rõ rệt; ws* giảm FPR nhiều lần; 2ws* gần như triệt tiêu "
         "FPR nhưng tăng gấp đôi độ trễ – majority vote là thành phần quan trọng như Meidan mô tả.",
@@ -404,6 +459,9 @@ def ch8_conclusion(R: Report, X: Results):
          "Không tái lập số tuyệt đối"],
         ["Kết luận định tính (E11)", "S+D tốt nhất; D < R", "6/7 với topology Hình 3; 3/7 với Definition 2",
          "Khớp với Hình 3"],
+        ["Hình 6 – AR theo VM (vẽ lại)", "5 chiến lược × 7 VM", "Diversity khớp 7/7 VM; S, S+D khớp ở V5",
+         "Khớp một phần"],
+        ["Hình 7 – ASP theo đường (vẽ lại)", "8 đường, ASP 0.2–0.43", "5 đường tới V8, ASP ≈ 0.91–0.94", "Không tái lập được"],
         ["Bộ kích hoạt MTD", "Không mô hình hóa detector", "AE V1 thật làm trigger event-based", "Mở rộng của DT043"],
     ], columns=["Khía cạnh", "Paper chính (Masud 2025)", "DT043", "Nhận xét"]), "Ánh xạ với paper chính", font=9,
         col_widths_cm=[3.0, 4.2, 5.8, 3.0])
@@ -413,8 +471,8 @@ def ch8_conclusion(R: Report, X: Results):
         "**Không tái lập được TPR 100%** của Meidan; nguyên nhân chỉ được khoanh vùng (ngưỡng + đặc tính tcp/udp), chưa tách riêng "
         "từng khác biệt quy trình.",
         "**Edge giả lập:** không có Raspberry Pi; energy là proxy; không đo pipeline trích đặc trưng.",
-        "**Track B:** mô hình HARM rút gọn với tham số giả định; chỉ tái lập xu hướng; chưa đối chiếu toàn văn paper chính "
-        "cho một số chi tiết (đánh dấu trong phiếu tái lập).",
+        "**Track B:** mô hình HARM rút gọn (E10) dùng tham số giả định nên chỉ tái lập xu hướng; E11 dùng đúng số liệu toàn văn "
+        "paper chính, khớp mức VM và đường tấn công nhưng không khớp tổng toàn mạng vì Bảng 4 của paper không nêu đủ cách tính.",
         "**Thống kê:** n = 9 thiết bị cho Wilcoxon là nhỏ; V2, E6, E9 chỉ 3 seed.",
         "**Hậu kiểm ngưỡng** (7.1) được đề xuất sau khi xem test nên chỉ mang tính giải thích.",
     ])
@@ -457,11 +515,11 @@ powershell -ExecutionPolicy Bypass -File run_all.ps1
 # mở http://127.0.0.1:8000/  (thêm ?replay=Danmini_Doorbell:mirai/syn để tự phát lại)
 """)
     R.h2("B. Kiểm thử")
-    R.para("ai/tests: 30 test (unit: schema, chia + purge, không trùng hash giữa các tập, scaler chỉ thấy DStrn, ngưỡng, "
+    R.para("ai/tests: 44 test – 30 test pipeline (unit: schema, chia + purge, không trùng hash giữa các tập, scaler chỉ thấy DStrn, ngưỡng, "
            "majority vote không vượt ranh giới segment, metric; integration: end-to-end trên dữ liệu tổng hợp, Keras ↔ "
            "TFLite, cùng seed cùng kết quả, Isolation Forest; negative: file rỗng, thiếu/thừa/sai thứ tự cột, NaN/±inf, chuỗi, "
-           "dòng bị cắt, cửa sổ sai, manifest bị sửa, sai số chiều, int8 thiếu representative data). backend/tests: 12 test "
-           "(API, cảnh báo, MTD, kiểm tra đầu vào, path traversal, lô quá lớn, gói model bị sửa, repository).")
+           "dòng bị cắt, cửa sổ sai, manifest bị sửa, sai số chiều, int8 thiếu representative data) và 14 test THARM khóa các số của paper (kể cả shuffle tổng quát cho đúng ví dụ V5). backend/tests: 12 test "
+           "(API, cảnh báo, MTD, kiểm tra đầu vào, path traversal, lô quá lớn, gói model bị sửa, repository). Tổng 56 test, đều qua.")
     R.h2("C. Cấu trúc kết quả")
     R.code("""
 results/raw/<exp>/<thiết bị>/seed=<s>/   config.yaml, metrics.json, train_log.csv
