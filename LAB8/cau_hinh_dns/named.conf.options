@@ -1,0 +1,17 @@
+options {
+    directory "/var/cache/bind";
+    listen-on { 127.0.0.1; 10.9.0.10; };
+    listen-on-v6 { none; };
+    recursion yes;
+    allow-query { 127.0.0.1; 10.9.0.0/24; };
+    allow-recursion { 127.0.0.1; 10.9.0.0/24; };
+    dnssec-validation no;
+    minimal-responses yes;
+};
+
+// LAB ONLY: do not use outside this isolated exercise.
+// Disable DNS COOKIE only for the simulated authoritative server
+// so the on-path spoofing exercise is deterministic.
+server 172.16.6.20 {
+    send-cookie no;
+};

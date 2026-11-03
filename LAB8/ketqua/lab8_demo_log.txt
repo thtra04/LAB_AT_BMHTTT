@@ -1,0 +1,62 @@
+[H[2J[3J+-------------------------------------------------------------------+
+|   LAB 8 - LOCAL DNS ATTACK : DNS SPOOFING & CACHE POISONING        |
+|   Sinh vien : Hoang Thanh Tra   MSSV : 1150080120   Lop : 11CNPM2  |
+|   Moi truong : mang ao co lap DNS-LAB 10.9.0.0/24 (domain .test)   |
++-------------------------------------------------------------------+
+
+========== MO HINH & DIA CHI (3 may that trong DNS-LAB) ==========
+>> DNS-SERVER 10.9.0.10  (BIND9 recursive/cache + authoritative lab9.test)
+ens37            UP             10.9.0.10/24 
+>> VICTIM 10.9.0.100  (+ DMZ: 172.16.6.10 web that, 172.16.6.20 auth-dns)
+ens37            UP             10.9.0.100/24 172.16.6.10/24 172.16.6.20/24 
+>> ATTACKER 10.9.0.200  (scapy + che do promiscuous)
+ens37            UP             10.9.0.200/24 
+
+========== BASELINE - phan giai HOP LE truoc khi tan cong ==========
+>> dig @10.9.0.10 www.lab9.test   (zone noi bo -> web that 172.16.6.10)
+   172.16.6.10
+>> dig @10.9.0.10 www.external.lab9.test  (uy quyen -> AUTH-DNS 172.16.6.20)
+   172.16.6.10
+>> [VICTIM] curl http://www.external.lab9.test/  -> trang that
+   
+
+========== TASK 1 - THAY DOI /etc/hosts (redirect cuc bo tren Victim) ==========
+>> Them dong:  10.9.0.200  www.lab9.test  vao /etc/hosts cua VICTIM
+   10.9.0.200 www.lab9.test
+>> [VICTIM] getent hosts www.lab9.test  -> /etc/hosts duoc uu tien
+   10.9.0.200      www.lab9.test
+>> [VICTIM] curl http://www.lab9.test/  -> TRANG GIA (attacker 10.9.0.200)
+   LAB 9 - TRANG MÔ PHỎNG BỊ CHUYỂN HƯỚNG
+>> Nhung dig @10.9.0.10 www.lab9.test VAN tra ket qua that (DNS khong dung /etc/hosts):
+   172.16.6.10
+>> Khoi phuc /etc/hosts -> getent tro lai that:
+   172.16.6.10     www.lab9.test
+
+========== TASK 2 - DIRECT DNS SPOOFING (attacker gia dap thang toi Victim) ==========
+>> Attacker lang nghe truy van Victim->Resolver roi gui dap gia (gia nguon 10.9.0.10)
+>> [VICTIM] dig www.external.lab9.test  (hoi resolver 10.9.0.10)
+   10.9.0.200   <== 10.9.0.200 : DAP GIA DA THANG
+>> [VICTIM] curl http://www.external.lab9.test/
+   LAB 9 - TRANG MÔ PHỎNG BỊ CHUYỂN HƯỚNG
+>> Log attacker:
+   [LAB9] forged victim response: www.external.lab9.test. -> 10.9.0.200; txid=60902; dst=10.9.0.100:49950
+>> Bang chung goi tin (doc task2.pcap) - goi dap gia A=10.9.0.200 tu 10.9.0.10 -> Victim:
+   21:21:12.467941 IP 10.9.0.10.53 > 10.9.0.100.40509: 56149 1/0/0 A 10.9.0.200 (78)
+   21:21:12.799317 IP 10.9.0.10.53 > 10.9.0.100.49950: 33511 1/0/0 A 10.9.0.200 (78)
+
+========== TASK 3 - DNS CACHE POISONING (dau doc cache cua Resolver) ==========
+>> Attacker gia dap tu AUTH-DNS (172.16.6.20) toi Resolver, thang goi that
+>> [VICTIM] dig www.external.lab9.test  -> Resolver di hoi AUTH (bi gia dap)
+   10.9.0.200
+>> Log attacker:
+   [LAB9] forged resolver response: www.external.lab9.test. -> 10.9.0.200; txid=35445; dst=10.9.0.10:39217
+>> SAU KHI DUNG attacker: cache Resolver VAN tra 10.9.0.200 (da bi dau doc trong TTL):
+   10.9.0.200
+>> Dump cache BIND9 (rndc dumpdb) - ban ghi gia con trong cache:
+   www.external.lab9.test.	109	IN A	10.9.0.200
+
+========== KHOI PHUC MOI TRUONG (phong thu) ==========
+>> rndc flush  -> xoa cache gia, phan giai tro lai dia chi that
+   dig @10.9.0.10 www.external.lab9.test -> 172.16.6.10
+
+========== HOAN TAT LAB 8 : da minh hoa Task1 + Task2 + Task3 ==========

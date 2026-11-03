@@ -1,0 +1,9 @@
+zone "lab9.test" {
+    type master;
+    file "/etc/bind/db.lab9.test";
+};
+
+zone "9.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.10.9.0";
+};

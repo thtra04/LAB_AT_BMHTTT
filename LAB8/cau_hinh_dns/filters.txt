@@ -1,0 +1,9 @@
+LAB9 Wireshark display filters
+
+dns
+udp.port == 53
+ip.addr == 10.9.0.100 && dns
+ip.addr == 10.9.0.10 && dns
+ip.addr == 172.16.6.20 && dns
+dns.qry.name == "www.external.lab9.test"
+dns.flags.response == 1 && dns.a == 10.9.0.200

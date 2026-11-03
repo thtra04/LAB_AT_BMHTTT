@@ -1,0 +1,7 @@
+$TTL 300
+@   IN SOA ns.lab9.test. admin.lab9.test. (
+        2026101101 300 120 3600 60 )
+@       IN NS  ns.lab9.test.
+10      IN PTR ns.lab9.test.
+100     IN PTR victim.lab9.test.
+200     IN PTR attacker.lab9.test.

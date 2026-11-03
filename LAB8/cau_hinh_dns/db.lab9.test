@@ -1,0 +1,13 @@
+$TTL 300
+@   IN SOA ns.lab9.test. admin.lab9.test. (
+        2026110302 ; serial
+        300        ; refresh
+        120        ; retry
+        3600       ; expire
+        60 )       ; negative cache TTL
+@       IN NS  ns.lab9.test.
+ns      IN A   10.9.0.10
+www     IN A   172.16.6.10
+portal  IN A   172.16.6.10
+external IN NS  nsext.lab9.test.
+nsext   IN A   172.16.6.20
