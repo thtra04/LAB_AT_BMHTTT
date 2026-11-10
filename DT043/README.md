@@ -10,15 +10,10 @@
 | Paper chính | Masud et al. (2025), *Vulnerability defence using hybrid moving target defence in IoT systems*, Computers & Security 153, 104380 · [PDF](tailieu/docs/b%C3%A1o/Vulnerability%20defence%20using%20hybrid%20moving%20target%20defence%20in%20Internet%20of.pdf) |
 | Bản dịch tiếng Việt paper chính · kiểm tra tái lập | [Word](tailieu/docs/b%C3%A1o/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.docx) · [PDF](tailieu/docs/b%C3%A1o/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.pdf) · [Markdown](tailieu/docs/ban_dich_bai_bao_chinh.md) · [kiem_tra_tai_lap.md](tailieu/docs/kiem_tra_tai_lap.md) |
 | Paper tham chiếu kỹ thuật | Meidan et al. (2018), *N-BaIoT*, IEEE Pervasive Computing (arXiv:1805.03409) · [PDF](tailieu/docs/b%C3%A1o/N-BaIoT%20Network-based%20detection%20of%20IoT%20botnet%20attacks%20using%20deep%20autoencoders.pdf) |
-| Báo cáo (30 trang) | [tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx) · [PDF](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.pdf) |
-| Slide thuyết trình (có ghi chú) – bộ đầy đủ 30 slide (20 chính + 10 phụ lục) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_1150080120_HoangThanhTra.pdf) · bộ rút gọn 23 slide (13 chính + 10 phụ lục): [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.pdf) |
-| Kịch bản thuyết trình ≈ 4:53 (khung 5 phút, có demo) – bộ đầy đủ | [tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P.md) · [bản Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_1150080120_HoangThanhTra.docx) |
-| Kịch bản thuyết trình ≈ 4:50 (khung 5 phút, có demo) – bộ rút gọn | [tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P_10slide.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P_10slide.md) · [bản Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_10slide_1150080120_HoangThanhTra.docx) |
+| Báo cáo (30 trang) | [tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx](tailieu/bao_cao/BaoCao_DT043_1150080120_HoangThanhTra.docx) |
 | **Bản 4'30 không demo trực tiếp** (16 slide chính theo 5 phần: phân tích bài báo → các bước làm bài 1–10, mỗi bước có hình chạy trong notebook và kết quả → kết quả → so sánh với bài báo → dự định làm tiếp; 10 phụ lục; hình lấy bằng `python report/extract_nb_figs.py`) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_4p30_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_4p30_1150080120_HoangThanhTra.pdf) · kịch bản [.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_4P30.md) · [Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_4p30_1150080120_HoangThanhTra.docx) – sinh bằng `node report/build_deck_10.js --4p30` và `python report/build_demo_video.py --deck 4p30` |
 | **Bản 4'30, mẫu trình bày giản dị** (cùng nội dung, lời thoại với bản 4'30) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_4p30_mau2_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_4p30_mau2_1150080120_HoangThanhTra.pdf) – sinh bằng `node report/build_deck_10.js --4p30 --mau2` |
-| **Bản ngắn 8 slide để báo cáo** (≈ 3:12, demo rút gọn) | [pptx](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_ngan_1150080120_HoangThanhTra.pptx) · [PDF](tailieu/thuyet_trinh/SlideThuyetTrinh_DT043_ngan_1150080120_HoangThanhTra.pdf) · kịch bản [.md](tailieu/thuyet_trinh/KICH_BAN_THUYET_TRINH_5P_ngan.md) · [Word](tailieu/thuyet_trinh/KichBanThuyetTrinh_DT043_ngan_1150080120_HoangThanhTra.docx) |
 | Hỏi – đáp về bài báo và đề tài · giải thích notebook | [HoiDap_BaiBao (Word)](tailieu/thuyet_trinh/HoiDap_BaiBao_DT043_1150080120_HoangThanhTra.docx) · [GiaiThich_Notebook (Word)](tailieu/thuyet_trinh/GiaiThich_Notebook_DT043_1150080120_HoangThanhTra.docx) |
-| Câu hỏi phòng hờ khi bảo vệ | [tailieu/thuyet_trinh/HOI_DAP_BAO_VE.md](tailieu/thuyet_trinh/HOI_DAP_BAO_VE.md) |
 | Notebook trình bày (đã chạy, có output) | [src/DT043_walkthrough.ipynb](src/DT043_walkthrough.ipynb) – dataset/manifest → EDA → chia chống rò rỉ → huấn luyện V1 → int8 → edge → kết quả 468 lần chạy → MTD → demo API; cần `pip install ipykernel` trong `.venv` để chạy lại |
 | Kế hoạch / nhật ký | [tailieu/KE_HOACH.md](tailieu/KE_HOACH.md) · [tailieu/NHAT_KY_THUC_HIEN.md](tailieu/NHAT_KY_THUC_HIEN.md) |
 
@@ -33,7 +28,7 @@ DT043/
 │   ├── ai/                    # AI – huấn luyện, đánh giá, lượng tử hóa, benchmark, mô phỏng MTD
 │   │   ├── src/nbaiot/        #   thư viện: data, split, scaling, models, threshold, metrics, quantize, bench, pipeline, mtd/
 │   │   ├── configs/           #   base.yaml + exp/*.yaml (mỗi thí nghiệm 1 file)
-│   │   ├── scripts/           #   00…10: môi trường → dữ liệu → EDA → ma trận → benchmark → tổng hợp → MTD → xuất gói
+│   │   ├── scripts/           #   00…12: môi trường → dữ liệu → EDA → ma trận → benchmark → tổng hợp → MTD → xuất gói → tái lập bài báo (E11, E12)
 │   │   └── tests/             #   unit / integration / negative (pytest)
 │   ├── backend/               # BE – FastAPI: nạp gói triển khai, API phát hiện/replay/cảnh báo/MTD
 │   ├── db/                    # DB – SQLite: schema.sql + repository.py
@@ -46,10 +41,10 @@ DT043/
 │   ├── requirements.txt, requirements-lock.txt, run_all.ps1
 │   └── .venv/                 # môi trường Python (không commit)
 └── tailieu/                   # TÀI LIỆU
-    ├── bao_cao/               # báo cáo Word + PDF
-    ├── thuyet_trinh/          # 3 bộ slide: đầy đủ, rút gọn, ngắn 8 slide (pptx + pdf), kịch bản từng bộ (.md + .docx), hỏi – đáp, câu hỏi bảo vệ
+    ├── bao_cao/               # báo cáo Word
+    ├── thuyet_trinh/          # slide 4'30 (2 mẫu trình bày, pptx + pdf), kịch bản 4'30 (.md + .docx), hỏi – đáp, giải thích notebook
     ├── video/                 # video mẫu thuyết trình (không commit)
-    ├── docs/                  # báo/ (PDF hai bài báo), phiếu tái lập, tái lập E11, data card, threat model, tiêu chí thành công
+    ├── docs/                  # báo/ (PDF hai bài báo + bản dịch), phiếu tái lập, tái lập E11, E12, data card, threat model, tiêu chí thành công
     ├── KE_HOACH.md
     └── NHAT_KY_THUC_HIEN.md
 ```
@@ -85,7 +80,7 @@ $env:PYTHONIOENCODING = "utf-8"
 | 8e. Tái hiện thêm tổng mạng, Hình 5–8 của Masud (E12) – chi tiết: [tai_lap_E12_day_du.md](tailieu/docs/tai_lap_E12_day_du.md) | `.venv\Scripts\python ai/scripts/12_masud_full_repro.py` | ~1 phút |
 | 9. Xuất gói triển khai AI → BE | `.venv\Scripts\python ai/scripts/08_export_deploy.py` | vài giây |
 | 10. Sinh báo cáo Word (ghi vào `../tailieu/bao_cao/`) – **cảnh báo:** ghi đè file Word hiện tại, làm mất phần sửa tay và mục 6.10 (E12); sau đó phải chạy lại `report/patch_report_e12.py` và sửa tay lại | `.venv\Scripts\python report/build_report.py` rồi `report/finalize_word.ps1` (cập nhật mục lục, xuất PDF) | ~1 phút |
-| 11. Sinh slide PowerPoint (ghi vào `../tailieu/thuyet_trinh/`) | `.venv\Scripts\python report/export_deck_data.py`, rồi trong `report/`: `npm install` (lần đầu) và `node build_deck.js` | ~1 phút |
+| 11. Sinh slide PowerPoint (ghi vào `../tailieu/thuyet_trinh/`) | `.venv\Scripts\python report/export_deck_data.py`, rồi trong `report/`: `npm install` (lần đầu) và `node build_deck_10.js --4p30` (thêm `--mau2` cho mẫu 2) | ~1 phút |
 
 Hoặc chạy toàn bộ bước 0–9 (gồm E11, E12): `powershell -ExecutionPolicy Bypass -File run_all.ps1`. Script dừng ngay khi một bước lỗi và **không** sinh lại báo cáo Word hay slide, nên không ghi đè tài liệu đã sửa tay.
 
