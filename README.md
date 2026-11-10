@@ -19,7 +19,7 @@ Repository lưu trữ các bài thực hành của học phần **An toàn Bảo
 | [LAB1-9/LAB6](LAB1-9/LAB6/) | Xác thực Active Directory và chính sách truy cập trên pfSense (pfSense AD Authentication & Access Policies) |
 | [LAB1-9/LAB7](LAB1-9/LAB7/) | Xây dựng chính sách Web Protection trên mô hình pfSense + Web Proxy (E2Guardian, Squid, ClamAV) |
 | [LAB1-9/LAB8](LAB1-9/LAB8/) | Local DNS Attack (DNS Spoofing & Cache Poisoning) |
-| [LAB1-9/LAB9/LAB10](LAB1-9/LAB9/LAB10/) | Remote DNS Cache Poisoning (pfSense + Kali, runbook trong `trien_khai/`) |
+| [LAB1-9/LAB9/LAB10](LAB1-9/LAB9/LAB10/) | Remote DNS Cache Poisoning – tấn công Kaminsky từ xa (pfSense + Kali, runbook trong `trien_khai/`) |
 | [LAB10-15](LAB10-15/) | Các bài Lab 10–15 (chưa có) |
 | [DT043](DT043/) | Bài giữa kỳ – Phát hiện botnet IoT bằng autoencoder nhẹ (N-BaIoT, per-device AE, lượng tử hóa int8, edge benchmark, MTD lai, tái lập bài báo Masud 2025; hệ thống AI / BE / DB / FE) |
 
