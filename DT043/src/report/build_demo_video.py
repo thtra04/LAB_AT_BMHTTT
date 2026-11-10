@@ -1,6 +1,6 @@
 """Dựng video mẫu thuyết trình ~4 phút (khung 5 phút) (slide + demo thật trên dashboard + phụ đề lời thoại + đồng hồ)
-và sinh kịch bản .md + .docx từ CÙNG một dòng thời gian, để video và kịch bản khớp nhau. Có hai dòng thời gian:
-bộ slide 17 trang và bộ slide 10 trang.
+và sinh kịch bản .md + .docx từ CÙNG một dòng thời gian, để video và kịch bản khớp nhau. Các dòng thời gian:
+bộ slide 17 trang, bộ 10 trang, bộ ngắn 8 trang và bản 4'30 không demo (--deck 4p30, dùng slide của build_deck_10.js --4p30).
 
 Chạy (Python hệ thống có playwright, pymupdf, pillow, imageio-ffmpeg, pandas, python-docx), tại thư mục DT043/src:
     python report/build_demo_video.py                       # cả hai bộ: kịch bản + video
@@ -192,6 +192,68 @@ SEGMENTS_NGAN = [
         "RQ5 về edge đạt, RQ1 đến RQ4 không đạt và em giữ nguyên tiêu chí.", CONCLUSION, THANKS]),
 ]
 
+def proportional(items, total):
+    """Chia total giây cho các slide (đánh số 1, 2, …) theo độ dài lời thoại, để tốc độ nói đều nhau."""
+    n = sum(len(" ".join(lines)) for _, lines in items)
+    out, a, acc = [], 0, 0
+    for i, (title, lines) in enumerate(items, 1):
+        acc += len(" ".join(lines))
+        b = round(total * acc / n)
+        out.append(dict(kind="slide", slide=i, start=a, end=b, title=title, lines=lines))
+        a = b
+    return out
+
+
+# Bản 4'30 không demo trực tiếp, 5 phần: phân tích bài báo → các bước làm bài → kết quả → so sánh với bài báo
+# → dự định làm tiếp (slide của build_deck_10.js --4p30; slide 8 là ảnh dashboard thay cho demo)
+SEGMENTS_4P30 = proportional([
+    ("Mở đầu", [
+        "Em chào thầy và các bạn. Em là Hoàng Thanh Trà, đề tài DT043: phát hiện IoT nhiễm botnet ngay tại thiết bị biên "
+        "bằng autoencoder nhẹ, kết hợp Moving Target Defence.",
+        "Em trình bày năm phần: phân tích bài báo, các bước làm bài, kết quả, so sánh với bài báo và dự định làm tiếp."]),
+    *[(p["title"], p["lines"]) for p in paper(0)],
+    ("Bước 1–2: đọc bài báo, lập kế hoạch", [
+        "Bước một và hai: em đọc hai bài báo, thấy bài chính không có bộ phát hiện nên chia hai track, rồi đặt sáu câu "
+        "hỏi nghiên cứu và mười một thí nghiệm."]),
+    ("Bước 3–4: tải dữ liệu, làm sạch, EDA", [
+        "Bước ba và bốn: tải N-BaIoT, 107 file khớp checksum, 7,06 triệu dòng; em loại 158 nghìn dòng trùng.",
+        "Dữ liệu mất cân bằng nặng nên em dùng macro-F1 và FPR thay cho accuracy."]),
+    ("Bước 5: chia chống rò rỉ, huấn luyện AE, chọn ngưỡng", [
+        "Bước năm: chia benign theo thời gian có vùng đệm, huấn luyện autoencoder trên benign, ngưỡng bằng trung bình "
+        "cộng độ lệch chuẩn của lỗi tái tạo.",
+        "Hình cho thấy flood tcp và udp cũng nằm dưới ngưỡng – đây là lỗi bỏ sót chính."]),
+    ("Bước 6–7: chốt tiêu chí, chạy 468 lần", [
+        "Bước sáu và bảy: chốt tiêu chí trước, rồi chạy 468 lần.",
+        "Tám loại tấn công có recall gần bằng 1, chỉ tcp và udp thấp; kết quả dao động theo seed nên phải chạy nhiều "
+        "lần."]),
+    ("Bước 7: lượng tử hóa int8, đo trên edge", [
+        "Lượng tử hóa int8: model V1 chỉ 15,3 KB, macro-F1 giảm nhẹ 0,028; trên một lõi E-core mất 10,8 micro-giây "
+        "mỗi mẫu."]),
+    ("Bước 8–9: hệ thống 4 tầng, MTD lai", [
+        "Bước tám và chín: dựng hệ thống bốn tầng; phát lại Mirai thì 1989 trên 1989 cửa sổ bị cảnh báo và tự kích "
+        "hoạt MTD.",
+        "Biểu đồ bên phải: MTD lai đạt cùng mức lộ diện với số lần đổi ít hơn khoảng 55%."]),
+    ("Bước 10: tái lập bài báo chính", [
+        "Bước mười: tái lập bài chính bằng đúng dữ liệu của bài, vẽ lại Hình 6 và dò công thức bài không in rõ."]),
+    ("Kết quả: FPR thấp, lỗi ở flood tcp/udp", [
+        "Tổng hợp kết quả: FPR chỉ 0,0025, thấp hơn Meidan, nhưng TPR 0,822 vì flood tcp/udp; Isolation Forest có "
+        "macro-F1 cao nhất, em báo cáo trung thực."]),
+    ("Đối chiếu 6 câu hỏi nghiên cứu", [CRITERIA]),
+    ("So sánh với Meidan 2018", [
+        "So với Meidan: FPR của em 0,0025, thấp hơn 0,007 của bài nhưng chưa kiểm định; TPR 0,822 thay vì 100%.",
+        "Phần bỏ sót nằm ở flood tcp/udp giả mạo nguồn; chia ngẫu nhiên cũng không tăng TPR, nên em chưa tách được "
+        "nguyên nhân duy nhất."]),
+    ("So sánh với Masud 2025", [
+        "So với Masud: dữ liệu đầu vào khớp hoàn toàn, rủi ro từng máy ảo khớp tới 0,01, đường tấn công lệch 0,8%.",
+        "Với công thức em suy ra, tổng AC lệch dưới 3,4%; tổng R và nhiều hình vẫn chưa khớp vì bài thiếu công thức và "
+        "có chỗ không nhất quán."]),
+    ("Kết luận và dự định làm tiếp", [
+        "Tóm lại: autoencoder nhẹ bắt gần tuyệt đối 8/10 loại tấn công, báo động giả thấp, chạy được ở edge.",
+        "Dự định tiếp theo: thêm đặc trưng cho flood giả mạo nguồn, chạy trên Raspberry Pi có đo điện, đưa MTD lai lên "
+        "mạng giả lập và thử trên bộ dữ liệu mới.",
+        THANKS]),
+], 270)
+
 # Mỗi bộ slide: dòng thời gian + phần chữ riêng (tên file, slide dự phòng, slide trả lời câu hỏi)
 DECKS = {
     "17": dict(segments=SEGMENTS_17, suffix="", label="đầy đủ 30 slide (20 chính + 10 phụ lục)", fallback=10, explain=12,
@@ -207,6 +269,13 @@ DECKS = {
     "ngan": dict(segments=SEGMENTS_NGAN, suffix="_ngan", label="ngắn 8 slide", fallback=5, explain=6,
                  shown="chiếu cả 8 slide; slide 5 có ảnh dashboard, dùng khi server lỗi",
                  qa_slides=["6", "6", "6", "6, 8", "8", "3, 5", "7", "3", "2, 4", "7"]),
+    "4p30": dict(segments=SEGMENTS_4P30, suffix="_4p30", md="KICH_BAN_THUYET_TRINH_4P30.md", demo=False,
+                 label="4'30 không demo, 26 slide (16 chính + 10 phụ lục)", explain=12,
+                 shown="chiếu lần lượt slide 1–16 theo 5 phần: phân tích bài báo (2–4), các bước làm bài – mỗi bước có "
+                       "hình chạy trong notebook và kết quả (5–11), kết quả (12–13), so sánh với bài báo (14–15), dự định "
+                       "làm tiếp (16); phụ lục 17–26 để trả lời câu hỏi",
+                 qa_slides=["7, 12, 14, 21, 22", "9, 12, 22", "7, 12", "9", "8, 13", "10, 15, 26", "11, 15, 20, 23, 25",
+                            "2–4, 17", "5–11, 19", "11, 22, 24"]),
 }
 
 
@@ -218,7 +287,7 @@ def use_deck(key):
     TOTAL = SEGMENTS[-1]["end"]
     sfx = DECK["suffix"]
     SLIDES_PDF = DOCS / "thuyet_trinh" / f"SlideThuyetTrinh_DT043{sfx}_1150080120_HoangThanhTra.pdf"
-    OUT_MD = DOCS / "thuyet_trinh" / f"KICH_BAN_THUYET_TRINH_5P{sfx}.md"
+    OUT_MD = DOCS / "thuyet_trinh" / DECK.get("md", f"KICH_BAN_THUYET_TRINH_5P{sfx}.md")
     OUT_DOCX = DOCS / "thuyet_trinh" / f"KichBanThuyetTrinh_DT043{sfx}_1150080120_HoangThanhTra.docx"
     OUT_MP4 = DOCS / "video" / f"Video_mau_thuyet_trinh_DT043{sfx}.mp4"
 
@@ -234,16 +303,17 @@ NUMBERS = [
     ("MTD (ASP)", "không MTD 0,498 · shuffle 0,409 · diversity 0,437 · kết hợp 0,327"),
     ("Tái lập paper chính", "rủi ro mức máy ảo khớp ±0,01 · đường tấn công −0,8% · chọn V5 như paper · "
                             "6/7 kết luận định tính (topology Hình 3; Definition 2: 3/7)"),
-    ("Chạy lại Hình 6 (bài chính)", "diversity khớp 7/7 máy ảo (lệch ≤ 5%) · shuffle, S+D khớp ở V5"),
+    ("E12 – công thức AC suy ra", "tổng AC lệch ≤ 3,4% · RoC ≤ 8,4% · tổng mạng lệch ≤ 5%: 5/9 · tổng R diversity −13,1%, redundancy −16,6%"),
+    ("Chạy lại Hình 6 (bài chính)", "Hình 6(a): 11/35 điểm lệch ≤ 5% · diversity 7/7 · shuffle, S+D chỉ khớp ở V5"),
     ("Demo mirai/syn (Danmini)", "1989/1989 cửa sổ cảnh báo, cảnh báo high + 2 hành động MTD"),
     ("Demo benign và gafgyt/tcp (Ennio)", "0 cửa sổ cảnh báo"),
 ]
 
 QA = [  # slide hỗ trợ lấy theo bộ slide (DECK["qa_slides"])
     ("Sao không đạt TPR 100% như Meidan?",
-     "Em chia theo thời gian có vùng đệm và loại trùng lặp để không rò rỉ; thí nghiệm cố tình cho rò rỉ (E6) làm "
-     "FPR \"đẹp giả\" xuống 0,0006, cho thấy cách chia ảnh hưởng lớn đến kết quả. Phần bỏ sót là flood tcp/udp "
-     "giả mạo nguồn."),
+     "Phần bỏ sót là flood tcp/udp giả mạo nguồn, trông giống benign, và ngưỡng mean + std bị đuôi MSE kéo cao. Rò rỉ "
+     "không giải thích được: chia ngẫu nhiên (E6) có TPR 0,804 và FPR \"đẹp giả\" 0,0006. Bài cũng tối ưu tham số riêng "
+     "từng thiết bị, nên em chưa tách được nguyên nhân duy nhất."),
     ("Isolation Forest tốt hơn, sao vẫn dùng AE?",
      "Đúng, em báo cáo trung thực. AE nhỏ hơn nhiều, lượng tử hóa int8 được và chạy vài µs/mẫu trên edge; IF làm "
      "baseline so sánh."),
@@ -260,19 +330,20 @@ QA = [  # slide hỗ trợ lấy theo bộ slide (DECK["qa_slides"])
     ("Tái lập paper chính được đến đâu?",
      "Dùng đúng 18 CVE hệ điều hành, 14 CVE dịch vụ và 8 máy ảo của paper: rủi ro mức máy ảo khớp ±0,01, đường tấn "
      "công lệch −0,8%, độ trung tâm trên đồ thị có hướng chọn V5 như paper. Với topology Hình 3 tái lập 6/7 kết luận "
-     "định tính, với Definition 2 chỉ 3/7. Tổng rủi ro toàn mạng không khớp vì paper cắt danh sách cạnh và công thức "
-     "in ra mâu thuẫn."),
+     "định tính, với Definition 2 chỉ 3/7. E12 suy ra AC theo VM bằng Σ BS × cost: tổng AC lệch dưới 3,4%, RoC dưới 8,4%, "
+     "nhưng đây là giả thuyết và chưa giải thích được V2. Tổng R của diversity, redundancy và Hình 5(b), 6, 7, 9 vẫn chưa "
+     "khớp vì bài thiếu công thức và có chỗ không nhất quán."),
     ("Bài báo tham khảo giải quyết bài toán gì, hạn chế ở đâu?",
      "Masud 2025 đánh giá việc kết hợp shuffle, diversity, redundancy bằng mô hình THARM ba tầng; kết luận shuffle + "
      "diversity tốt nhất. Hạn chế: chỉ mô phỏng, chỉ MTD theo thời gian, không có bộ phát hiện kích hoạt MTD, không "
      "công bố mã. Bài tham chiếu Meidan 2018 chia dữ liệu một lần và không đo trên edge."),
     ("Em làm bài này theo quy trình nào?",
      "Đọc bài báo → lập kế hoạch → tải dữ liệu có checksum → làm sạch, EDA → viết pipeline kèm test → chốt tiêu chí "
-     "trước khi chạy → chạy 468 lần → dựng hệ thống 4 tầng → tổng hợp thống kê, báo cáo → tái lập bài chính (E11)."),
+     "trước khi chạy → chạy 468 lần → dựng hệ thống 4 tầng → tổng hợp thống kê, báo cáo → tái lập bài chính (E11, E12)."),
     ("Biểu đồ chạy lại có giống bài báo không?",
-     "Em vẽ lại đúng dạng Hình 6, Hình 7 của bài chính và Hình 2 của Meidan. Hình 6: diversity khớp 7/7 máy ảo, shuffle "
-     "và S+D khớp ở V5, redundancy cao hơn. Hình 7 không khớp vì topology bài công bố chỉ có 5 đường và bài không nêu "
-     "cách tính ASP đường. Hình 2 của Meidan: FPR khớp, TPR thấp hơn do flood tcp/udp."),
+     "Em vẽ lại đúng dạng Hình 6, Hình 7 của bài chính và Hình 2 của Meidan. Hình 6(a): 11/35 điểm lệch ≤ 5%, trong đó "
+     "diversity 7/7, shuffle và S+D chỉ khớp ở V5. Hình 7: Eq. 1 cho cùng thang đo, nhưng topology chỉ có 5 đường và bài "
+     "không in chuỗi VM của 8 đường, nên không so được từng cột. Hình 2 của Meidan: FPR khớp, TPR thấp hơn do flood tcp/udp."),
 ]
 
 
@@ -280,7 +351,38 @@ def qa_rows():
     return [(q, a, s) for (q, a), s in zip(QA, DECK["qa_slides"])]
 
 
+def has_demo():
+    return DECK.get("demo", True)
+
+
+def numbers():
+    return NUMBERS if has_demo() else [(k.replace("Demo", "Chạy hệ thống"), v) for k, v in NUMBERS]
+
+
+# Bản không demo: chỉ cần PowerPoint, không bật server
+PREP_NO_DEMO = [
+    "Mở PowerPoint ở chế độ trình chiếu (F5), để sẵn Slide 1; chỉ dùng phím → để chuyển slide, không cần bật server "
+    "hay trình duyệt.",
+    "Bật **Presenter View** để thấy ghi chú lời thoại dưới mỗi slide.",
+    "Slide 5–11 là từng bước làm bài, mỗi slide có hình chạy trong notebook: nói «Làm gì» rồi chỉ vào hình khi nói "
+    "«Kết quả».",
+]
+
+
 def tips():
+    if not has_demo():
+        at = {s["slide"]: s["start"] for s in SEGMENTS}
+        return [
+            f"Mốc chuyển phần: phần 1 – phân tích bài báo **{fmt(at[2])}**, phần 2 – các bước làm bài **{fmt(at[5])}**, "
+            f"phần 3 – kết quả **{fmt(at[12])}**, phần 4 – so sánh với bài báo **{fmt(at[14])}**, phần 5 – dự định làm "
+            f"tiếp **{fmt(at[16])}**, kết thúc đúng **{fmt(TOTAL)}**. Tập theo video mẫu 2–3 lần cho quen nhịp.",
+            "Nếu bị chậm: bỏ câu thứ hai ở slide 1 (giới thiệu 5 phần) và câu thứ hai ở slide 6 (mất cân bằng) – tiết "
+            "kiệm khoảng 12 s.",
+            "Không đọc nguyên văn bảng số trên slide; chỉ nhấn 1–2 con số trong lời thoại.",
+            "Nếu thầy muốn xem chạy thật sau phần trình bày: bật server theo README (uvicorn backend.app.main:app) – "
+            "không nằm trong 4'30.",
+            "Video mẫu chỉ để tập: video nộp phải do bạn tự trình bày.",
+        ]
     d = next(s for s in SEGMENTS if s["kind"] == "demo")
     return [
         f"Tập theo video mẫu 2–3 lần: đến **{fmt(d['start'])} phải bắt đầu demo**, đến **{fmt(d['end'])} phải quay "
@@ -320,11 +422,12 @@ def cues():
 def build_md():
     sfx = DECK["suffix"]
     L = []
-    L.append(f"# Kịch bản thuyết trình ≈ {fmt(TOTAL)} (khung 5 phút, có demo) – DT043 · bộ {DECK['label']}\n")
+    mode = "khung 5 phút, có demo" if has_demo() else "không demo trực tiếp"
+    L.append(f"# Kịch bản thuyết trình ≈ {fmt(TOTAL)} ({mode}) – DT043 · bộ {DECK['label']}\n")
     L.append("**Đề tài:** Phát hiện botnet IoT bằng autoencoder nhẹ · **Người trình bày:** Hoàng Thanh Trà – MSSV "
              "1150080120 – 11CNPM2  ")
     L.append(f"**Tài liệu dùng:** [bộ slide {DECK['label']}](SlideThuyetTrinh_DT043{sfx}_1150080120_HoangThanhTra.pptx) "
-             f"({DECK['shown']}) + dashboard demo `http://127.0.0.1:8000/`.  ")
+             f"({DECK['shown']})" + (" + dashboard demo `http://127.0.0.1:8000/`.  " if has_demo() else ".  "))
     L.append(f"**Video mẫu để tập theo:** `../video/Video_mau_thuyet_trinh_DT043{sfx}.mp4` – dựng từ CÙNG dòng thời gian "
              "với kịch bản này (script `src/report/build_demo_video.py`), phụ đề trong video trùng từng chữ với lời thoại "
              "bên dưới; video không có tiếng, bạn đọc theo phụ đề và mốc giờ ở góc phải.\n")
@@ -337,6 +440,31 @@ def build_md():
         L.append(f"| {fmt(s['start'])} – {fmt(s['end'])} | {name} | {where} | {s['end'] - s['start']} s |")
     L.append("")
     L.append("## 2. Chuẩn bị trước khi lên trình bày (≈ 5 phút trước)\n")
+    if not has_demo():
+        L += [f"{i}. {t}" for i, t in enumerate(PREP_NO_DEMO, 1)] + [""]
+    else:
+        prep_demo_md(L)
+    L.append("## 3. Lời thoại theo mốc thời gian (trùng phụ đề trong video)\n")
+    cues_md(L)
+    L.append("## 4. Số liệu cần nhớ\n")
+    L.append("| Nội dung | Giá trị |")
+    L.append("|---|---|")
+    for k, v in numbers():
+        L.append(f"| {k} | {v} |")
+    L.append("")
+    L.append("## 5. Câu hỏi có thể gặp\n")
+    L.append("| Câu hỏi | Trả lời ngắn | Slide hỗ trợ |")
+    L.append("|---|---|---|")
+    for q, a, s in qa_rows():
+        L.append(f"| {q} | {a} | {s} |")
+    L.append("")
+    L.append("## 6. Mẹo trình bày\n")
+    L += ["- " + t for t in tips()]
+    OUT_MD.write_text("\n".join(L) + "\n", encoding="utf-8")
+    print("đã ghi", OUT_MD)
+
+
+def prep_demo_md(L):
     L.append("1. Mở PowerShell tại thư mục `DT043\\src`, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo lại), "
              "rồi bật server:")
     L.append("   ```powershell")
@@ -348,7 +476,9 @@ def build_md():
     L.append("3. Mở PowerPoint ở chế độ trình chiếu, để sẵn Slide 1. Dùng **Alt + Tab** để chuyển giữa slide và trình "
              "duyệt.")
     L.append(f"4. Dự phòng: nếu server không chạy, chiếu **Slide {DECK['fallback']}** (ảnh demo) và đọc kết quả ở mục 4.\n")
-    L.append("## 3. Lời thoại theo mốc thời gian (trùng phụ đề trong video)\n")
+
+
+def cues_md(L):
     for a, b, seg, i, text in cues():
         if seg["kind"] == "demo":
             if i == 0:
@@ -365,22 +495,6 @@ def build_md():
         L.append(f"> **[{fmt(a)}]** {text}")
         if i == len(seg["lines"]) - 1:
             L.append("")
-    L.append("## 4. Số liệu cần nhớ\n")
-    L.append("| Nội dung | Giá trị |")
-    L.append("|---|---|")
-    for k, v in NUMBERS:
-        L.append(f"| {k} | {v} |")
-    L.append("")
-    L.append("## 5. Câu hỏi có thể gặp\n")
-    L.append("| Câu hỏi | Trả lời ngắn | Slide hỗ trợ |")
-    L.append("|---|---|---|")
-    for q, a, s in qa_rows():
-        L.append(f"| {q} | {a} | {s} |")
-    L.append("")
-    L.append("## 6. Mẹo trình bày\n")
-    L += ["- " + t for t in tips()]
-    OUT_MD.write_text("\n".join(L) + "\n", encoding="utf-8")
-    print("đã ghi", OUT_MD)
 
 
 # ---------------------------------------------------------------- kịch bản Word (cùng nội dung với .md)
@@ -390,11 +504,12 @@ def build_docx():
     from docx_helpers import Report
     R = Report()
     R.para("KỊCH BẢN THUYẾT TRÌNH ĐỀ TÀI DT043", bold=True, size=16, align="center")
-    R.para(f"Phát hiện botnet IoT bằng autoencoder nhẹ – bộ {DECK['label']} – khung 5 phút, nói ≈ {fmt(TOTAL)}, có demo",
-           italic=True, align="center")
+    mode = "khung 5 phút, nói ≈ " + fmt(TOTAL) + ", có demo" if has_demo() else "nói ≈ " + fmt(TOTAL) + ", không demo trực tiếp"
+    R.para(f"Phát hiện botnet IoT bằng autoencoder nhẹ – bộ {DECK['label']} – {mode}", italic=True, align="center")
     R.para("Người trình bày: **Hoàng Thanh Trà** – MSSV 1150080120 – Lớp 11CNPM2", align="center")
-    R.para(f"Tài liệu dùng: bộ slide {DECK['label']} ({DECK['shown']}) + dashboard demo http://127.0.0.1:8000/. "
-           f"Video mẫu để tập: tailieu/video/Video_mau_thuyet_trinh_DT043{DECK['suffix']}.mp4 (phụ đề trùng từng chữ "
+    R.para(f"Tài liệu dùng: bộ slide {DECK['label']} ({DECK['shown']})"
+           + (" + dashboard demo http://127.0.0.1:8000/. " if has_demo() else ". ")
+           + f"Video mẫu để tập: tailieu/video/Video_mau_thuyet_trinh_DT043{DECK['suffix']}.mp4 (phụ đề trùng từng chữ "
            "với lời thoại bên dưới).", justify=False)
 
     R.h1("1. Phân bổ thời gian")
@@ -404,15 +519,10 @@ def build_docx():
             font=11, col_widths_cm=[3.0, 8.0, 3.0, 2.0])
 
     R.h1("2. Chuẩn bị trước khi lên trình bày (≈ 5 phút trước)")
-    R.numbered(["Mở PowerShell tại thư mục DT043\\src, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo "
-                "lại), rồi bật server và đợi dòng «Application startup complete»:"])
-    R.code("Remove-Item db\\dt043.sqlite3 -ErrorAction SilentlyContinue\n"
-           ".venv\\Scripts\\python -m uvicorn backend.app.main:app --port 8000")
-    R.numbered(["Mở trình duyệt http://127.0.0.1:8000/, kiểm tra góc phải hiện **9 model**.",
-                "Mở PowerPoint ở chế độ trình chiếu, để sẵn Slide 1. Dùng **Alt + Tab** để chuyển giữa slide và "
-                "trình duyệt.",
-                f"Dự phòng: nếu server không chạy, chiếu **Slide {DECK['fallback']}** (ảnh demo) và đọc kết quả ở "
-                "mục 4."], start=2)
+    if not has_demo():
+        R.numbered(PREP_NO_DEMO)
+    else:
+        prep_demo_docx(R)
 
     R.h1("3. Lời thoại theo mốc thời gian")
     for seg in SEGMENTS:
@@ -430,7 +540,7 @@ def build_docx():
                 R.para(f"**[{fmt(a)}]** {text}")
 
     R.h1("4. Số liệu cần nhớ")
-    R.table(pd.DataFrame(NUMBERS, columns=["Nội dung", "Giá trị"]), font=11, col_widths_cm=[5.0, 11.0])
+    R.table(pd.DataFrame(numbers(), columns=["Nội dung", "Giá trị"]), font=11, col_widths_cm=[5.0, 11.0])
     R.h1("5. Câu hỏi có thể gặp")
     R.table(pd.DataFrame(qa_rows(), columns=["Câu hỏi", "Trả lời ngắn", "Slide"]), font=10.5,
             col_widths_cm=[4.5, 10.0, 1.5])
@@ -438,6 +548,18 @@ def build_docx():
     R.bullets(tips())
     R.save(OUT_DOCX)
     print("đã ghi", OUT_DOCX)
+
+
+def prep_demo_docx(R):
+    R.numbered(["Mở PowerShell tại thư mục DT043\\src, xóa CSDL demo cũ để bảng cảnh báo và MTD trống (file tự tạo "
+                "lại), rồi bật server và đợi dòng «Application startup complete»:"])
+    R.code("Remove-Item db\\dt043.sqlite3 -ErrorAction SilentlyContinue\n"
+           ".venv\\Scripts\\python -m uvicorn backend.app.main:app --port 8000")
+    R.numbered(["Mở trình duyệt http://127.0.0.1:8000/, kiểm tra góc phải hiện **9 model**.",
+                "Mở PowerPoint ở chế độ trình chiếu, để sẵn Slide 1. Dùng **Alt + Tab** để chuyển giữa slide và "
+                "trình duyệt.",
+                f"Dự phòng: nếu server không chạy, chiếu **Slide {DECK['fallback']}** (ảnh demo) và đọc kết quả ở "
+                "mục 4."], start=2)
 
 
 # ---------------------------------------------------------------- dựng hình
@@ -595,9 +717,11 @@ def build_video():
     def cue_at(t):
         return next(c for c in cue_list if c[0] <= t + 0.5 < c[1] or (c[1] == TOTAL and t + 0.5 >= c[0]))
 
-    demo = next(s for s in SEGMENTS if s["kind"] == "demo")
+    demo = next((s for s in SEGMENTS if s["kind"] == "demo"), None)
+    spans = [("p1", 0, demo["start"]), ("demo", demo["start"], demo["end"]), ("p2", demo["end"], TOTAL)] if demo \
+        else [("p1", 0, TOTAL)]
     parts = []
-    for name, a, b in [("p1", 0, demo["start"]), ("demo", demo["start"], demo["end"]), ("p2", demo["end"], TOTAL)]:
+    for name, a, b in spans:
         fdir = Path(tmp) / name
         fdir.mkdir()
         for k, t in enumerate(range(a, b)):
@@ -609,7 +733,7 @@ def build_video():
             frame.save(fdir / f"f{k:04d}.png")
         parts.append((name, fdir, b - a))
 
-    video, offset = record_demo(tmp)
+    video, offset = record_demo(tmp) if demo else (None, 0)
     seg_files = []
     for name, fdir, dur in parts:
         out = Path(tmp) / f"{name}.mp4"

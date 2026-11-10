@@ -64,6 +64,7 @@ PAPER_TABLE4 = {"ASP": [0.975, 0.986, 0.99, 0.98, 0.9745, 0.99, 0.97, 0.95],
                 "AC": [8.17, 6.54, 8.64, 9.97, 7.34, 8.84, 8.57, 6.27],
                 "AR": [47.19, 36.68, 51.07, 47.64, 40.7, 52.12, 47.57, 33.73]}
 PAPER_VM_RISK = {"V2": 16.28, "V4": 12.47, "V5": 12.58, "V7": 8.67, "V8": 5.62, "V5_linux": 8.9}
+PAPER_VM_AC = {"V2": 37.5, "V7": 43.2, "V5": 46.4, "V8": 39.4}       # AC theo VM bài dùng ở mục 4.2
 PAPER_PATHS = {"shuffle A-V2-V7-V5-V8": 43.15, "diversity A-V2-V4-V5(Linux)-V8": 43.31,
                "redundancy A-V2-V4-V5'-V8": 43.31}
 PAPER_NETWORK = {"shuffle": {"R": 167.38, "AC": 666.2, "RoC": 1.01},
@@ -97,6 +98,38 @@ class Tharm:
 
     def base_score(self, vm: str) -> float:
         return float(sum(v[2] for v in self.vulns(vm)))
+
+    # ----------------------------------------------------------------- cách tính suy ra khi tái hiện đầy đủ (E12)
+    def asp_eq1(self, vm: str) -> float:
+        """Eq. 1 đúng như bản in: 1 − (Π(1 − E_os) + Π(1 − E_s)). VM không có dịch vụ (V8) lấy tích dịch vụ = 0."""
+        vm_os = OS_VULNS[self.os[vm]]
+        svc = [SERVICE_VULNS[i - 1] for i in self.services.get(vm, [])]
+        p_os = float(np.prod([1.0 - v[4] for v in vm_os]))
+        p_svc = float(np.prod([1.0 - v[4] for v in svc])) if svc else 0.0
+        return 1.0 - (p_os + p_svc)
+
+    def cost_weighted(self, vm: str, printed: bool = False) -> float:
+        """AC theo VM = Σ CVSS BS × attack cost (GIẢ THUYẾT suy ra, bài không in công thức này).
+
+        Khớp số bài in ở V5, V7, V8 (lệch < 5%), không khớp V2. `printed=True` dùng đúng số bài in khi VM còn OS gốc.
+        """
+        if printed and vm in PAPER_VM_AC and self.os[vm] == VM_OS[vm]:
+            return PAPER_VM_AC[vm]
+        return float(sum(v[2] * v[5] for v in self.vulns(vm)))
+
+    def risk_printed(self, vm: str) -> float:
+        """R theo VM, dùng số bài in nếu có (khác R_v đúng một chỗ: bài dùng R_V2 = 16.28, Bảng 1–2 cho 15.94)."""
+        return PAPER_VM_RISK["V2"] if vm == "V2" and self.os[vm] == VM_OS[vm] else self.risk(vm)
+
+    def network_metrics_weighted(self, printed: bool = False) -> dict:
+        """Tổng theo từng đường như Algorithm 2, với AC theo VM = Σ BS × cost; RoC = tổng R/AC của từng đường."""
+        rs, cs = [], []
+        for p in self.paths():
+            vms = p[1:]
+            rs.append(sum(self.risk_printed(v) if printed else self.risk(v) for v in vms))
+            cs.append(sum(self.cost_weighted(v, printed) for v in vms))
+        return {"n_paths": len(rs), "R": float(sum(rs)), "AC": float(sum(cs)),
+                "RoC": float(sum(r / c for r, c in zip(rs, cs)))}
 
     # ----------------------------------------------------------------- chỉ số mức mạng
     def paths(self) -> list[list[str]]:

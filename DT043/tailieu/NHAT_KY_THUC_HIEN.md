@@ -188,14 +188,21 @@ Phát hiện chính: (1) suy giảm hoàn toàn do gafgyt tcp/udp (recall 0.42�
 - Kết quả: Hình 6 – diversity khớp 7/7 VM (lệch ≤ 5%), shuffle và S+D khớp ở V5, redundancy và S+D+R cao hơn; Hình 7 không tái lập được (5 đường so với 8 đường, công thức ASP đường không công bố); Hình 2 Meidan – FPR khớp, TPR của AE thấp hơn.
 - Báo cáo Word thêm mục **6.9** (hình gốc đặt cạnh hình chạy lại, 1 bảng) và 2 dòng ở bảng ánh xạ Chương 8; ghép hình gốc và hình chạy lại cạnh nhau, thu nhỏ vài hình để giữ **30 trang**; slide thêm phần phân tích bài báo, slide "Chạy lại Hình 6" và phụ lục.
 
-## Bước 16 – Dịch bài báo chính và kiểm tra lại phần tái lập (11/10/2026)
+## Bước 16 – Dịch bài báo chính (11/10/2026) và kiểm tra lại phần tái lập (sau E11, ghi nhật ký 27/10–03/11/2026)
 
-- Dịch toàn văn Masud et al. (2025) sang tiếng Việt: `docs/ban_dich_bai_bao_chinh.md` → `report/build_bandich_baibao.py` → `docs/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.docx` (+ PDF, 45 trang, đủ 5 bảng, 3 thuật toán, 9 hình cắt từ PDF gốc bằng `report/extract_paper_figs.py`).
+- Dịch toàn văn Masud et al. (2025) sang tiếng Việt, ngày 11/10/2026 theo sinh viên và đầu file bản dịch; bản Word/PDF hiện tại xuất ngày 03/11/2026: `docs/ban_dich_bai_bao_chinh.md` → `report/build_bandich_baibao.py` → `docs/BanDich_BaiBao_DT043_1150080120_HoangThanhTra.docx` (+ PDF, 45 trang, đủ 5 bảng, 3 thuật toán, 9 hình cắt từ PDF gốc bằng `report/extract_paper_figs.py`).
 - Kiểm tra độc lập E11 (`docs/kiem_tra_tai_lap.md`): toàn bộ CVE, topology, OS khớp bài. Sửa 3 điểm:
   - `tharm.centrality()` tính trên **đồ thị tấn công có hướng** (closeness, in-degree, betweenness) → Eq. 8 chọn **V5 như paper** (bản trước vô hướng ra V2); thêm 2 test → `test_tharm.py` **16 passed**.
   - RoC toàn mạng của paper là tổng RoC theo đường (1,01 ≈ 4 × 0,259), không mâu thuẫn như ghi trước đây.
   - Số tổng của paper ứng với khoảng 4 / 4 / 6 đường → khớp Definition 2 hơn Hình 3; ghi rõ "6/7 kết luận" chỉ đạt với topology Hình 3 (Definition 2: 3/7).
 - Cập nhật `docs/tai_lap_paper_chinh.md`, README, báo cáo Word mục 6.8, hỏi – đáp, kịch bản thuyết trình.
+
+## Bước 17 – Tái hiện thêm phần kết quả của bài chính: E12 (09/11/2026)
+
+- `tharm.py` thêm `asp_eq1`, `cost_weighted`, `risk_printed`, `network_metrics_weighted`; `ai/scripts/12_masud_full_repro.py` sinh `results/tables/e12_*.csv` và `results/figures/fig_e12_*.png`. Kết quả E11 không đổi; `pytest ai/tests backend/tests`: **66 passed**.
+- AC theo VM = Σ BS × cost (giả thuyết, khớp V5, V7, V8; không khớp V2) đưa tổng AC từ lệch −83% xuống trong khoảng ±3,4% và RoC xuống trong khoảng ±8,4% (Definition 2). Tổng mạng lệch ≤ 5%: 5/9 (E11: 1/9). R của diversity và redundancy vẫn lệch −13% và −17%.
+- Eq. 1 nguyên văn cho ASP đường 0,24–0,48, cùng thang với Hình 7 (0,2–0,43). Hình 5(b) không khớp; Hình 6 cùng thang nhưng khác hình dạng; Hình 8 chỉ so tỷ lệ với bộ sinh mạng giả định; Hình 9 không tái hiện được. Chi tiết: `docs/tai_lap_E12_day_du.md`.
+- Báo cáo Word thêm mục 6.10 bằng `report/patch_report_e12.py` (sửa tại chỗ vì .docx đã được sửa tay, không sinh lại từ `chapters_*.py`), giữ 30 trang. Bộ slide 4'30 và kịch bản được sinh lại, thêm slide phụ lục E12 (26 slide). Tài liệu hỏi – đáp sinh lại bằng `report/build_hoidap_baibao.py` (10/11/2026): thêm câu 16 về E12 và cập nhật số E12 ở các câu tái lập. Các bộ slide khác và video mẫu chưa cập nhật.
 
 ## Việc sinh viên tự làm trước khi nộp
 - Quay video demo ngắn (dashboard + slide).

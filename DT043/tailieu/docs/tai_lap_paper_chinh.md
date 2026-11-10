@@ -9,6 +9,8 @@
 .venv\Scripts\python -m pytest ai/tests/test_tharm.py -q
 ```
 
+> **Cập nhật 09/11/2026:** E12 tìm được cách tính làm tổng AC và RoC gần khớp bài, và thử Hình 5, 7, 8. Các nhận định "không tái lập được" về AC, RoC và thang đo ASP dưới đây là kết quả của E11. Xem [tai_lap_E12_day_du.md](tai_lap_E12_day_du.md).
+
 ## 1. Lấy gì từ paper (không tự đặt tham số)
 
 | Thành phần | Nguồn trong paper |

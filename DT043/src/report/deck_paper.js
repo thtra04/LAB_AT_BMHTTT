@@ -39,6 +39,13 @@ function helpers(ctx) {
   return {
     // nhãn nhỏ phía trên tiêu đề (giống "2. BÀI BÁO THAM KHẢO")
     kicker(s, label) {
+      if (ctx.MAU2) {   // chuyển thành dòng nhỏ ở chân trang, không in hoa
+        const parts = label.split(" · ");
+        const low = (t) => t.charAt(0) + t.slice(1).toLocaleLowerCase("vi");
+        const foot = parts[0] === "PHỤ LỤC" ? "Phụ lục" : parts.slice(0, 2).map((t, i) => (i ? t.toLocaleLowerCase("vi") : low(t))).join(" – ");
+        text(s, foot, { x: 6.6, y: 7.0, w: 5.5, h: 0.3, fontSize: 10, color: C.accent4, align: "right", objectName: "section-label" });
+        return;
+      }
       text(s, label, { x: 0.6, y: 0.12, w: 12.1, h: 0.3, fontSize: 13, bold: true, color: C.accent5, charSpacing: 1 });
     },
     // ảnh co vừa khung, giữ tỉ lệ, căn giữa
@@ -63,6 +70,11 @@ function helpers(ctx) {
     },
     // khối "nhãn màu + nội dung" như slide phân tích bài báo
     labelRow(s, label, body, y, h, color, name) {
+      if (ctx.MAU2) {
+        text(s, label, { x: 0.6, y, w: 2.1, h, fontSize: 18, bold: true, color: C.text2, valign: "middle" });
+        text(s, body, { x: 2.8, y, w: 9.9, h, fontSize: 17, valign: "middle", objectName: name + "-text" });
+        return;
+      }
       s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y, w: 2.4, h, rectRadius: 0.08, fill: { color }, line: { color }, objectName: name });
       text(s, label, { x: 0.6, y, w: 2.4, h, fontSize: 17, bold: true, color: C.background1, align: "center", valign: "middle" });
       text(s, body, { x: 3.25, y, w: 9.45, h, fontSize: 16, valign: "middle", objectName: name + "-text" });
@@ -80,10 +92,9 @@ function helpers(ctx) {
 }
 
 // ======================================================================= phân tích bài báo (3 slide)
-async function paperSlides(ctx, section) {
+async function paperSlides(ctx, section, KICK = "BÀI BÁO THAM KHẢO · MASUD ET AL. (2025)") {
   const { HEX, C, text, card, content } = ctx;
   const H = helpers(ctx);
-  const KICK = "BÀI BÁO THAM KHẢO · MASUD ET AL. (2025)";
   let s;
 
   // ---- 1. Bài toán mà bài báo đặt ra
@@ -157,20 +168,20 @@ async function sideBySide(ctx, s, H, left, right, y, h) {
   }
 }
 
-async function fig6Slide(ctx, section) {
+async function fig6Slide(ctx, section, kick = "TÁI LẬP BÀI BÁO CHÍNH · CHẠY LẠI ĐÚNG DẠNG BIỂU ĐỒ") {
   const { HEX, C, text, content, FIG } = ctx;
   const H = helpers(ctx);
   const cmp = csv("paper_fig6_masud_vs_paper.csv");
   const ok = (m) => cmp.filter((r) => r.MTD === m && Math.abs(Number(r["lệch %"])) <= 5).length;
   const s = content(section);
-  H.kicker(s, "TÁI LẬP BÀI BÁO CHÍNH · CHẠY LẠI ĐÚNG DẠNG BIỂU ĐỒ");
+  H.kicker(s, kick);
   s.addText("Chạy lại Hình 6 của bài báo: AR, AC, RoC theo VM", { placeholder: "title" });
   await sideBySide(ctx, s, H, [path.join(PFIG, "masud_fig6_metrics.png"), "Hình 6 – bài báo", "fig6-paper"],
     [path.join(FIG, "fig_paper_masud_fig6.png"), "Chạy lại – DT043 (dữ liệu bài báo, topology Hình 3)", "fig6-ours"], 1.3, 3.75);
   const chips = [
     [`Diversity: khớp ${ok("d")}/7 VM (lệch ≤ 5%)`, HEX.accent6],
     [`Shuffle, S+D: khớp ở V5 – VM duy nhất bài nêu host đích`, HEX.accent2],
-    ["Redundancy, S+D+R cao hơn; AC, RoC khác thang đo – bài không nêu đủ cách tính", HEX.accent3],
+    ["Toàn Hình 6(a): 11/35 điểm lệch ≤ 5%; redundancy, S+D+R cao hơn; AC, RoC: xem E12", HEX.accent3],
   ];
   chips.forEach((c, i) => {
     const x = 0.6 + i * 4.1;
@@ -183,8 +194,44 @@ async function fig6Slide(ctx, section) {
     + "results/tables/paper_fig6_masud_vs_paper.csv.");
 }
 
+// ======================================================================= quy trình thực hiện (phụ lục, hoặc phần chính ở bản 4'30)
+function processSlide(ctx, section, kick) {
+  const { pres, D, HEX, C, text, card, content, nf } = ctx;
+  const H = helpers(ctx);
+  const s = content(section);
+  H.kicker(s, kick);
+  s.addText("Quy trình thực hiện: từ đọc bài báo đến báo cáo", { placeholder: "title" });
+  const steps = [
+    ["Đọc bài báo", "Masud 2025 lệch chủ đề (MTD, không AE) → chia 2 track; Meidan 2018 làm baseline"],
+    ["Lập kế hoạch", "Phiếu tái lập, ≥ 5 hạn chế, 6 câu hỏi nghiên cứu, ma trận thí nghiệm"],
+    ["Môi trường, dữ liệu", "Python 3.11 + khóa phiên bản; tải N-BaIoT 1.77 GB, manifest SHA-256 107 file"],
+    ["Làm sạch, EDA", `Kiểm schema 115 cột, khử ${nf(D.data.dups)} dòng trùng, đo mất cân bằng, tự tương quan`],
+    ["Pipeline + test", "Chia chống rò rỉ, scaler, AE, ngưỡng, int8; 30 test unit / integration / negative"],
+    ["Chốt tiêu chí", "Smoke test 1 lần → chốt tiêu chí thành công, lưu SHA-256 trước khi chạy"],
+    ["Chạy ma trận", `${D.n_runs} lần chạy (cấu hình × thiết bị × seed), mỗi lần 1 process, có resume và log`],
+    ["Hệ thống 4 tầng", "Xuất gói AI → BE; FastAPI + SQLite + dashboard; 12 test BE/DB"],
+    ["Tổng hợp, báo cáo", "KTC95, Wilcoxon + Holm, đối chiếu tiêu chí; Word và slide sinh từ số liệu"],
+    ["Tái lập bài chính", "Có toàn văn: dựng 3-layer THARM bằng đúng CVE/topology (E11, E12), 24 test so số"],
+  ];
+  steps.forEach((st, i) => {
+    const x = 0.6 + (i % 5) * 2.45, y = 1.45 + Math.floor(i / 5) * 2.55;
+    card(s, x, y, 2.3, 2.4, HEX.lt2, "step" + i);
+    s.addShape(pres.shapes.OVAL, { x: x + 0.15, y: y + 0.15, w: 0.5, h: 0.5, fill: { color: i === 5 ? HEX.accent3 : HEX.dk2 }, line: { color: i === 5 ? HEX.accent3 : HEX.dk2 }, objectName: "stepnum" + i });
+    text(s, String(i + 1), { x: x + 0.15, y: y + 0.15, w: 0.5, h: 0.5, fontSize: 15, bold: true, color: C.background1, align: "center", valign: "middle" });
+    text(s, st[0], { x: x + 0.75, y: y + 0.12, w: 1.45, h: 0.56, fontSize: 14, bold: true, color: C.text2, valign: "middle" });
+    text(s, st[1], { x: x + 0.15, y: y + 0.8, w: 2.0, h: 1.5, fontSize: 12.5 });
+    if (i % 5 < 4) s.addShape(pres.shapes.RIGHT_ARROW, { x: x + 2.31, y: y + 1.05, w: 0.13, h: 0.3, fill: { color: HEX.accent4 }, line: { color: HEX.accent4 }, objectName: "steparrow" + i });
+  });
+  text(s, "Mỗi bước có lệnh đã chạy, kết quả và sự cố gặp phải trong tailieu/NHAT_KY_THUC_HIEN.md; bước 6 làm trước khi có kết quả nên không thể chỉnh tiêu chí theo kết quả.",
+    { x: 0.6, y: 6.55, w: 12.1, h: 0.4, fontSize: 12, italic: true, color: C.accent4 });
+  s.addNotes("Quy trình: đọc bài báo và thấy bài chính lệch chủ đề nên chia hai track; lập kế hoạch, chuẩn bị môi trường và dữ liệu có checksum; "
+    + "làm sạch, EDA; viết pipeline kèm test; chốt tiêu chí trước khi chạy; chạy 468 lần; dựng hệ thống 4 tầng; tổng hợp thống kê và viết báo cáo; "
+    + "cuối cùng tái lập bài chính bằng toàn văn.");
+}
+
 // ======================================================================= phụ lục chi tiết
-async function appendixSlides(ctx) {
+// skipProcess: bản 4'30 đã đưa slide quy trình lên phần chính
+async function appendixSlides(ctx, { skipProcess = false, e12 = false } = {}) {
   const { pres, D, HEX, C, text, card, content, f, nf, FIG } = ctx;
   const H = helpers(ctx);
   const SEC = "Phụ lục";
@@ -216,35 +263,7 @@ async function appendixSlides(ctx) {
     + "vote cửa sổ, đạt TPR 100%. Hạn chế: một lần chia dữ liệu, không lượng tử hóa, không đo edge – đây là chỗ đề tài làm thêm.");
 
   // ---- A2. Quy trình thực hiện
-  s = content(SEC);
-  H.kicker(s, "PHỤ LỤC · CÁCH LÀM RA ĐỀ TÀI");
-  s.addText("Quy trình thực hiện: từ đọc bài báo đến báo cáo", { placeholder: "title" });
-  const steps = [
-    ["Đọc bài báo", "Masud 2025 lệch chủ đề (MTD, không AE) → chia 2 track; Meidan 2018 làm baseline"],
-    ["Lập kế hoạch", "Phiếu tái lập, ≥ 5 hạn chế, 6 câu hỏi nghiên cứu, ma trận thí nghiệm"],
-    ["Môi trường, dữ liệu", "Python 3.11 + khóa phiên bản; tải N-BaIoT 1.77 GB, manifest SHA-256 107 file"],
-    ["Làm sạch, EDA", `Kiểm schema 115 cột, khử ${nf(D.data.dups)} dòng trùng, đo mất cân bằng, tự tương quan`],
-    ["Pipeline + test", "Chia chống rò rỉ, scaler, AE, ngưỡng, int8; 30 test unit / integration / negative"],
-    ["Chốt tiêu chí", "Smoke test 1 lần → chốt tiêu chí thành công, lưu SHA-256 trước khi chạy"],
-    ["Chạy ma trận", `${D.n_runs} lần chạy (cấu hình × thiết bị × seed), mỗi lần 1 process, có resume và log`],
-    ["Hệ thống 4 tầng", "Xuất gói AI → BE; FastAPI + SQLite + dashboard; 12 test BE/DB"],
-    ["Tổng hợp, báo cáo", "KTC95, Wilcoxon + Holm, đối chiếu tiêu chí; Word và slide sinh từ số liệu"],
-    ["Tái lập bài chính", "Có toàn văn: dựng 3-layer THARM bằng đúng CVE/topology (E11), 14 test so số"],
-  ];
-  steps.forEach((st, i) => {
-    const x = 0.6 + (i % 5) * 2.45, y = 1.45 + Math.floor(i / 5) * 2.55;
-    card(s, x, y, 2.3, 2.4, HEX.lt2, "step" + i);
-    s.addShape(pres.shapes.OVAL, { x: x + 0.15, y: y + 0.15, w: 0.5, h: 0.5, fill: { color: i === 5 ? HEX.accent3 : HEX.dk2 }, line: { color: i === 5 ? HEX.accent3 : HEX.dk2 }, objectName: "stepnum" + i });
-    text(s, String(i + 1), { x: x + 0.15, y: y + 0.15, w: 0.5, h: 0.5, fontSize: 15, bold: true, color: C.background1, align: "center", valign: "middle" });
-    text(s, st[0], { x: x + 0.75, y: y + 0.12, w: 1.45, h: 0.56, fontSize: 14, bold: true, color: C.text2, valign: "middle" });
-    text(s, st[1], { x: x + 0.15, y: y + 0.8, w: 2.0, h: 1.5, fontSize: 12.5 });
-    if (i % 5 < 4) s.addShape(pres.shapes.RIGHT_ARROW, { x: x + 2.31, y: y + 1.05, w: 0.13, h: 0.3, fill: { color: HEX.accent4 }, line: { color: HEX.accent4 }, objectName: "steparrow" + i });
-  });
-  text(s, "Mỗi bước có lệnh đã chạy, kết quả và sự cố gặp phải trong tailieu/NHAT_KY_THUC_HIEN.md; bước 6 làm trước khi có kết quả nên không thể chỉnh tiêu chí theo kết quả.",
-    { x: 0.6, y: 6.55, w: 12.1, h: 0.4, fontSize: 12, italic: true, color: C.accent4 });
-  s.addNotes("Quy trình: đọc bài báo và thấy bài chính lệch chủ đề nên chia hai track; lập kế hoạch, chuẩn bị môi trường và dữ liệu có checksum; "
-    + "làm sạch, EDA; viết pipeline kèm test; chốt tiêu chí trước khi chạy; chạy 468 lần; dựng hệ thống 4 tầng; tổng hợp thống kê và viết báo cáo; "
-    + "cuối cùng tái lập bài chính bằng toàn văn.");
+  if (!skipProcess) processSlide(ctx, SEC, "PHỤ LỤC · CÁCH LÀM RA ĐỀ TÀI");
 
   // ---- A3. Phương pháp phát hiện chi tiết
   s = content(SEC);
@@ -289,7 +308,7 @@ async function appendixSlides(ctx) {
     ["E8", "Edge benchmark P0 / P1", "3 × 4 × 3 × 5 lượt", "RQ5"],
     ["E9", "Robustness: né tránh, nhiễu, đầu độc 1% / 5%", "9 × 3 × 3", "an toàn"],
     ["E10", "MTD: HARM rút gọn + MTD lai do AE kích hoạt", "5 seed Monte Carlo", "RQ6"],
-    ["E11", "Tái lập 3-layer THARM bằng dữ liệu bài báo", "tất định, 14 test", "bài chính"]],
+    ["E11", "Tái lập 3-layer THARM bằng dữ liệu bài báo", "tất định, 24 test", "bài chính"]],
   { fontSize: 12, box: { x: 0.6, y: 1.4, w: 8.1, colW: [0.65, 4.35, 1.95, 1.15], rowH: 0.42, objectName: "matrix-table" } });
   card(s, 9.0, 1.4, 3.7, 2.55, HEX.lt2, "env-card");
   H.groups(s, [["Môi trường", ["i7-13650HX (6 P + 8 E core), RAM 23.7 GB, Windows 11", "Python 3.11.9, TensorFlow 2.21, scikit-learn 1.9",
@@ -329,7 +348,7 @@ async function appendixSlides(ctx) {
     text(s, t[0], { x: 8.2, y: y + 0.08, w: 4.4, h: 0.35, fontSize: 14, bold: true, color: C.text2 });
     text(s, t[1], { x: 8.2, y: y + 0.42, w: 4.4, h: 0.65, fontSize: 12 });
   });
-  text(s, "Mã: ai/src/nbaiot/mtd/tharm.py · script ai/scripts/10_tharm_paper_replication.py · 14 test khóa các số của bài báo · chi tiết: tailieu/docs/tai_lap_paper_chinh.md",
+  text(s, "Mã: ai/src/nbaiot/mtd/tharm.py · script ai/scripts/10_tharm_paper_replication.py · 24 test khóa các số của bài báo · chi tiết: tailieu/docs/tai_lap_paper_chinh.md",
     { x: 0.6, y: 6.4, w: 12.1, h: 0.45, fontSize: 12, italic: true, color: C.accent4 });
   s.addNotes("E11: em dựng lại THARM chỉ bằng dữ liệu bài báo công bố – 32 CVE, 8 máy ảo, topology và các bước MTD trong mục 4. "
     + "Phát hiện quan trọng: công thức rủi ro phải là tổng mới khớp số của bài, bản in ghi tích.");
@@ -394,10 +413,10 @@ async function appendixSlides(ctx) {
   ctx.stat(s, 8.95, 1.3, 1.8, nFig3 + "/7", "kết luận khớp (Hình 3)", HEX.accent1, "trend3");
   ctx.stat(s, 10.9, 1.3, 1.8, nDef2 + "/7", "theo Definition 2", HEX.accent3, "trend2");
   await H.image(s, path.join(FIG, "fig_tharm_scenarios.png"), 0.6, 3.45, 12.1, 3.15, "fig-tharm");
-  text(s, "Tổng toàn mạng không suy ra được: bài báo cắt danh sách cạnh sau shuffle, công thức in mâu thuẫn; kết luận \"S + D tốt nhất\" phụ thuộc cạnh V6 → V4.",
+  text(s, "Tổng R không khớp với cả hai topology; AC, RoC xem E12. Kết luận \"S + D tốt nhất\" phụ thuộc cạnh V6 → V4 và chỉ đạt ở ví dụ V5.",
     { x: 0.6, y: 6.6, w: 12.1, h: 0.35, fontSize: 12, italic: true, color: C.accent4 });
-  s.addNotes("Tái lập bài chính: rủi ro mức máy ảo khớp tới 0,01, ba đường tấn công lệch 0,8%, tổng toàn mạng không khớp; với topology Hình 3 "
-    + "tái lập 6/7 kết luận định tính, gồm kết luận chính shuffle + diversity rủi ro thấp nhất.");
+  s.addNotes("Tái lập bài chính: rủi ro mức máy ảo khớp tới 0,01, ba đường tấn công lệch 0,8%, tổng R không khớp; với topology Hình 3 "
+    + "tái lập 6/7 kết luận định tính, nhưng shuffle + diversity chỉ có rủi ro thấp nhất ở ví dụ V5.");
 
   // ---- A7c. Chạy lại Hình 7 của bài báo chính
   s = content(SEC);
@@ -406,11 +425,44 @@ async function appendixSlides(ctx) {
   await sideBySide(ctx, s, H, [path.join(PFIG, "masud_fig7_asp.png"), "Hình 7 – bài báo (8 đường)", "fig7-paper"],
     [path.join(FIG, "fig_paper_masud_fig7.png"), "Chạy lại – DT043 (5 đường tới V8, diversity V5)", "fig7-ours"], 1.3, 3.9);
   card(s, 0.6, 5.75, 12.1, 0.95, HEX.lt2, "fig7-note");
-  text(s, "Không tái lập được: topology bài công bố chỉ có 5 đường tới V8 (bài vẽ 8 đường); ASP đường của bài 0.2–0.43 trong khi "
-    + "ASP từng VM ở Bảng 4 là 0.95–0.99 – bài không nêu cách tính ASP đường. Với OR độc lập, đổi V5 Windows 11 → Linux làm ASP tăng nhẹ.",
+  text(s, "Không tái lập được từng cột: topology chỉ có 5 đường tới V8 (bài vẽ 8, không in chuỗi VM). Hình phải dùng OR độc lập (0.91–0.94); Eq. 1 nguyên văn "
+    + "(E12) cho 0.24–0.48, cùng thang với bài (0.2–0.43). Đổi V5 Windows 11 → Linux làm ASP tăng ở cả hai cách, ngược lời bình của bài.",
   { x: 0.85, y: 5.75, w: 11.6, h: 0.95, fontSize: 13, valign: "middle" });
   s.addNotes("Hình 7 vẽ lại cùng dạng nhưng không khớp: số đường và cách tính ASP đường của bài không suy ra được từ dữ liệu công bố. "
     + "Em ghi rõ là không tái lập được thay vì chỉnh số cho giống. Số liệu: results/tables/paper_fig7_masud.csv.");
+
+  // ---- A7d. E12: tổng toàn mạng và các hình còn lại (chỉ bản 4'30)
+  if (e12) {
+    s = content(SEC);
+    H.kicker(s, "PHỤ LỤC · TÁI HIỆN THÊM BÀI BÁO CHÍNH (E12)");
+    s.addText("E12: công thức AC suy ra đưa tổng AC, RoC về gần bài", { placeholder: "title" });
+    const e = csv("e12_network_totals.csv").filter((r) => r.topology === "Definition 2" && r["biến thể"] === "Σ BS×cost");
+    const pick = (m, k) => e.find((r) => r.MTD === m && r["chỉ số"] === k);
+    const pc = (r) => `${Number(r.E12).toFixed(r["chỉ số"] === "RoC" ? 2 : 1)} (${Number(r["lệch E12 %"]) > 0 ? "+" : ""}${Number(r["lệch E12 %"]).toFixed(1)}%)`;
+    H.table(s, [["MTD trên V5", "R bài", "R E12", "AC bài", "AC E11", "AC E12", "RoC bài", "RoC E12"]].concat(
+      [["shuffle", "Shuffle"], ["diversity", "Diversity"], ["redundancy", "Redundancy"]].map(([m, l]) => [l,
+        Number(pick(m, "R")["bài báo"]).toFixed(1), pc(pick(m, "R")), Number(pick(m, "AC")["bài báo"]).toFixed(1),
+        Number(pick(m, "AC")["E11 cũ"]).toFixed(1), pc(pick(m, "AC")), Number(pick(m, "RoC")["bài báo"]).toFixed(2), pc(pick(m, "RoC"))])),
+    { fontSize: 12, box: { x: 0.6, y: 1.35, w: 12.1, colW: [1.6, 0.9, 2.0, 1.0, 1.0, 2.2, 1.0, 2.4], rowH: 0.4, objectName: "e12-table" } });
+    card(s, 0.6, 3.1, 5.85, 3.6, HEX.lt2, "e12-formula");
+    text(s, "Cách tính suy ra", { x: 0.85, y: 3.2, w: 5.4, h: 0.4, fontSize: 15, bold: true, color: C.text2 });
+    const a = ["AC theo VM = Σ CVSS BS × attack cost: khớp V5, V7, V8; V2 lệch −33.9%",
+      "Là giả thuyết, dò trên 4 số bài in; tổng AC không dùng khi chọn công thức",
+      "Eq. 1 nguyên văn: ASP đường 0.24–0.48, cùng thang Hình 7 (0.2–0.43)",
+      "Tổng mạng lệch ≤ 5%: 5/9 (E11: 1/9)"];
+    s.addText(a.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < a.length - 1 } })),
+      { x: 0.85, y: 3.65, w: 5.4, h: 2.95, fontSize: 15, color: C.text1, paraSpaceAfter: 8, valign: "top", margin: 0, isTextBox: true, objectName: "e12-a" });
+    card(s, 6.85, 3.1, 5.85, 3.6, HEX.lt2, "e12-gaps");
+    text(s, "Vẫn chưa khớp", { x: 7.1, y: 3.2, w: 5.4, h: 0.4, fontSize: 15, bold: true, color: C.accent3 });
+    const b = ["Tổng R: diversity −13.1%, redundancy −16.6%",
+      "Hình 5(b), Hình 6 cùng thang nhưng khác hình dạng; Hình 7 không có chuỗi VM",
+      "Hình 8: chỉ so tỷ lệ, mạng 400 VM là giả định; Hình 9: không có mô hình thời gian",
+      "Bài không nhất quán: R_d = 163.73 nhưng Hình 6 vẽ ≈ 203"];
+    s.addText(b.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < b.length - 1 } })),
+      { x: 7.1, y: 3.65, w: 5.4, h: 2.95, fontSize: 15, color: C.text1, paraSpaceAfter: 8, valign: "top", margin: 0, isTextBox: true, objectName: "e12-b" });
+    s.addNotes("E12: em dò lại công thức mà bài không in rõ. AC theo VM bằng tổng điểm CVSS nhân chi phí khớp ba trên bốn số bài in, và đưa tổng AC toàn mạng về lệch "
+      + "không quá 3,4%. Đây là giả thuyết của em, không phải công thức tác giả xác nhận. Tổng R của diversity, redundancy và nhiều hình vẫn chưa khớp, em không chỉnh số cho giống.");
+  }
 
   // ---- A8. Nguyên mẫu
   s = content(SEC);
@@ -441,10 +493,10 @@ async function appendixSlides(ctx) {
     ["GET /api/mtd/actions · POST /api/mtd/tick", "nhật ký MTD, MTD theo thời gian"],
     ["GET /api/experiments", "bảng kết quả thực nghiệm"]],
   { fontSize: 12, box: { x: 6.8, y: 3.0, w: 5.9, colW: [3.3, 2.6], rowH: 0.42, objectName: "api-table" } });
-  text(s, "56 test tự động: 30 AI + 14 tái lập THARM + 12 backend/CSDL (gói bị sửa 1 byte, path traversal, sai số chiều, lô quá lớn)",
+  text(s, "66 test tự động: 30 AI + 24 tái lập THARM + 12 backend/CSDL (gói bị sửa 1 byte, path traversal, sai số chiều, lô quá lớn)",
     { x: 6.8, y: 6.05, w: 5.9, h: 0.6, fontSize: 12, italic: true, color: C.accent4 });
   s.addNotes("Nguyên mẫu: tầng AI xuất gói triển khai gồm model int8, scaler và meta có checksum; backend FastAPI chỉ nạp gói hợp lệ, suy luận "
     + "TFLite một luồng, ghi cảnh báo và hành động MTD vào SQLite; dashboard gọi các API này.");
 }
 
-module.exports = { paperSlides, fig6Slide, appendixSlides, csv };
+module.exports = { paperSlides, fig6Slide, processSlide, appendixSlides, helpers, csv };

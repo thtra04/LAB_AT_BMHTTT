@@ -20,5 +20,5 @@
     "networkx": "3.6.1",
     "pytest": "9.1.1"
   },
-  "git_commit": "b03872d"
+  "git_commit": "94de869"
 }

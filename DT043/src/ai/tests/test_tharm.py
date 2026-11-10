@@ -1,4 +1,5 @@
 """Kiểm tra mô hình 3-layer THARM tái lập đúng các con số paper Masud et al. (2025) công bố."""
+import numpy as np
 import pytest
 
 from nbaiot.mtd import tharm as T
@@ -51,6 +52,30 @@ def test_fig3_topology_trend_shuffle_diversity_best():
     risk = {k: v.network_metrics()["R"] for k, v in sc.items()}
     assert risk["S"] < risk["none"] and risk["D"] < risk["none"] < risk["R"]
     assert risk["S+D"] == min(risk.values())
+
+
+@pytest.mark.parametrize("vm,paper", [("V5", 46.4), ("V7", 43.2), ("V8", 39.4)])
+def test_weighted_cost_close_to_printed_vm_ac(base, vm, paper):
+    """E12: AC theo VM = Σ BS × cost khớp số bài in (V2 = 37.5 thì không, xem test dưới)."""
+    assert base.cost_weighted(vm) == pytest.approx(paper, rel=0.05)
+
+
+def test_weighted_cost_does_not_explain_v2(base):
+    assert abs(base.cost_weighted("V2") / 37.5 - 1) > 0.3
+
+
+@pytest.mark.parametrize("key,label", [("S", "shuffle"), ("D", "diversity"), ("R", "redundancy")])
+def test_network_ac_definition2_within_5_percent(key, label):
+    """E12: tổng AC toàn mạng trên Definition 2 chỉ từ Bảng 1–2, không dùng số in của bài."""
+    m = T.scenarios(with_fig3_edge=False)[key].network_metrics_weighted()
+    assert m["AC"] == pytest.approx(T.PAPER_NETWORK[label]["AC"], rel=0.05)
+
+
+def test_eq1_literal_gives_path_asp_in_fig7_scale():
+    """Eq. 1 nguyên văn cho ASP đường cùng thang với Hình 7 (0.2–0.43), khác OR độc lập (≈ 0.91–0.94)."""
+    b = T.build(with_fig3_edge=True)
+    vals = [float(np.prod([b.asp_eq1(v) for v in p[1:]])) for p in b.paths()]
+    assert 0.2 < min(vals) and max(vals) < 0.5
 
 
 def test_asp_is_probability(base):
